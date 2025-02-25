@@ -9,15 +9,14 @@ import re
 import csv
 import pandas as pd
 
-# 현재 디렉토리의 config를 임포트
-import config
+# 현재 스크립트의 절대 경로
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# static/data 디렉토리의 절대 경로
+STATIC_DATA_PATH = os.path.join(SCRIPT_DIR, 'static', 'data')
 
-
-# 루트 디렉토리를 sys.path에 추가
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-# static/data 디렉토리의 depart_list.csv 경로
-DEPART_LIST_PATH = os.path.join(config.STATIC_DATA_PATH, 'depart_list.csv')
+# depart_list.csv 파일의 절대 경로
+DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
 
 async def get_project_list(disk_path=None):
     """공용 디스크를 찾는 함수"""
@@ -76,18 +75,16 @@ async def get_department_list(disk_path):
         departments.sort(key=lambda x: x[0])
         
         # static/data 디렉토리 확인 및 생성
-        save_dir = os.path.join(os.path.dirname(__file__), '..', 'static', 'data')
-        os.makedirs(save_dir, exist_ok=True)
+        os.makedirs(STATIC_DATA_PATH, exist_ok=True)
         
         # CSV 파일로 저장
-        csv_path = os.path.join(save_dir, 'depart_list.csv')
-        with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+        with open(DEPART_LIST_PATH, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             # 헤더 추가
             writer.writerow(['department_code', 'department_name'])
             writer.writerows(departments)
         
-        print(f"부서 목록이 {csv_path}에 저장되었습니다.")
+        print(f"부서 목록이 {DEPART_LIST_PATH}에 저장되었습니다.")
         print(f"총 {len(departments)}개 부서가 발견되었습니다.")
         return True
         
@@ -99,7 +96,7 @@ async def get_projects_from_department(department_code=None):
     """부서 코드에 해당하는 프로젝트 목록을 가져오는 함수"""
     try:
         # 1. depart_list.csv 파일 읽기
-        df = pd.read_csv(config.DEPART_LIST_PATH)
+        df = pd.read_csv(DEPART_LIST_PATH)
         
         # 2. 공용 디스크 경로 가져오기
         disk_path = await get_project_list()
@@ -177,11 +174,11 @@ async def create_project_list():
     """
     try:
         # 1. 부서 목록 읽기
-        if not os.path.exists(config.DEPART_LIST_PATH):
-            print(f"부서 목록 파일을 찾을 수 없습니다: {config.DEPART_LIST_PATH}")
+        if not os.path.exists(DEPART_LIST_PATH):
+            print(f"부서 목록 파일을 찾을 수 없습니다: {DEPART_LIST_PATH}")
             return None
             
-        depart_df = pd.read_csv(config.DEPART_LIST_PATH)
+        depart_df = pd.read_csv(DEPART_LIST_PATH)
         
         # 2. 공용 디스크 경로 가져오기
         disk_path = await get_project_list()
@@ -263,7 +260,7 @@ async def create_project_list():
                             process_directory(item_path, dept_code, dept_name, project_data, depth + 1, current_path)
                         # 특수 폴더가 없는 경우에만 프로젝트로 처리
                         elif not has_special_folders:
-                            if process_project_folder(item, dept_code, dept_name, project_data):
+                            if process_project_folder(item, dept_code, dept_name, project_data, disk_path):
                                 print(f"{'  ' * depth}- 프로젝트 발견: {item}")
             except Exception as e:
                 print(f"{'  ' * depth}- 폴더 {dir_path} 처리 중 오류: {str(e)}")
@@ -288,7 +285,7 @@ async def create_project_list():
                             # 프로젝트 ID를 YYYYMM,NN 형식으로 변환
                             year_month = proj['project_id'][:6]
                             number = proj['project_id'][6:]
-                            original_folder = f"{year_month},{number} | {proj['project_name']}"
+                            original_folder = proj['project_path']  # 전체 경로 사용
                             project_data.append({
                                 'department_code': proj['department_code'],
                                 'department_name': proj['department_name'],
@@ -309,7 +306,7 @@ async def create_project_list():
             project_df = project_df.sort_values(['department_code', 'project_id'])
             
             # CSV 파일로 저장
-            save_path = os.path.join(os.path.dirname(config.DEPART_LIST_PATH), 'project_list.csv')
+            save_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
             project_df.to_csv(save_path, index=False, encoding='utf-8')
             
             print(f"\n프로젝트 목록이 저장되었습니다: {save_path}")
@@ -324,7 +321,7 @@ async def create_project_list():
         print(f"프로젝트 목록 생성 중 오류 발생: {str(e)}")
         return None
 
-def process_project_folder(folder_name, dept_code, dept_name, project_data):
+def process_project_folder(folder_name, dept_code, dept_name, project_data, disk_path):
     """프로젝트 폴더를 처리하는 헬퍼 함수"""
     
     def format_project_id(year, number):
@@ -335,6 +332,9 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
     # 구분선이나 메모 폴더 제외
     if '----' in folder_name or folder_name.endswith('(이하)'):
         return False
+    
+    # 전체 경로 구성
+    full_path = os.path.join(disk_path, f"{dept_code}_{dept_name}", folder_name)
     
     # 1. 공항인프라 부서의 CYYYYNNNN 패턴 찾기
     match = re.search(r'^C((?:19|20)\d{2})(\d{4})(?:_|\s)', folder_name)
@@ -355,7 +355,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
     
@@ -378,7 +378,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
     
@@ -406,7 +406,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
     
@@ -428,7 +428,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
     
@@ -459,7 +459,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
         
@@ -480,7 +480,7 @@ def process_project_folder(folder_name, dept_code, dept_name, project_data):
             'department_name': dept_name,
             'project_id': project_id,
             'project_name': project_name.strip(),
-            'original_folder': folder_name
+            'original_folder': full_path
         })
         return True
         
@@ -509,7 +509,7 @@ async def get_env_projects():
     """환경부서의 프로젝트 목록을 가져오는 함수"""
     try:
         # 1. depart_list.csv 파일 읽기 (부서 코드를 문자열로 읽기)
-        df = pd.read_csv(config.DEPART_LIST_PATH, dtype={'department_code': str})
+        df = pd.read_csv(DEPART_LIST_PATH, dtype={'department_code': str})
         
         # 2. 공용 디스크 경로 가져오기
         disk_path = await get_project_list()
