@@ -12,43 +12,150 @@ import pandas as pd
 # 현재 스크립트의 절대 경로
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# 프로젝트 루트 디렉토리 (my-folder-app)
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+
 # static/data 디렉토리의 절대 경로
-STATIC_DATA_PATH = os.path.join(SCRIPT_DIR, 'static', 'data')
+STATIC_DATA_PATH = os.path.join(ROOT_DIR, 'static', 'data')
 
 # depart_list.csv 파일의 절대 경로
 DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
 
-async def get_project_list(disk_path=None):
-    """공용 디스크를 찾는 함수"""
+def process_directory(dir_path, dept_code, dept_name, project_data):
+    """디렉토리를 처리하는 함수"""
     try:
-        # 1. 모든 드라이브 검색
-        drives = win32api.GetLogicalDriveStrings()
-        drives = drives.split('\000')[:-1]
-        
-        print("검색된 드라이브:", drives)
-        
-        # 2. 각 드라이브에서 "공용 디스크" 찾기
-        for drive in drives:
-            try:
-                if os.path.exists(drive):
-                    print(f"\n드라이브 {drive} 확인 중...")
+        # 디렉토리 내 모든 항목 처리
+        for item in os.listdir(dir_path):
+            item_path = os.path.join(dir_path, item)
+            if os.path.isdir(item_path):
+                # 프로젝트 ID 패턴 확인 (YYYYNNNN 형식)
+                match = re.match(r'(\d{8}).*', item)
+                if match:
+                    project_id = match.group(1)
                     
-                    # 부서 폴더(01010_도로)로 공용 디스크 식별
-                    if os.path.exists(os.path.join(drive, "01010_도로")):
-                        print(f">>> {drive}에서 '01010_도로' 폴더 발견!")
-                        network_path = os.path.realpath(drive)
-                        print(f">>> 실제 네트워크 경로: {network_path}")
-                        return network_path
+                    # 프로젝트명 추출 (ID와 언더스코어 제외)
+                    project_name = item[9:].strip('_ ')
+                    if not project_name:
+                        project_name = item
                     
-            except Exception as e:
-                print(f"드라이브 {drive} 확인 중 오류: {str(e)}")
-                continue
+                    # 전체 경로 생성
+                    full_path = os.path.normpath(item_path)
+                    
+                    project_data.append({
+                        'department_code': dept_code,
+                        'department_name': dept_name,
+                        'project_id': project_id,
+                        'project_name': project_name,
+                        'original_folder': full_path
+                    })
+                    print(f"프로젝트 발견: {item}")
+                    
+    except Exception as e:
+        print(f"디렉토리 처리 중 오류 발생: {str(e)}")
+
+def update_project_paths(csv_path, disk_path):
+    """프로젝트 CSV 파일의 경로를 전체 경로로 업데이트"""
+    try:
+        # CSV 파일 읽기
+        df = pd.read_csv(csv_path)
+        
+        # 각 부서별 경로 업데이트
+        for idx, row in df.iterrows():
+            dept_folder = f"{row['department_code']}_{row['department_name']}"
+            project_folder = row['original_folder']
+            
+            # 전체 경로 생성
+            full_path = os.path.join(disk_path, dept_folder, project_folder)
+            full_path = os.path.normpath(full_path)  # 경로 정규화
+            
+            # DataFrame 업데이트
+            df.at[idx, 'original_folder'] = full_path
+        
+        # 업데이트된 CSV 저장
+        df.to_csv(csv_path, index=False, encoding='utf-8')
+        print(f"프로젝트 경로가 업데이트되었습니다: {csv_path}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"프로젝트 경로 업데이트 중 오류 발생: {str(e)}")
+        return False
+
+async def get_project_list(disk_path=None):
+    """공용 디스크를 찾고 프로젝트 목록을 생성하는 함수"""
+    try:
+        # 1. 디스크 경로가 없으면 검색
+        if not disk_path:
+            drives = win32api.GetLogicalDriveStrings()
+            drives = drives.split('\000')[:-1]
+            
+            for drive in drives:
+                if os.path.exists(os.path.join(drive, "01010_도로")):
+                    disk_path = os.path.realpath(drive)
+                    break
+        
+        if not disk_path:
+            print("공용 디스크를 찾을 수 없습니다.")
+            return None
+
+        # 2. 부서 목록 읽기
+        df_dept = pd.read_csv(DEPART_LIST_PATH)
+        
+        # 3. 프로젝트 데이터 수집
+        projects_data = []
+        
+        for _, dept in df_dept.iterrows():
+            dept_code = dept['department_code']
+            dept_name = dept['department_name']
+            dept_folder = f"{dept_code}_{dept_name}"
+            dept_path = os.path.join(disk_path, dept_folder)
+            
+            if os.path.exists(dept_path):
+                # 부서 폴더 내 프로젝트 검색
+                for item in os.listdir(dept_path):
+                    item_path = os.path.join(dept_path, item)
+                    if os.path.isdir(item_path):
+                        # 프로젝트 ID 추출 (YYYYNNNN 형식)
+                        match = re.match(r'(\d{8}).*', item)
+                        if match:
+                            project_id = match.group(1)
+                            
+                            # 전체 경로 생성 (Y:\부서폴더\프로젝트폴더 형식)
+                            full_path = f"{disk_path}\\{dept_folder}\\{item}"
+                            full_path = os.path.normpath(full_path)
+                            
+                            projects_data.append({
+                                'department_code': dept_code,
+                                'department_name': dept_name,
+                                'project_id': project_id,
+                                'project_name': item[9:],  # ID와 언더스코어 제외
+                                'original_folder': full_path  # 전체 경로 저장
+                            })
+
+        # 4. CSV 파일로 저장
+        if projects_data:
+            df_projects = pd.DataFrame(projects_data)
+            csv_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
+            print(f"\nCSV 파일 저장 시도:")
+            print(f"- 저장 경로: {csv_path}")
+            print(f"- 디렉토리 존재 여부: {os.path.exists(os.path.dirname(csv_path))}")
+            
+            df_projects.to_csv(csv_path, index=False, encoding='utf-8')
+            print(f"- 파일 저장 완료")
+            print(f"- 파일 존재 여부: {os.path.exists(csv_path)}")
+            print(f"- 파일 크기: {os.path.getsize(csv_path)} bytes")
+            
+            # CSV 파일 내용 확인
+            print("\n저장된 경로 예시:")
+            for i, row in df_projects.head().iterrows():
+                print(f"{row['project_id']}: {row['original_folder']}")
                 
-        print("\n'공용 디스크'를 찾지 못했습니다.")
+            return disk_path
+
         return None
         
     except Exception as e:
-        print(f"전체 검색 중 오류 발생: {str(e)}")
+        print(f"프로젝트 목록 생성 중 오류 발생: {str(e)}")
         return None
 
 async def get_department_list(disk_path):
@@ -684,19 +791,48 @@ async def test_env_projects():
     print("\n=== 테스트 완료 ===")
 
 if __name__ == "__main__":
-    print("1. 공용 디스크 경로 찾기")
-    disk_path = asyncio.run(get_project_list())
-    if disk_path:
-        print("\n2. 부서 목록 생성")
-        if asyncio.run(get_department_list(disk_path)):
-            print("\n3. 전체 프로젝트 목록 생성")
-            asyncio.run(test_create_project_list())
+    print("=== 테스트 시작 ===")
+    
+    # 저장 경로 확인
+    print(f"현재 작업 디렉토리: {os.getcwd()}")
+    print(f"스크립트 위치: {SCRIPT_DIR}")
+    print(f"데이터 저장 경로: {STATIC_DATA_PATH}")
+    
+    # 디렉토리 생성
+    os.makedirs(STATIC_DATA_PATH, exist_ok=True)
+    print(f"\n데이터 디렉토리 생성됨: {os.path.exists(STATIC_DATA_PATH)}")
+    
+    try:
+        # 도로부서만 테스트
+        print("\n도로부서(01010) 프로젝트 목록 생성 테스트")
+        disk_path = r"\\EstInternetDisk\6-leedh"
+        dept_path = os.path.join(disk_path, "01010_도로")
+        
+        if os.path.exists(dept_path):
+            print(f"도로부서 경로 발견: {dept_path}")
             
-            print("\n4. 환경부서 프로젝트 목록 조회")
-            asyncio.run(test_env_projects())
-    else:
-        print("공용 디스크를 찾을 수 없습니다.")
+            # 프로젝트 데이터 수집
+            project_data = []
+            process_directory(dept_path, "01010", "도로", project_data)
+            
+            # DataFrame 생성 및 저장
+            if project_data:
+                df = pd.DataFrame(project_data)
+                csv_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
+                print(f"\nCSV 파일 저장 시도:")
+                print(f"- 저장 경로: {csv_path}")
+                print(f"- 디렉토리 존재 여부: {os.path.exists(os.path.dirname(csv_path))}")
+                
+                df.to_csv(csv_path, index=False, encoding='utf-8')
+                print(f"- 파일 저장 완료")
+                print(f"- 파일 존재 여부: {os.path.exists(csv_path)}")
+                print(f"- 파일 크기: {os.path.getsize(csv_path)} bytes")
+        else:
+            print("도로부서 경로를 찾을 수 없습니다.")
+            
+    except Exception as e:
+        print(f"오류 발생: {str(e)}")
+    
+    print("\n=== 테스트 완료 ===")
 
-## python Get_data.py    
-
-
+# python get_data.py

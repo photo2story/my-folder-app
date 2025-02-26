@@ -1,0 +1,69 @@
+{
+  "project_id": "20180076",
+  "department_code": "01010",
+  "department_name": "도로",
+  "project_name": "영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역",
+  "project_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역",
+  "documents": {
+    "contract": [
+      {
+        "type": "directory",
+        "name": "1. 과업 계약 및 착수",
+        "path": "1. 과업 계약 및 착수",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수",
+        "depth": 0
+      },
+      {
+        "type": "directory",
+        "name": "1.01 계약",
+        "path": "1.01 계약",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수\\1.01 계약",
+        "depth": 1
+      },
+      {
+        "type": "directory",
+        "name": "1.01.03 계약서",
+        "path": "1.01.03 계약서",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서",
+        "depth": 2
+      },
+      {
+        "type": "directory",
+        "name": "변경계약2차(재평추가)",
+        "path": "변경계약2차(재평추가)",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\변경계약2차(재평추가)",
+        "depth": 3
+      }
+    ],
+    "specification": [
+      {
+        "type": "directory",
+        "name": "1. 과업 계약 및 착수",
+        "path": "1. 과업 계약 및 착수",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수",
+        "depth": 0
+      },
+      {
+        "type": "directory",
+        "name": "4. 과업준공",
+        "path": "4. 과업준공",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\4. 과업준공",
+        "depth": 0
+      },
+      {
+        "type": "directory",
+        "name": "1.03 과업수행계획서",
+        "path": "1.03 과업수행계획서",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수\\1.03 과업수행계획서",
+        "depth": 1
+      },
+      {
+        "type": "directory",
+        "name": "1.03.01 과업수행계획서",
+        "path": "1.03.01 과업수행계획서",
+        "full_path": "\\\\EstInternetDisk\\6-leedh\\01010_도로\\20180076_영락공원 진입도로 개설공사 외 4개소 기본 및 실시설계용역\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서",
+        "depth": 2
+      }
+    ]
+  }
+}
