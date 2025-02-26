@@ -163,6 +163,9 @@ node_modules/
 !result*.csv
 data*.csv
 
+!depart*.csv
+!project*.csv
+
 # Other Flutter build directories
 android/build/
 ios/Flutter/Flutter.framework
