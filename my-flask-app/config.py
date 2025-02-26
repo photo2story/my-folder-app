@@ -1,73 +1,41 @@
 # my-flask-app/config.py
 import os
-from datetime import datetime, timedelta
 from dotenv import load_dotenv
-import pandas as pd
-import pytz
-import pandas_market_calendars as mcal
-import yfinance as yf
-# from config_assets import PROJECTS  # STOCKS를 별도의 파일에서 가져옴
-# STOCKS = config_asset.STOCKS (import하여 이미 정의됨)
-
 
 load_dotenv()
 
-# Discord configuration
-DISCORD_APPLICATION_TOKEN = os.getenv('DISCORD_APPLICATION_TOKEN', 'your_token_here')
-DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', 'your_channel_id_here'))
-DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL', 'your_webhook_url_here')
+# Google API 설정
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')  # .env 파일에서 API 키를 가져옴
 
-
-# 프로젝트 루트 경로 설정
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-# static/images 폴더 경로 설정 (프로젝트 루트 기준)
-STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
-
-# static/data 폴더 경로 설정 (프로젝트 루트 기준)
+# 프로젝트 루트 경로 (app.py 기준 상위 디렉토리)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 STATIC_DATA_PATH = os.path.join(PROJECT_ROOT, 'static', 'data')
+STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
+PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
+DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')  # 부서 목록 CSV 경로 추가
+# 네트워크 드라이브 경로 (Z:로 변경)
+NETWORK_BASE_PATH = r"Z:"  # Z: 드라이브 네트워크 경로 변경
 
+# Discord 설정
+# 환경 변수
+DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', '0'))
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
-# depart_list.csv 파일 경로 설정
-DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
-
-
-
-def is_gemini_analysis_complete(ticker):
-    report_file_path = os.path.join(STATIC_IMAGES_PATH, f'report_{project}.txt')
-    
-    if not os.path.exists(report_file_path):
-        return False
-    
-    try:
-        with open(report_file_path, 'r', encoding='utf-8') as file:
-            first_line = file.readline().strip()
-            today_date_str = datetime.now().strftime('%Y-%m-%d')
-            
-            if today_date_str in first_line:
-                return True
-            else:
-                return False
-    except Exception as e:
-        print(f"Error reading report file for {ticker}: {e}")
-        return False
-    
-
-
-def is_cache_valid(cache_file, start_date, end_date):
-    """
-    캐시 파일의 유효성을 검사합니다:
-    """
-
-
-# 이 함수들을 봇의 다른 부분에서 호출하여 유효성을 검토할 수 있습니다.
-if __name__ == '__main__':
-    # 분석할 프로젝트 설정
-    project = '20230050'
-    deliverables_analysis_complete = is_deliverables_analysis_complete(project)
-    gemini_analysis_complete = is_gemini_analysis_complete(project)
-    print(f"Deliverables analysis complete for {project}: {deliverables_analysis_complete}")
-    print(f"Gemini analysis complete for {project}: {gemini_analysis_complete}")
-    
+# 검색 대상 문서 유형
+DOCUMENT_TYPES = {
+    'contract': {'name': '계약서', 'keywords': ['계약서', 'contract']},
+    'specification': {'name': '과업지시서', 'keywords': ['과업지시서', '과업지시', '내용서', 'specification']},
+    'initiation': {'name': '착수계', 'keywords': ['착수계', '착수', 'initiation']},
+    'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정','협약', 'agreement']},
+    'budget': {'name': '실행예산', 'keywords': ['실행예산', '실행' 'budget']},
+    'deliverable': {'name': '성과품', 'keywords': ['성과품', 'deliverable']},
+    # 'final_deliverable': {'name': '최종성과품', 'keywords': ['최종성과품', 'final deliverable']},
+    'completion': {'name': '준공계', 'keywords': ['준공계', 'completion']},
+    'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation']},
+    'certificate': {'name': '실적증명', 'keywords': ['실적증명', '증명', 'certificate']}
+}
 # python config.py
 

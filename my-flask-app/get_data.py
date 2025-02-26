@@ -1,838 +1,191 @@
 ## /my-flask-app/get_data.py
 
 import os
-import sys
-import asyncio
-import win32api
-from pathlib import Path
+import argparse
 import re
 import csv
 import pandas as pd
+from config_assets import SCAN_CONFIG, FORCE_SCAN_CONFIG
+from config import PROJECT_LIST_CSV, STATIC_DATA_PATH, NETWORK_BASE_PATH, DEPART_LIST_PATH
 
-# 현재 스크립트의 절대 경로
+# 경로 설정
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# 프로젝트 루트 디렉토리 (my-folder-app)
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
-
-# static/data 디렉토리의 절대 경로
 STATIC_DATA_PATH = os.path.join(ROOT_DIR, 'static', 'data')
 
-# depart_list.csv 파일의 절대 경로
-DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
+# 정규 표현식 미리 컴파일
+YEAR_PATTERN = re.compile(r'(?:19[9]|20[0-2])\d')
+EIGHT_DIGIT_PATTERN = re.compile(r'(?:^|[^\d])(\d{8})(?:[^\d]|$)')
+SEVEN_DIGIT_PATTERN = re.compile(r'(?:^|[^\d])(\d{7})(?:[^\d]|$)')
+SPLIT_PATTERN = re.compile(r'((?:19[9]|20[0-2])\d)[^0-9]*(\d{2,3})(?:[^\d]|$)')
 
-def process_directory(dir_path, dept_code, dept_name, project_data):
-    """디렉토리를 처리하는 함수"""
+def check_network_drive(drive_path):
     try:
-        # 디렉토리 내 모든 항목 처리
-        for item in os.listdir(dir_path):
-            item_path = os.path.join(dir_path, item)
-            if os.path.isdir(item_path):
-                # 프로젝트 ID 패턴 확인 (YYYYNNNN 형식)
-                match = re.match(r'(\d{8}).*', item)
-                if match:
-                    project_id = match.group(1)
-                    
-                    # 프로젝트명 추출 (ID와 언더스코어 제외)
-                    project_name = item[9:].strip('_ ')
-                    if not project_name:
-                        project_name = item
-                    
-                    # 전체 경로 생성
-                    full_path = os.path.normpath(item_path)
-                    
-                    project_data.append({
-                        'department_code': dept_code,
-                        'department_name': dept_name,
-                        'project_id': project_id,
-                        'project_name': project_name,
-                        'original_folder': full_path
+        if not os.path.exists(drive_path):
+            print(f"[ERROR] Network drive not found: {drive_path}")
+            return False
+        os.listdir(drive_path)
+        print(f"[DEBUG] Network drive accessible: {drive_path}")
+        return True
+    except Exception as e:
+        print(f"[ERROR] Network drive check failed: {str(e)}")
+        return False
+
+def should_scan_deeper(folder_name):
+    for keyword in FORCE_SCAN_CONFIG['deep_scan_keywords']:
+        if keyword in folder_name:
+            return True
+    return False
+
+def is_project_folder(folder_name):
+    return bool(YEAR_PATTERN.search(folder_name))
+
+def extract_project_id(folder_name):
+    if match := EIGHT_DIGIT_PATTERN.search(folder_name):
+        return match.group(1)
+    if match := SEVEN_DIGIT_PATTERN.search(folder_name):
+        number = match.group(1)
+        return f"{number[:4]}0{number[4:].zfill(3)}"
+    if match := SPLIT_PATTERN.search(folder_name):
+        year, seq = match.groups()
+        return f"{year}0{seq.zfill(3)}"
+    if match := YEAR_PATTERN.search(folder_name):
+        return f"{match.group(0)}nnnn"
+    return None
+
+def scan_directory(path, current_depth=0, verbose=False):
+    if current_depth > SCAN_CONFIG['max_category_depth']:
+        return []
+    
+    projects = []
+    try:
+        items = os.listdir(path)
+        for item in items:
+            item_path = os.path.join(path, item)
+            if not os.path.isdir(item_path):
+                continue
+            
+            if verbose:
+                print(f"[DEBUG] Checking folder: {item}")
+            
+            if is_project_folder(item):
+                project_id = extract_project_id(item)
+                if project_id:
+                    if verbose:
+                        print(f"[DEBUG] Found project: {item} (ID: {project_id})")
+                    projects.append({
+                        'name': item,
+                        'path': item_path,
+                        'depth': current_depth,
+                        'project_id': project_id
                     })
-                    print(f"프로젝트 발견: {item}")
-                    
-    except Exception as e:
-        print(f"디렉토리 처리 중 오류 발생: {str(e)}")
-
-def update_project_paths(csv_path, disk_path):
-    """프로젝트 CSV 파일의 경로를 전체 경로로 업데이트"""
-    try:
-        # CSV 파일 읽기
-        df = pd.read_csv(csv_path)
-        
-        # 각 부서별 경로 업데이트
-        for idx, row in df.iterrows():
-            dept_folder = f"{row['department_code']}_{row['department_name']}"
-            project_folder = row['original_folder']
+                continue
             
-            # 전체 경로 생성
-            full_path = os.path.join(disk_path, dept_folder, project_folder)
-            full_path = os.path.normpath(full_path)  # 경로 정규화
-            
-            # DataFrame 업데이트
-            df.at[idx, 'original_folder'] = full_path
-        
-        # 업데이트된 CSV 저장
-        df.to_csv(csv_path, index=False, encoding='utf-8')
-        print(f"프로젝트 경로가 업데이트되었습니다: {csv_path}")
-        
-        return True
-        
-    except Exception as e:
-        print(f"프로젝트 경로 업데이트 중 오류 발생: {str(e)}")
-        return False
-
-async def get_project_list(disk_path=None):
-    """공용 디스크를 찾고 프로젝트 목록을 생성하는 함수"""
-    try:
-        # 1. 디스크 경로가 없으면 검색
-        if not disk_path:
-            drives = win32api.GetLogicalDriveStrings()
-            drives = drives.split('\000')[:-1]
-            
-            for drive in drives:
-                if os.path.exists(os.path.join(drive, "01010_도로")):
-                    disk_path = os.path.realpath(drive)
-                    break
-        
-        if not disk_path:
-            print("공용 디스크를 찾을 수 없습니다.")
-            return None
-
-        # 2. 부서 목록 읽기
-        df_dept = pd.read_csv(DEPART_LIST_PATH)
-        
-        # 3. 프로젝트 데이터 수집
-        projects_data = []
-        
-        for _, dept in df_dept.iterrows():
-            dept_code = dept['department_code']
-            dept_name = dept['department_name']
-            dept_folder = f"{dept_code}_{dept_name}"
-            dept_path = os.path.join(disk_path, dept_folder)
-            
-            if os.path.exists(dept_path):
-                # 부서 폴더 내 프로젝트 검색
-                for item in os.listdir(dept_path):
-                    item_path = os.path.join(dept_path, item)
-                    if os.path.isdir(item_path):
-                        # 프로젝트 ID 추출 (YYYYNNNN 형식)
-                        match = re.match(r'(\d{8}).*', item)
-                        if match:
-                            project_id = match.group(1)
-                            
-                            # 전체 경로 생성 (Y:\부서폴더\프로젝트폴더 형식)
-                            full_path = f"{disk_path}\\{dept_folder}\\{item}"
-                            full_path = os.path.normpath(full_path)
-                            
-                            projects_data.append({
-                                'department_code': dept_code,
-                                'department_name': dept_name,
-                                'project_id': project_id,
-                                'project_name': item[9:],  # ID와 언더스코어 제외
-                                'original_folder': full_path  # 전체 경로 저장
-                            })
-
-        # 4. CSV 파일로 저장
-        if projects_data:
-            df_projects = pd.DataFrame(projects_data)
-            csv_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
-            print(f"\nCSV 파일 저장 시도:")
-            print(f"- 저장 경로: {csv_path}")
-            print(f"- 디렉토리 존재 여부: {os.path.exists(os.path.dirname(csv_path))}")
-            
-            df_projects.to_csv(csv_path, index=False, encoding='utf-8')
-            print(f"- 파일 저장 완료")
-            print(f"- 파일 존재 여부: {os.path.exists(csv_path)}")
-            print(f"- 파일 크기: {os.path.getsize(csv_path)} bytes")
-            
-            # CSV 파일 내용 확인
-            print("\n저장된 경로 예시:")
-            for i, row in df_projects.head().iterrows():
-                print(f"{row['project_id']}: {row['original_folder']}")
+            if should_scan_deeper(item):
+                if verbose:
+                    print(f"[DEBUG] Scanning deeper into: {item}")
+                sub_projects = scan_directory(item_path, current_depth + 1, verbose)
+                projects.extend(sub_projects)
                 
-            return disk_path
-
-        return None
-        
     except Exception as e:
-        print(f"프로젝트 목록 생성 중 오류 발생: {str(e)}")
-        return None
-
-async def get_department_list(disk_path):
-    """부서 폴더 목록을 찾아서 CSV로 저장하는 함수"""
-    try:
-        if not disk_path:
-            print("공용 디스크 경로를 찾을 수 없습니다.")
-            return False
-
-        # 결과를 저장할 리스트
-        departments = []
-        
-        # 디렉토리 내의 모든 폴더 검색
-        for item in os.listdir(disk_path):
-            if os.path.isdir(os.path.join(disk_path, item)):
-                # *****_ 패턴 매칭 (숫자 5자리 + 언더스코어)
-                if re.match(r'^\d{5}_', item):
-                    # 폴더명에서 번호와 이름 분리
-                    number = item[:5]
-                    name = item[6:]  # 언더스코어 다음부터
-                    departments.append([number, name])
-        
-        # 번호순으로 정렬
-        departments.sort(key=lambda x: x[0])
-        
-        # static/data 디렉토리 확인 및 생성
-        os.makedirs(STATIC_DATA_PATH, exist_ok=True)
-        
-        # CSV 파일로 저장
-        with open(DEPART_LIST_PATH, 'w', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            # 헤더 추가
-            writer.writerow(['department_code', 'department_name'])
-            writer.writerows(departments)
-        
-        print(f"부서 목록이 {DEPART_LIST_PATH}에 저장되었습니다.")
-        print(f"총 {len(departments)}개 부서가 발견되었습니다.")
-        return True
-        
-    except Exception as e:
-        print(f"부서 목록 생성 중 오류 발생: {str(e)}")
-        return False
-
-async def get_projects_from_department(department_code=None):
-    """부서 코드에 해당하는 프로젝트 목록을 가져오는 함수"""
-    try:
-        # 1. depart_list.csv 파일 읽기
-        df = pd.read_csv(DEPART_LIST_PATH)
-        
-        # 2. 공용 디스크 경로 가져오기
-        disk_path = await get_project_list()
-        if not disk_path:
-            print("공용 디스크를 찾을 수 없습니다.")
-            return None
-            
-        # 3. 부서 코드가 지정되지 않은 경우 전체 부서의 프로젝트 검색
-        if department_code is None:
-            departments = df['department_code'].tolist()
-        else:
-            if str(department_code) not in df['department_code'].astype(str).values:
-                print(f"부서 코드 {department_code}를 찾을 수 없습니다.")
-                return None
-            departments = [str(department_code)]
-            
-        # 4. 프로젝트 정보 수집
-        projects = []
-        for dept_code in departments:
-            dept_folder = df[df['department_code'].astype(str) == str(dept_code)].iloc[0]
-            dept_path = os.path.join(disk_path, f"{dept_code}_{dept_folder['department_name']}")
-            
-            if os.path.exists(dept_path):
-                # 부서 폴더 내의 모든 하위 폴더를 프로젝트로 간주
-                for item in os.listdir(dept_path):
-                    project_path = os.path.join(dept_path, item)
-                    if os.path.isdir(project_path):
-                        project_info = {
-                            'department_code': dept_code,
-                            'department_name': dept_folder['department_name'],
-                            'project_name': item,
-                            'project_path': project_path
-                        }
-                        projects.append(project_info)
-        
-        return projects
-        
-    except Exception as e:
-        print(f"프로젝트 목록 조회 중 오류 발생: {str(e)}")
-        return None
-
-async def test_get_projects():
-    """프로젝트 목록 조회 테스트"""
-    print("\n=== 프로젝트 목록 조회 테스트 시작 ===")
+        print(f"[ERROR] Error scanning directory {path}: {str(e)}")
     
-    # 1. 특정 부서의 프로젝트 조회
-    print("\n1. 도로부서(01010) 프로젝트 조회")
-    road_projects = await get_projects_from_department('01010')
-    if road_projects:
-        print(f"도로부서 프로젝트 수: {len(road_projects)}")
-        for proj in road_projects[:5]:  # 처음 5개만 출력
-            print(f"- {proj['project_name']}")
+    return projects
+
+def create_project_list(root_path, target_departments=None, force_scan=False, verbose=False):
+    print("=== Starting project list creation ===")
     
-    # 2. 전체 부서의 프로젝트 조회
-    print("\n2. 전체 부서 프로젝트 조회")
-    all_projects = await get_projects_from_department()
-    if all_projects:
-        print(f"전체 프로젝트 수: {len(all_projects)}")
-        # 부서별 프로젝트 수 집계
-        dept_counts = {}
-        for proj in all_projects:
-            dept = f"{proj['department_code']}_{proj['department_name']}"
-            dept_counts[dept] = dept_counts.get(dept, 0) + 1
-        
-        print("\n부서별 프로젝트 수:")
-        for dept, count in dept_counts.items():
-            print(f"- {dept}: {count}개")
+    if not check_network_drive(root_path):
+        raise Exception(f"Cannot access network drive: {root_path}")
     
-    print("\n=== 테스트 완료 ===")
-
-async def create_project_list():
-    """
-    부서 목록을 읽어서 각 부서의 프로젝트 정보를 수집하고 CSV로 저장하는 함수
-    컬럼: 부서코드, 부서명, 프로젝트ID, 프로젝트명
-    """
-    try:
-        # 1. 부서 목록 읽기
-        if not os.path.exists(DEPART_LIST_PATH):
-            print(f"부서 목록 파일을 찾을 수 없습니다: {DEPART_LIST_PATH}")
-            return None
-            
-        depart_df = pd.read_csv(DEPART_LIST_PATH)
-        
-        # 2. 공용 디스크 경로 가져오기
-        disk_path = await get_project_list()
-        if not disk_path:
-            print("공용 디스크를 찾을 수 없습니다.")
-            return None
-            
-        # 특수 폴더 목록 정의
-        SPECIAL_FOLDERS = {
-            # 일반 특수 폴더
-            '001.준공 프로젝트',
-            '002.진행 프로젝트',
-            '1. 진행사업',
-            '2. 준공사업',
-            # 팀 폴더
-            '1팀',
-            '2팀',
-            '3팀',
-            '4팀',
-            '창원팀',
-            '해외사업',
-            # 부서별 폴더
-            '01. 도로, 공항부',
-            '03. 구조부',
-            '04. 지반부',
-            '05. 교통부',
-            '06. 안전진단부',
-            '07. 철도설계부',
-            '08. 철도건설관리부',
-            '10. 도시계획부',
-            '11. 도시설계부',
-            '12. 조경부',
-            '13. 주차원부',
-            '15. 상하수도부',
-            '16. 항만부',
-            '17. 환경사업부',
-            '18. 건설사업관리부'
-        }
-
-        def is_special_folder(folder_name, current_path, dept_code):
-            """특수 폴더인지 확인하는 헬퍼 함수"""
-            # 환경부서인 경우 처리하지 않음 (별도 함수에서 처리)
-            if dept_code == "06010":
-                return False
-                
-            # 일반 부서의 경우
-            return folder_name in SPECIAL_FOLDERS
-
-        def process_directory(dir_path, dept_code, dept_name, project_data, depth=0, path_from_dept=""):
-            """디렉토리를 재귀적으로 처리하는 함수"""
-            try:
-                # 환경부서는 처리하지 않음 (별도 함수에서 처리)
-                if dept_code == "06010":
-                    return
-
-                items = os.listdir(dir_path)
-                has_special_folders = False
-
-                # 현재까지의 경로 구성
-                for item in items:
-                    if os.path.isdir(os.path.join(dir_path, item)):
-                        # 현재 폴더까지의 상대 경로
-                        current_path = f"{path_from_dept}/{item}" if path_from_dept else item
-
-                        # 특수 폴더 확인
-                        if is_special_folder(item, current_path, dept_code):
-                            has_special_folders = True
-                            break
-
-                # 현재 디렉토리의 모든 항목 처리
-                for item in items:
-                    item_path = os.path.join(dir_path, item)
-                    if os.path.isdir(item_path):
-                        current_path = f"{path_from_dept}/{item}" if path_from_dept else item
-
-                        # 특수 폴더인 경우 재귀적으로 처리
-                        if is_special_folder(item, current_path, dept_code):
-                            print(f"{'  ' * depth}특수 폴더 발견: {current_path}")
-                            process_directory(item_path, dept_code, dept_name, project_data, depth + 1, current_path)
-                        # 특수 폴더가 없는 경우에만 프로젝트로 처리
-                        elif not has_special_folders:
-                            if process_project_folder(item, dept_code, dept_name, project_data, disk_path):
-                                print(f"{'  ' * depth}- 프로젝트 발견: {item}")
-            except Exception as e:
-                print(f"{'  ' * depth}- 폴더 {dir_path} 처리 중 오류: {str(e)}")
-            
-        # 3. 프로젝트 정보 수집
-        project_data = []
-        
-        for _, dept in depart_df.iterrows():
-            dept_code = str(dept['department_code']).zfill(5)  # 5자리로 맞추기
-            dept_name = dept['department_name']
-            dept_folder = f"{dept_code}_{dept_name}"
-            dept_path = os.path.join(disk_path, dept_folder)
-            
-            print(f"\n{dept_folder} 검색 중...")
-            
-            if os.path.exists(dept_path):
-                if dept_code == "06010":  # 환경부서
-                    print("환경부서 프로젝트 처리 중...")
-                    env_projects = await get_env_projects()
-                    if env_projects:
-                        for proj in env_projects:
-                            # 프로젝트 ID를 YYYYMM,NN 형식으로 변환
-                            year_month = proj['project_id'][:6]
-                            number = proj['project_id'][6:]
-                            original_folder = proj['project_path']  # 전체 경로 사용
-                            project_data.append({
-                                'department_code': proj['department_code'],
-                                'department_name': proj['department_name'],
-                                'project_id': proj['project_id'],
-                                'project_name': proj['project_name'],
-                                'original_folder': original_folder
-                            })
-                            print(f"환경부서 프로젝트 추가: {original_folder}")
-                else:
-                    # 부서 폴더 내의 모든 항목을 재귀적으로 처리
-                    process_directory(dept_path, dept_code, dept_name, project_data)
-        
-        # 4. DataFrame 생성 및 저장
-        if project_data:
-            project_df = pd.DataFrame(project_data)
-            
-            # 정렬: 부서코드 -> 프로젝트ID 순
-            project_df = project_df.sort_values(['department_code', 'project_id'])
-            
-            # CSV 파일로 저장
-            save_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
-            project_df.to_csv(save_path, index=False, encoding='utf-8')
-            
-            print(f"\n프로젝트 목록이 저장되었습니다: {save_path}")
-            print(f"총 {len(project_df)}개 프로젝트가 발견되었습니다.")
-            
-            return project_df
-        else:
-            print("\n프로젝트를 찾을 수 없습니다.")
-            return None
-            
-    except Exception as e:
-        print(f"프로젝트 목록 생성 중 오류 발생: {str(e)}")
-        return None
-
-def process_project_folder(folder_name, dept_code, dept_name, project_data, disk_path):
-    """프로젝트 폴더를 처리하는 헬퍼 함수"""
+    os.makedirs(STATIC_DATA_PATH, exist_ok=True)
     
-    def format_project_id(year, number):
-        """프로젝트 ID를 8자리로 포맷팅하는 헬퍼 함수"""
-        # 연도(YYYY) 다음에 0을 추가하고 나머지 숫자를 뒤에 붙임
-        return f"{year}0{number.zfill(3)}"
+    if not os.path.exists(DEPART_LIST_PATH):
+        print(f"[ERROR] Department list not found: {DEPART_LIST_PATH}")
+        return
     
-    # 구분선이나 메모 폴더 제외
-    if '----' in folder_name or folder_name.endswith('(이하)'):
-        return False
+    df_dept = pd.read_csv(DEPART_LIST_PATH)
+    print(f"\nLoaded {len(df_dept)} departments")
     
-    # 전체 경로 구성
-    full_path = os.path.join(disk_path, f"{dept_code}_{dept_name}", folder_name)
-    
-    # 1. 공항인프라 부서의 CYYYYNNNN 패턴 찾기
-    match = re.search(r'^C((?:19|20)\d{2})(\d{4})(?:_|\s)', folder_name)
-    if match:
-        year = match.group(1)  # 연도 부분 (예: 2023)
-        number = match.group(2)  # 번호 부분 (예: 0087)
-        project_id = f"C{format_project_id(year, number)}"  # 예: C20230087
+    all_projects = []
+    for _, dept in df_dept.iterrows():
+        dept_code = str(dept['department_code']).zfill(5)
+        dept_name = dept['department_name']
+        dept_folder = f"{dept_code}_{dept_name}"
+        dept_path = os.path.join(root_path, dept_folder)
         
-        # 프로젝트명은 프로젝트 ID 이후의 문자열
-        full_id = f"C{match.group(1)}{match.group(2)}"
-        start_pos = folder_name.find(full_id) + len(full_id)
-        project_name = folder_name[start_pos:].strip('_ -')
-        if not project_name:
-            project_name = folder_name
+        if target_departments and dept_code not in target_departments:
+            if verbose:
+                print(f"\n[SKIP] {dept_folder}")
+            continue
         
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-    
-    # 2. 도시계획 부서의 YYYY-NNN 패턴 찾기
-    match = re.search(r'(?:^|\s|_)((?:19|20)\d{2})-(\d{3})(?:\s|_|\.)', folder_name)
-    if match:
-        year = match.group(1)  # 연도 부분 (예: 2017)
-        number = match.group(2)  # 번호 부분 (예: 091)
-        project_id = format_project_id(year, number)  # 예: 20170091
-        
-        # 프로젝트명은 프로젝트 ID 이후의 문자열 (점 또는 공백 이후)
-        full_id = f"{match.group(1)}-{match.group(2)}"
-        start_pos = folder_name.find(full_id) + len(full_id)
-        project_name = folder_name[start_pos:].strip('_ -.★')  # ★ 기호도 제거
-        if not project_name:
-            project_name = folder_name
-        
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-    
-    # 3. 상하수도 부서의 패턴 찾기
-    # 3-1. [준공] Y20220257 형식
-    match = re.search(r'(?:\[.*?\]\s*)?Y((?:19|20)\d{2})(\d{4})\s', folder_name)
-    if match:
-        year = match.group(1)  # 연도 부분
-        number = match.group(2)  # 번호 부분
-        project_id = format_project_id(year, number)
-        
-        # 프로젝트명에서 대괄호 부분과 ID 제거
-        name_start = folder_name.find(']')
-        if name_start != -1:
-            name_start += 1
-            project_name = folder_name[name_start:].strip()
-        else:
-            project_name = folder_name
-            
-        # Y20220257 같은 패턴 제거
-        project_name = re.sub(r'Y\d{8}\s*', '', project_name).strip()
-        
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-    
-    # 3-2. Y2000001 형식 (대괄호 없는 경우)
-    match = re.search(r'^Y((?:19|20)\d{2})(\d{4})', folder_name)
-    if match:
-        year = match.group(1)
-        number = match.group(2)
-        project_id = format_project_id(year, number)
-        
-        # Y2000001 이후의 문자열을 프로젝트명으로
-        start_pos = 9  # Y + YYYYNNNN = 9글자
-        project_name = folder_name[start_pos:].strip('_ -')
-        if not project_name:
-            project_name = folder_name
-        
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-    
-    # 4. 일반적인 연도+숫자(YYYYNNNN) 패턴 찾기
-    match = re.search(r'(?:^|\s|_|-)((?:19|20)\d{2})(\d{2,4})(?:\s|_|-|$)', folder_name)
-    if match:
-        year = match.group(1)  # 연도 부분 (예: 2017)
-        number = match.group(2)  # 번호 부분 (예: 105)
-        
-        # 프로젝트 ID가 구분선이나 메모인 경우 제외
-        if year + number == "2000000":
-            return False
-            
-        project_id = format_project_id(year, number)
-        
-        # 프로젝트명은 프로젝트 ID 이후의 문자열
-        full_id = match.group(1) + match.group(2)
-        start_pos = folder_name.find(full_id) + len(full_id)
-        project_name = folder_name[start_pos:].strip('_ -')
-        if not project_name:
-            project_name = folder_name
-            
-        # 특수문자 처리
-        project_name = project_name.replace('․', '·')  # 중간점 통일
-        
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-        
-    # 5. YYYYMMDD 형식 찾기
-    match = re.search(r'(?:^|\s|_|-)(20\d{6})(?:\s|_|-|$)', folder_name)
-    if match:
-        project_id = match.group(1)
-        start_pos = folder_name.find(project_id) + len(project_id)
-        project_name = folder_name[start_pos:].strip('_ -')
-        if not project_name:
-            project_name = folder_name
-            
-        # 특수문자 처리
-        project_name = project_name.replace('․', '·')  # 중간점 통일
-        
-        project_data.append({
-            'department_code': dept_code,
-            'department_name': dept_name,
-            'project_id': project_id,
-            'project_name': project_name.strip(),
-            'original_folder': full_path
-        })
-        return True
-        
-    return False  # 프로젝트 ID를 찾지 못한 경우
-
-async def test_create_project_list():
-    """프로젝트 목록 생성 테스트"""
-    print("\n=== 프로젝트 목록 생성 테스트 시작 ===")
-    
-    df = await create_project_list()
-    
-    if df is not None:
-        # 부서별 프로젝트 수 출력
-        dept_counts = df.groupby(['department_code', 'department_name']).size().reset_index(name='count')
-        print("\n부서별 프로젝트 수:")
-        for _, row in dept_counts.iterrows():
-            print(f"- {row['department_code']}_{row['department_name']}: {row['count']}개")
-            
-        # 처음 5개 프로젝트 출력
-        print("\n처음 5개 프로젝트:")
-        print(df.head().to_string())
-    
-    print("\n=== 테스트 완료 ===")
-
-async def get_env_projects():
-    """환경부서의 프로젝트 목록을 가져오는 함수"""
-    try:
-        # 1. depart_list.csv 파일 읽기 (부서 코드를 문자열로 읽기)
-        df = pd.read_csv(DEPART_LIST_PATH, dtype={'department_code': str})
-        
-        # 2. 공용 디스크 경로 가져오기
-        disk_path = await get_project_list()
-        if not disk_path:
-            print("공용 디스크를 찾을 수 없습니다.")
-            return None
-
-        # 3. 환경부서 정보 가져오기
-        env_code = "06010"
-        env_dept_df = df[df['department_code'] == env_code]  # 문자열 비교
-        if len(env_dept_df) == 0:
-            print(f"환경부서(코드: {env_code})를 찾을 수 없습니다.")
-            # 부서 목록 출력
-            print("\n현재 등록된 부서 목록:")
-            for _, row in df.iterrows():
-                print(f"- {row['department_code']}: {row['department_name']}")
-            return None
-
-        env_dept = env_dept_df.iloc[0]
-        dept_path = os.path.join(disk_path, f"{env_code}_{env_dept['department_name']}")
-
+        print(f"\n[SCAN] Scanning {dept_folder}...")
         if not os.path.exists(dept_path):
-            print(f"환경부서 폴더를 찾을 수 없습니다: {dept_path}")
-            return None
-
-        # 4. 환경부서 프로젝트 정보 수집
-        projects = []
+            print(f"- Department folder not found: {dept_path}")
+            continue
         
-        # 검색 제외 폴더 목록
-        EXCLUDE_FOLDERS = {
-            '# 기술지원계약서(계약팀)',
-            '0000 프로젝트분류(샘플)',
-            '99.기타',
-            '이전',
-            '[샘플]준공관련(원주청)',
-            '퇴사자 자료',
-            '건설사업관리부 검토요청 프로젝트',
-            '내륙습지 공간데이터 및 속성정보'
-        }
-
-        # 팀 폴더 목록
-        TEAM_FOLDERS = {
-            '1팀', 
-            '2팀',
-            '@완료',
-            '준공',
-            '001.준공 프로젝트',
-            '002.진행 프로젝트',
-            '1. 진행사업',
-            '2. 준공사업'
-        }
-
-        # 업무 분류 폴더 목록
-        WORK_TYPE_FOLDERS = {
-            '01.환경영향평가',
-            '02.사후환경영향조사',
-            '03.전략환경영향평가',
-            '04.소규모환경영향평가',
-            '05.기타',
-            '06.제안서',
-            '07.기타',
-            '00.해양환경영향조사'
-        }
-        
-        def process_env_directory(dir_path, current_path=""):
-            """환경부서 디렉토리를 재귀적으로 처리하는 함수"""
-            try:
-                items = os.listdir(dir_path)
-                for item in items:
-                    # 제외 폴더 건너뛰기
-                    if item in EXCLUDE_FOLDERS:
-                        continue
-
-                    item_path = os.path.join(dir_path, item)
-                    if os.path.isdir(item_path):
-                        new_path = f"{current_path}/{item}" if current_path else item
-                        
-                        # 프로젝트 ID 패턴 먼저 확인 (2000년대 초반 프로젝트도 포함)
-                        id_match = re.match(r'^(\d{6})[,\s_-]*(\d+)(?:[,\s_-]+|\s*[|ㅣIl]\s*|\s+)(.+)$', item)
-                        if id_match:
-                            year_month = id_match.group(1)  # YYYYMM
-                            proj_num = id_match.group(2)  # N or NN
-                            name_part = id_match.group(3).strip()  # 나머지 부분을 이름으로
-                            
-                            # 팀과 업무 유형 정보 추출
-                            path_parts = current_path.split('/') if current_path else []
-                            team = next((part for part in path_parts if part in TEAM_FOLDERS), "")
-                            work_type = next((part for part in path_parts if part in WORK_TYPE_FOLDERS), "")
-                            
-                            # 상태 정보 추출 (@완료 여부)
-                            status = "완료" if "@완료" in path_parts else "진행중"
-                            
-                            # 프로젝트 ID(8자리)와 이름 추출
-                            proj_num = proj_num.zfill(2)  # NN (2자리로 패딩)
-                            project_id = f"{year_month}{proj_num}"  # YYYYMMNN
-                            
-                            projects.append({
-                                'department_code': env_code,
-                                'department_name': env_dept['department_name'],
-                                'project_id': project_id,
-                                'project_name': name_part,
-                                'project_path': item_path,
-                                'work_type': work_type,
-                                'team': team,
-                                'status': status
-                            })
-                            print(f"프로젝트 발견: {project_id} | {name_part}")
-                            
-                        # 팀 폴더, 업무 분류 폴더, @완료 폴더는 재귀적으로 처리
-                        elif (item in TEAM_FOLDERS or 
-                              item in WORK_TYPE_FOLDERS or 
-                              item == "@완료"):
-                            process_env_directory(item_path, new_path)
-            except Exception as e:
-                print(f"폴더 {dir_path} 처리 중 오류: {str(e)}")
-
-        # 5. 디렉토리 처리 시작
-        process_env_directory(dept_path)
-        
-        # 6. 결과 정렬 (팀 > 업무유형 > 프로젝트ID 순)
-        projects.sort(key=lambda x: (x['team'], x['work_type'], x['project_id']))
-        
-        return projects
-        
-    except Exception as e:
-        print(f"환경부서 프로젝트 목록 조회 중 오류 발생: {str(e)}")
-        return None
-
-async def test_env_projects():
-    """환경부서 프로젝트 목록 조회 테스트"""
-    print("\n=== 환경부서 프로젝트 목록 조회 테스트 시작 ===")
+        projects = scan_directory(dept_path, verbose=verbose)
+        if projects:
+            for project in projects:
+                project['department_code'] = dept_code
+                project['department_name'] = dept_name
+            all_projects.extend(projects)
+            print(f"- Found {len(projects)} projects")
+        else:
+            print("- No projects found")
     
-    projects = await get_env_projects()
+    if all_projects:
+        structured_data = [
+            {
+                'department_code': p['department_code'],
+                'department_name': p['department_name'],
+                'project_id': p['project_id'],
+                'project_name': p['name'],
+                'original_folder': p['path']
+            } for p in all_projects
+        ]
+        
+        df = pd.DataFrame(structured_data)
+        df = df.sort_values(['department_code', 'project_id'])
+        df.to_csv(PROJECT_LIST_CSV, index=False, encoding='utf-8')
+        print(f"\nSaved {len(df)} projects to {PROJECT_LIST_CSV}")
+    else:
+        print("\nNo projects collected.")
     
-    if projects:
-        print(f"\n총 {len(projects)}개의 환경부서 프로젝트를 발견했습니다.")
-        
-        # 팀별, 작업 유형별, 상태별 프로젝트 수 집계
-        team_counts = {}
-        work_type_counts = {}
-        status_counts = {}
-        
-        for proj in projects:
-            # 팀별 집계
-            team = proj['team']
-            team_counts[team] = team_counts.get(team, 0) + 1
-            
-            # 작업 유형별 집계
-            work_type = proj['work_type']
-            work_type_counts[work_type] = work_type_counts.get(work_type, 0) + 1
-            
-            # 상태별 집계
-            status = proj['status']
-            status_counts[status] = status_counts.get(status, 0) + 1
-        
-        print("\n팀별 프로젝트 수:")
-        for team, count in team_counts.items():
-            print(f"- {team}: {count}개")
-            
-        print("\n작업 유형별 프로젝트 수:")
-        for work_type, count in work_type_counts.items():
-            print(f"- {work_type}: {count}개")
-            
-        print("\n상태별 프로젝트 수:")
-        for status, count in status_counts.items():
-            print(f"- {status}: {count}개")
-            
-        print("\n처음 5개 프로젝트:")
-        for proj in projects[:5]:
-            print(f"- [{proj['team']}] [{proj['work_type']}] [{proj['status']}] {proj['project_id']} {proj['project_name']}")
-    
-    print("\n=== 테스트 완료 ===")
+    print("\n=== Project list creation completed ===")
 
 if __name__ == "__main__":
-    print("=== 테스트 시작 ===")
+    parser = argparse.ArgumentParser(description="Generate project list from network drive")
+    parser.add_argument('--force', action='store_true', help="Force full scan (currently placeholder)")
+    parser.add_argument('--verbose', action='store_true', help="Enable detailed debug output")
+    args = parser.parse_args()
+    TARGET_DEPARTMENTS = [
+        "01010",  # 도로
+        "01020",  # 공항인프라
+        "01030",  # 구조
+        "01040",  # 지반
+        "01050",  # 교통
+        "01060",  # 안전진단
+        "02010",  # 도시철도
+        "03010",  # 철도
+        "03020",  # 철도건설관리
+        "04010",  # 도시계획
+        "04020",  # 도시설계
+        "04030",  # 조경
+        "05010",  # 수자원
+        "06010",  # 환경
+        "07010",  # 상하수도
+        "07010",  # 항만 - 중복된 코드
+        "08010",  # 건설사업관리
+        "09010",  # 해외영업
+        "10010",  # 플랫폼사업실
+        "11010",  # 기술지원실
+        "99999",  # 준공
+    ]
     
-    # 저장 경로 확인
-    print(f"현재 작업 디렉토리: {os.getcwd()}")
-    print(f"스크립트 위치: {SCRIPT_DIR}")
-    print(f"데이터 저장 경로: {STATIC_DATA_PATH}")
     
-    # 디렉토리 생성
-    os.makedirs(STATIC_DATA_PATH, exist_ok=True)
-    print(f"\n데이터 디렉토리 생성됨: {os.path.exists(STATIC_DATA_PATH)}")
-    
-    try:
-        # 도로부서만 테스트
-        print("\n도로부서(01010) 프로젝트 목록 생성 테스트")
-        disk_path = r"\\EstInternetDisk\6-leedh"
-        dept_path = os.path.join(disk_path, "01010_도로")
-        
-        if os.path.exists(dept_path):
-            print(f"도로부서 경로 발견: {dept_path}")
-            
-            # 프로젝트 데이터 수집
-            project_data = []
-            process_directory(dept_path, "01010", "도로", project_data)
-            
-            # DataFrame 생성 및 저장
-            if project_data:
-                df = pd.DataFrame(project_data)
-                csv_path = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
-                print(f"\nCSV 파일 저장 시도:")
-                print(f"- 저장 경로: {csv_path}")
-                print(f"- 디렉토리 존재 여부: {os.path.exists(os.path.dirname(csv_path))}")
-                
-                df.to_csv(csv_path, index=False, encoding='utf-8')
-                print(f"- 파일 저장 완료")
-                print(f"- 파일 존재 여부: {os.path.exists(csv_path)}")
-                print(f"- 파일 크기: {os.path.getsize(csv_path)} bytes")
-        else:
-            print("도로부서 경로를 찾을 수 없습니다.")
-            
-    except Exception as e:
-        print(f"오류 발생: {str(e)}")
-    
-    print("\n=== 테스트 완료 ===")
+    root_path = NETWORK_BASE_PATH
+    print(f"\nNetwork drive path: {root_path}")
+    create_project_list(root_path, TARGET_DEPARTMENTS, force_scan=args.force, verbose=args.verbose)
 
 # python get_data.py
