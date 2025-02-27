@@ -1,4 +1,4 @@
-# git_operations.py
+# /my-flask-app/git_operations.py
 
 import git
 import os
@@ -43,7 +43,7 @@ async def move_files_to_images_folder(file_path):
     filename = os.path.basename(file_path)
     
     # 경로 결정: result_alpha 파일과 combined_close_prices.csv, data_ 로 시작하는 파일은 static/data, 나머지는 static/images
-    if (filename.startswith("result_") or 
+    if (filename.startswith("project_") or 
         filename.startswith("data_")):
         github_path = f"static/data/{filename}"
     else:
