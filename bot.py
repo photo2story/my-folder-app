@@ -27,6 +27,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my-flas
 from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_DATA_PATH
 from search_project_data import ProjectDocumentSearcher
 from audit_service import AuditService
+from export_report import generate_summary_report
 
 # JSON 파일 저장 경로 설정
 AUDIT_RESULTS_DIR = os.path.join(STATIC_DATA_PATH, 'audit_results')
@@ -189,111 +190,95 @@ async def analyze_with_gemini(project_data):
 
 @bot.command(name='audit')
 async def audit(ctx, *, query: str = None):
-    """프로젝트 감사 명령어 처리"""
-    print(f"\n[DEBUG] Audit command received for query: {query}")
-    
-    if not query:
-        help_message = """
-📋 **감사 명령어 사용법**
-------------------------
-1️⃣ 단일 프로젝트 감사:
-   `audit 20230001`
-   예시: `audit 20230001`
-
-2️⃣ AI 분석 포함 감사:
-   `audit 20230001 true`
-   예시: `audit 20230001 true`
-
-3️⃣ 전체 프로젝트 감사:
-   `audit all`
-   예시: `audit all`
-   `audit all true` (AI 분석 포함)
-
-❗ 프로젝트 ID는 8자리 숫자입니다 (예: 20230001)
-"""
-        await ctx.send(help_message)
-        return
-
+    """프로젝트 감사 명령어"""
     try:
-        # 입력 파싱
-        parts = query.strip().split()
-        project_id = parts[0]
-        use_ai = len(parts) > 1 and parts[1].lower() == 'true'
-
-        # 전체 프로젝트 감사 처리
-        if project_id.lower() == 'all':
-            await ctx.send("📋 전체 프로젝트 감사를 시작합니다...")
-            try:
-                # project_list.csv 읽기
-                df = pd.read_csv(PROJECT_LIST_CSV)
-                total_projects = len(df)
-                await ctx.send(f"총 {total_projects}개의 프로젝트를 감사합니다.")
-                
-                success_count = 0
-                error_count = 0
-                
-                for index, row in df.iterrows():
-                    current_project_id = str(row['project_id'])
-                    try:
-                        await ctx.send(f"\n🔍 프로젝트 {current_project_id} 감사 중... ({index + 1}/{total_projects})")
-                        result = await audit_service.audit_project(current_project_id, use_ai=use_ai)
-                        
-                        if 'error' in result:
-                            error_count += 1
-                            await ctx.send(f"❌ {current_project_id} 감사 실패: {result['error']}")
-                        else:
-                            success_count += 1
-                            await audit_service.send_to_discord(result, ctx=ctx)
-                        
-                        # API 제한 고려하여 대기
-                        await asyncio.sleep(1)
-                        
-                    except Exception as e:
-                        error_count += 1
-                        await ctx.send(f"❌ {current_project_id} 처리 중 오류 발생: {str(e)}")
-                
-                # 최종 결과 보고
-                summary = f"""
-📊 전체 감사 완료 보고서
-------------------------
-✅ 감사 성공: {success_count}개
-❌ 감사 실패: {error_count}개
-📋 총 처리: {total_projects}개
-------------------------
-"""
-                await ctx.send(summary)
-                return
-                
-            except Exception as e:
-                await ctx.send(f"❌ 전체 프로젝트 감사 중 오류 발생: {str(e)}")
-                return
-
-        # 프로젝트 ID 형식 검증 (all이 아닌 경우)
-        if not re.match(r'^\d{8}$', project_id):
-            await ctx.send("❌ 잘못된 프로젝트 ID 형식입니다. 8자리 숫자를 입력해주세요. (예: 20230001)")
+        if not query:
+            help_message = (
+                "🔍 프로젝트 감사 명령어 사용법:\n"
+                "!audit [project_id] - 특정 프로젝트 감사\n"
+                "!audit all - 전체 프로젝트 감사\n"
+                "!audit [project_id] true - AI 분석 포함\n"
+                "!audit all true - 전체 프로젝트 AI 분석 포함"
+            )
+            await ctx.send(help_message)
             return
 
-        print(f"[DEBUG] Starting audit for project {project_id}")
-        # 프로젝트 감사 수행
-        result = await audit_service.audit_project(project_id, use_ai=use_ai)
-        
-        # 에러 결과 처리
-        if 'error' in result:
-            error_msg = f"Error: {result['error']}"
-            print(f"[DEBUG] Audit error: {error_msg}")
-            await ctx.send(error_msg)
-            return
+        args = query.split()
+        project_id = args[0].lower()
+        use_ai = len(args) > 1 and args[1].lower() == 'true'
+
+        if project_id == 'all':
+            await ctx.send("🔍 전체 프로젝트 감사를 시작합니다...")
             
-        print("[DEBUG] Audit completed successfully, sending to Discord")
-        # Discord로 결과 전송
-        await audit_service.send_to_discord(result, ctx=ctx)
-        print("[DEBUG] Discord message sent")
-        
+            # 프로젝트 목록 읽기
+            df = pd.read_csv(PROJECT_LIST_CSV)
+            total_projects = len(df)
+            
+            await ctx.send(f"📊 총 {total_projects}개 프로젝트를 처리합니다...")
+            
+            # 결과 저장용 리스트
+            all_results = []
+            success_count = 0
+            error_count = 0
+            
+            # 각 프로젝트 감사 수행
+            for idx, row in df.iterrows():
+                try:
+                    current_id = str(row['project_id'])
+                    progress = f"({idx + 1}/{total_projects})"
+                    
+                    if idx % 10 == 0:  # 진행상황 10개 단위로 보고
+                        await ctx.send(f"🔄 진행중... {progress}")
+                    
+                    result = await audit_service.audit_project(current_id, use_ai)
+                    all_results.append(result)
+                    
+                    if 'error' not in result:
+                        success_count += 1
+                    else:
+                        error_count += 1
+                        
+                except Exception as e:
+                    error_count += 1
+                    print(f"Error processing project {current_id}: {str(e)}")
+            
+            # 종합 보고서 생성
+            summary_path, summary = await generate_summary_report(all_results, verbose=True)
+            
+            # 결과 출력
+            report = (
+                "📋 전체 감사 완료 보고서\n"
+                "------------------------\n"
+                f"✅ 감사 성공: {success_count}개\n"
+                f"❌ 감사 실패: {error_count}개\n"
+                f"📊 총 처리: {total_projects}개\n"
+                "------------------------\n"
+                "📈 위험도 분석:\n"
+            )
+            
+            if summary and 'risk_levels' in summary:
+                report += (
+                    f"🔴 고위험: {summary['risk_levels']['high']}개\n"
+                    f"🟡 중위험: {summary['risk_levels']['medium']}개\n"
+                    f"🟢 저위험: {summary['risk_levels']['low']}개\n"
+                )
+            
+            if summary_path:
+                report += f"\n💾 종합 보고서 저장됨: {summary_path}"
+                if 'csv_report' in summary:
+                    report += f"\n📊 CSV 보고서 저장됨: {summary['csv_report']}"
+            
+            await ctx.send(report)
+            
+        else:
+            # 단일 프로젝트 감사
+            result = await audit_service.audit_project(project_id, use_ai, ctx)
+            if 'error' in result:
+                await ctx.send(f"❌ 감사 실패: {result['error']}")
+                
     except Exception as e:
-        error_message = f"프로젝트 감사 중 오류 발생: {str(e)}"
-        print(f"[DEBUG] Exception occurred: {str(e)}")
-        print(f"[DEBUG] Traceback: {traceback.format_exc()}")
-        await ctx.send(error_message)
+        await log_debug(ctx, f"감사 명령어 실행 중 오류 발생", error=e)
+        await ctx.send(f"❌ 오류 발생: {str(e)}")
 
 @bot.command(name='clear_cache')
 async def clear_cache(ctx):

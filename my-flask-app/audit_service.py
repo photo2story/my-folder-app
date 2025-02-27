@@ -223,6 +223,65 @@ class AuditService:
             await self._session.close()
             self._session = None
 
+    async def generate_summary_report(self, results):
+        """전체 감사 결과에 대한 종합 보고서 생성"""
+        try:
+            print("\n[DEBUG] === Generating Summary Report ===")
+            
+            # 결과 파일명 생성
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            summary_filename = f"summary_report_{timestamp}.json"
+            summary_path = os.path.join(RESULTS_DIR, summary_filename)
+            
+            # 통계 데이터 수집
+            summary = {
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'total_projects': len(results),
+                'successful_audits': sum(1 for r in results if 'error' not in r),
+                'failed_audits': sum(1 for r in results if 'error' in r),
+                'document_statistics': {
+                    doc_type: {
+                        'found': 0,
+                        'missing': 0
+                    } for doc_type in DOCUMENT_TYPES.keys()
+                },
+                'department_statistics': {},
+                'detailed_results': results
+            }
+            
+            # 부서별, 문서별 통계 수집
+            for result in results:
+                if 'error' not in result:
+                    dept = result['department']
+                    if dept not in summary['department_statistics']:
+                        summary['department_statistics'][dept] = {
+                            'total': 0,
+                            'documents_found': 0,
+                            'documents_missing': 0
+                        }
+                    
+                    dept_stats = summary['department_statistics'][dept]
+                    dept_stats['total'] += 1
+                    
+                    for doc_type, info in result['documents'].items():
+                        if info['exists']:
+                            summary['document_statistics'][doc_type]['found'] += 1
+                            dept_stats['documents_found'] += 1
+                        else:
+                            summary['document_statistics'][doc_type]['missing'] += 1
+                            dept_stats['documents_missing'] += 1
+            
+            # 보고서 저장
+            async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
+                await f.write(json.dumps(summary, ensure_ascii=False, indent=2))
+            
+            print(f"[DEBUG] Summary report saved to: {summary_path}")
+            return summary_path, summary
+            
+        except Exception as e:
+            print(f"[ERROR] Failed to generate summary report: {str(e)}")
+            return None, None
+
 if __name__ == "__main__":
     async def run_test():
         service = AuditService()
