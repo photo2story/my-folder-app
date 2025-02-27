@@ -13,7 +13,7 @@ from config import (
     DEPART_LIST_PATH
 )
 
-def load_audit_files(department_code, verbose=False):
+async def load_audit_files(department_code, verbose=False):
     """부서별 감사 JSON 파일 로드"""
     audit_path = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'results')
     pattern = f"{audit_path}/audit_{department_code}_*.json"
@@ -36,9 +36,9 @@ def load_audit_files(department_code, verbose=False):
     
     return results
 
-def create_department_report(department_code, verbose=False):
+async def create_department_report(department_code, verbose=False):
     """부서별 보고서 CSV 생성"""
-    audit_data = load_audit_files(department_code, verbose)
+    audit_data = await load_audit_files(department_code, verbose)
     if not audit_data:
         print(f"No valid audit data found for department {department_code}")
         return None
@@ -78,7 +78,10 @@ def create_department_report(department_code, verbose=False):
     os.makedirs(report_dir, exist_ok=True)
     output_path = os.path.join(report_dir, f"report_{department_code}.csv")
     df.to_csv(output_path, index=False, encoding='utf-8')
-    
+
+    print(f"Debug: Saved result_VOO_{ticker}.csv at {output_path}")
+    await move_files_to_images_folder(output_path)    
+
     if verbose:
         print(f"[DEBUG] Generated columns: {df.columns.tolist()}")
         print(f"[DEBUG] Total projects: {len(df)}")
@@ -88,7 +91,7 @@ def create_department_report(department_code, verbose=False):
     
     return df
 
-def get_department_codes():
+async def get_department_codes():
     """부서 코드 목록 가져오기"""
     try:
         if os.path.exists(DEPART_LIST_PATH):
@@ -103,7 +106,7 @@ def get_department_codes():
         print(f"[ERROR] Failed to load department codes: {str(e)}")
         return []
 
-def main(dept_code=None, verbose=False):
+async def main(dept_code=None, verbose=False):
     """보고서 생성 메인 함수"""
     start_time = datetime.now()
     print("=== Starting Report Generation ===")

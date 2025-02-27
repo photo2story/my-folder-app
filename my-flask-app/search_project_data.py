@@ -8,21 +8,20 @@ from datetime import datetime
 from functools import lru_cache
 from io import StringIO
 import pandas as pd
-from config import DOCUMENT_TYPES, PROJECT_LIST_CSV
+from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, STATIC_DATA_PATH
 
 class ProjectDocumentSearcher:
     def __init__(self):
         self.base_dir = os.path.dirname(os.path.dirname(__file__))
         self.static_dir = os.path.join(self.base_dir, 'static')
         self.data_dir = os.path.join(self.static_dir, 'data')
-        self.project_list_csv = PROJECT_LIST_CSV
-        self._cache = {}
-        self._project_df = None
+        self.projects_dir = os.path.join(self.static_dir, 'projects')
         
-        # 유효한 확장자 및 제외 패턴
-        self._valid_extensions = {'.pdf', '.hwp', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt'}
-        self._exclude_extensions = {'.bak', '.tmp', '.temp', '.bk', '.log'}
-        self._skip_patterns = {'backup', 'old', 'temp', '휴지통', '백업', '임시', 'test', '테스트'}
+        # CSV 파일 경로
+        self.project_list_csv = PROJECT_LIST_CSV
+        
+        # 디렉토리 생성
+        os.makedirs(self.projects_dir, exist_ok=True)
 
     async def _load_project_list(self):
         """프로젝트 목록 비동기 로드"""
@@ -161,46 +160,123 @@ class ProjectDocumentSearcher:
         self._cache[cache_key] = results
         return results
 
-    async def search_document(self, project_id, doc_type):
-        """특정 문서 유형 검색 (비동기)"""
-        all_results = await self.search_all_documents(project_id)
-        return all_results.get(doc_type, [])
+    async def search_document(self, project_path, doc_type, depth=0):
+        """프로젝트 폴더에서 특정 유형의 문서 관련 폴더를 단계별로 검색"""
+        found_files = []
+        
+        # 검색할 키워드 가져오기
+        doc_info = DOCUMENT_TYPES[doc_type]
+        keywords = doc_info['keywords']
+        doc_name = doc_info['name']
+        indent = "  " * depth
+        
+        try:
+            # 현재 폴더의 내용물 검색
+            print(f"\n{indent}검색 중: {os.path.basename(project_path)}")
+            
+            # 현재 폴더에서 관련 폴더 찾기
+            for item in os.listdir(project_path):
+                item_path = os.path.join(project_path, item)
+                
+                if os.path.isdir(item_path):
+                    if any(keyword in item for keyword in keywords):
+                        print(f"{indent}{doc_name} 폴더 발견: {item}")
+                        found_files.append({
+                            'type': 'directory',
+                            'name': item,
+                            'path': os.path.relpath(item_path, project_path),
+                            'full_path': item_path,
+                            'depth': depth,
+                            'doc_type': doc_type
+                        })
+                        # 발견된 폴더의 하위 검색
+                        sub_results = await self.search_document(item_path, doc_type, depth + 1)
+                        found_files.extend(sub_results)
+            
+            return found_files
+            
+        except Exception as e:
+            print(f"{indent}검색 중 오류 발생: {str(e)}")
+            return []
 
-    def clear_cache(self):
-        """캐시 초기화"""
-        self._cache = {}
-        self._project_df = None
+    async def process_single_project(self, project_id):
+        """특정 프로젝트만 처리"""
+        try:
+            # 프로젝트 목록 읽기 (부서 코드를 문자열로 읽기)
+            df = pd.read_csv(self.project_list_csv, dtype={
+                'department_code': str,
+                'project_id': str
+            })
+            
+            # 특정 프로젝트 찾기
+            project = df[df['project_id'] == str(project_id)]
+            
+            if len(project) == 0:
+                print(f"프로젝트 ID {project_id}를 찾을 수 없습니다.")
+                return
+            
+            row = project.iloc[0]
+            project_path = row['original_folder']
+            dept_code = row['department_code'].zfill(5)
+            
+            print(f"\n프로젝트 정보:")
+            print(f"- ID: {project_id}")
+            print(f"- 부서: {dept_code}_{row['department_name']}")
+            print(f"- 이름: {row['project_name']}")
+            print(f"- 경로: {project_path}")
+            
+            # 프로젝트 경로가 존재하는지 확인
+            if not os.path.exists(project_path):
+                print(f"경로를 찾을 수 없음: {project_path}")
+                return
+            
+            # 각 문서 유형별로 검색 수행
+            all_documents = {}
+            for doc_type in DOCUMENT_TYPES.keys():
+                doc_files = await self.search_document(project_path, doc_type)
+                all_documents[doc_type] = doc_files
+                
+                # 결과 출력
+                doc_name = DOCUMENT_TYPES[doc_type]['name']
+                if doc_files:
+                    print(f"\n{doc_name} 관련 항목 발견: {len(doc_files)}개")
+                    for doc in doc_files:
+                        indent = "  " * doc['depth']
+                        print(f"\n{indent}- 유형: {doc['type']}")
+                        print(f"{indent}  이름: {doc['name']}")
+                        print(f"{indent}  경로: {doc['path']}")
+                else:
+                    print(f"\n{doc_name} 관련 항목 없음")
+            
+            # 결과를 JSON으로 저장
+            result = {
+                'project_id': project_id,
+                'department_code': dept_code,
+                'department_name': str(row['department_name']),
+                'project_name': str(row['project_name']),
+                'project_path': str(project_path),
+                'documents': all_documents
+            }
+            
+            # JSON 파일로 저장
+            json_path = os.path.join(self.projects_dir, f'{project_id}.json')
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(result, f, ensure_ascii=False, indent=2)
+            print(f"\nJSON 저장됨: {json_path}")
+                
+        except Exception as e:
+            print(f"프로젝트 처리 중 오류 발생: {str(e)}")
 
 if __name__ == "__main__":
-    # 테스트 코드
-    async def run_test():
-        searcher = ProjectDocumentSearcher()
-        test_project_id = "20180076"
-        
-        print("\n=== 프로젝트 정보 테스트 ===")
-        project_info = await searcher.get_project_info(test_project_id)
-        if project_info:
-            print(f"프로젝트 정보:")
-            print(f"- ID: {project_info['project_id']}")
-            print(f"- 부서: {project_info['department_code']}_{project_info['department_name']}")
-            print(f"- 이름: {project_info['project_name']}")
-            print(f"- 경로: {project_info['original_folder']}")
-        
-        print("\n=== 문서 검색 테스트 ===")
-        results = await searcher.search_all_documents(test_project_id)
-        
-        print("\n검색 결과 요약:")
-        total_docs = 0
-        for doc_type, items in results.items():
-            if items:
-                doc_name = DOCUMENT_TYPES[doc_type]['name']
-                print(f"\n{doc_name} ({len(items)}개):")
-                total_docs += len(items)
-                for item in items[:3]:
-                    print(f"- {item['name']}")
-        
-        print(f"\n총 {total_docs}개의 문서를 찾았습니다.")
-
-    asyncio.run(run_test())
+    import asyncio
+    
+    print("=== 프로젝트 문서 검색 시작 ===")
+    searcher = ProjectDocumentSearcher()
+    
+    # 특정 프로젝트만 검색
+    test_project_id = "20180076"
+    asyncio.run(searcher.process_single_project(test_project_id))
+    
+    print("\n=== 검색 완료 ===")
 
 
