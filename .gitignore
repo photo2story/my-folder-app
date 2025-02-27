@@ -162,6 +162,7 @@ node_modules/
 !stock_market.csv
 !result*.csv
 data*.csv
+audit*.json
 
 !depart*.csv
 !project*.csv

@@ -16,6 +16,7 @@ from datetime import datetime
 import pandas as pd
 import traceback
 import json
+import re
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -187,16 +188,91 @@ async def analyze_with_gemini(project_data):
         return f"AI 분석 중 오류 발생: {str(e)}"
 
 @bot.command(name='audit')
-async def audit(ctx, project_id: str = None, use_ai: bool = False):
+async def audit(ctx, *, query: str = None):
     """프로젝트 감사 명령어 처리"""
-    print(f"\n[DEBUG] Audit command received for project_id: {project_id}")
+    print(f"\n[DEBUG] Audit command received for query: {query}")
     
-    if not project_id:
-        print("[DEBUG] No project_id provided")
-        await ctx.send("프로젝트 ID를 입력해주세요. 예: audit 20230050")
+    if not query:
+        help_message = """
+📋 **감사 명령어 사용법**
+------------------------
+1️⃣ 단일 프로젝트 감사:
+   `audit 20230001`
+   예시: `audit 20230001`
+
+2️⃣ AI 분석 포함 감사:
+   `audit 20230001 true`
+   예시: `audit 20230001 true`
+
+3️⃣ 전체 프로젝트 감사:
+   `audit all`
+   예시: `audit all`
+   `audit all true` (AI 분석 포함)
+
+❗ 프로젝트 ID는 8자리 숫자입니다 (예: 20230001)
+"""
+        await ctx.send(help_message)
         return
 
     try:
+        # 입력 파싱
+        parts = query.strip().split()
+        project_id = parts[0]
+        use_ai = len(parts) > 1 and parts[1].lower() == 'true'
+
+        # 전체 프로젝트 감사 처리
+        if project_id.lower() == 'all':
+            await ctx.send("📋 전체 프로젝트 감사를 시작합니다...")
+            try:
+                # project_list.csv 읽기
+                df = pd.read_csv(PROJECT_LIST_CSV)
+                total_projects = len(df)
+                await ctx.send(f"총 {total_projects}개의 프로젝트를 감사합니다.")
+                
+                success_count = 0
+                error_count = 0
+                
+                for index, row in df.iterrows():
+                    current_project_id = str(row['project_id'])
+                    try:
+                        await ctx.send(f"\n🔍 프로젝트 {current_project_id} 감사 중... ({index + 1}/{total_projects})")
+                        result = await audit_service.audit_project(current_project_id, use_ai=use_ai)
+                        
+                        if 'error' in result:
+                            error_count += 1
+                            await ctx.send(f"❌ {current_project_id} 감사 실패: {result['error']}")
+                        else:
+                            success_count += 1
+                            await audit_service.send_to_discord(result, ctx=ctx)
+                        
+                        # API 제한 고려하여 대기
+                        await asyncio.sleep(1)
+                        
+                    except Exception as e:
+                        error_count += 1
+                        await ctx.send(f"❌ {current_project_id} 처리 중 오류 발생: {str(e)}")
+                
+                # 최종 결과 보고
+                summary = f"""
+📊 전체 감사 완료 보고서
+------------------------
+✅ 감사 성공: {success_count}개
+❌ 감사 실패: {error_count}개
+📋 총 처리: {total_projects}개
+------------------------
+"""
+                await ctx.send(summary)
+                return
+                
+            except Exception as e:
+                await ctx.send(f"❌ 전체 프로젝트 감사 중 오류 발생: {str(e)}")
+                return
+
+        # 프로젝트 ID 형식 검증 (all이 아닌 경우)
+        if not re.match(r'^\d{8}$', project_id):
+            await ctx.send("❌ 잘못된 프로젝트 ID 형식입니다. 8자리 숫자를 입력해주세요. (예: 20230001)")
+            return
+
         print(f"[DEBUG] Starting audit for project {project_id}")
         # 프로젝트 감사 수행
         result = await audit_service.audit_project(project_id, use_ai=use_ai)
