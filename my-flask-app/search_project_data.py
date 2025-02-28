@@ -78,19 +78,38 @@ class ProjectDocumentSearcher:
             print(f"[ERROR] Failed to scan directory {path}: {str(e)}")
             return []
 
-    async def _scan_directory(self, project_path: Path, current_depth=0, max_depth=3):
+    async def _scan_directory(self, project_path: Path, current_depth=0, max_depth=10):
         """디렉토리 비동기 스캔"""
         if current_depth > max_depth or self._should_skip_path(project_path):
             return {}, {}
 
         results = {doc_type: [] for doc_type in DOCUMENT_TYPES.keys()}
         total_found = {doc_type: 0 for doc_type in DOCUMENT_TYPES.keys()}
+        temp_folder_matches = {doc_type: [] for doc_type in DOCUMENT_TYPES.keys()}
 
         try:
+            indent = "  " * current_depth
+            print(f"{indent}[DEBUG] 스캔 중: {project_path} (깊이: {current_depth})")
+
             # 디렉토리 스캔
             entries = await self._scan_files(project_path)
             
+            # 현재 폴더 이름이 키워드와 일치하는지 임시 저장
+            current_folder_name = project_path.name.lower()
+            for doc_type, type_info in DOCUMENT_TYPES.items():
+                if any(keyword.lower() in current_folder_name for keyword in type_info['keywords']):
+                    print(f"{indent}[DEBUG] 폴더명 매칭 (임시): {current_folder_name} -> {type_info['name']}")
+                    temp_folder_matches[doc_type].append({
+                        'type': 'directory',
+                        'name': project_path.name,
+                        'path': str(project_path.relative_to(project_path.parent)),
+                        'full_path': str(project_path),
+                        'depth': current_depth,
+                        'matched_by': 'folder_name'
+                    })
+            
             # 파일 처리
+            valid_files_found = set()  # 유효한 파일이 발견된 문서 유형 저장
             files = [entry for entry in entries if entry.is_file()]
             for entry in files:
                 item_path = Path(entry.path)
@@ -98,39 +117,53 @@ class ProjectDocumentSearcher:
                     if self.is_valid_document(item_path):
                         item_name = item_path.name.lower()
                         for doc_type, type_info in DOCUMENT_TYPES.items():
-                            if len(results[doc_type]) >= 3:
+                            if len(results[doc_type]) >= 5:  # 최대 5개까지 저장
                                 continue
                             if any(keyword.lower() in item_name for keyword in type_info['keywords']):
                                 total_found[doc_type] += 1
-                                print(f"[DEBUG] Found {type_info['name']} at depth {current_depth}: {item_path.name}")
+                                print(f"{indent}[DEBUG] 파일 발견: {type_info['name']} -> {item_path.name}")
                                 results[doc_type].append({
                                     'type': 'file',
                                     'name': item_path.name,
                                     'path': str(item_path.relative_to(project_path.parent)),
                                     'full_path': str(item_path),
-                                    'depth': current_depth
+                                    'depth': current_depth,
+                                    'matched_by': 'file_name'
                                 })
+                                valid_files_found.add(doc_type)
                                 break
+
+            # 폴더 매칭 결과를 실제 파일이 있는 경우에만 추가
+            for doc_type in DOCUMENT_TYPES.keys():
+                if doc_type in valid_files_found and temp_folder_matches[doc_type]:
+                    results[doc_type].extend(temp_folder_matches[doc_type])
 
             # 하위 디렉토리 처리
             dirs = [Path(entry.path) for entry in entries if entry.is_dir() and not self._should_skip_path(Path(entry.path))]
-            if dirs and current_depth < max_depth:
-                tasks = [self._scan_directory(d, current_depth + 1, max_depth) for d in dirs]
-                subdir_results = await asyncio.gather(*tasks)
+            
+            for dir_path in dirs:
+                dir_name = dir_path.name.lower()
+                should_deep_scan = any(keyword in dir_name for keyword in ['성과품', '도면', '설계도', '구조물공', '일반도', 
+                                                                         '보고서', '계약', '과업', '준공', '설계'])
+                local_max_depth = max_depth + 5 if should_deep_scan else max_depth
                 
-                # 결과 병합
-                for subdir_result, subdir_total in subdir_results:
+                if current_depth < local_max_depth:
+                    print(f"{indent}[DEBUG] 하위 디렉토리 진입: {dir_name} (추가 깊이 허용: {should_deep_scan})")
+                    subdir_result, subdir_total = await self._scan_directory(dir_path, current_depth + 1, local_max_depth)
+                    
+                    # 하위 디렉토리의 결과 병합
                     for doc_type in DOCUMENT_TYPES.keys():
-                        current_count = len(results[doc_type])
-                        if current_count < 3:
-                            space_left = 3 - current_count
-                            results[doc_type].extend(subdir_result[doc_type][:space_left])
-                        total_found[doc_type] += subdir_total[doc_type]
+                        if subdir_result[doc_type]:  # 하위 디렉토리에서 결과가 있는 경우에만
+                            current_count = len(results[doc_type])
+                            if current_count < 5:
+                                space_left = 5 - current_count
+                                results[doc_type].extend(subdir_result[doc_type][:space_left])
+                            total_found[doc_type] += subdir_total[doc_type]
 
         except Exception as e:
-            print(f"[ERROR] Directory scan failed: {str(e)}")
+            print(f"{indent}[ERROR] 디렉토리 스캔 실패: {str(e)}")
             import traceback
-            print(f"[ERROR] Traceback: {traceback.format_exc()}")
+            print(f"{indent}[ERROR] 상세: {traceback.format_exc()}")
 
         return results, total_found
 

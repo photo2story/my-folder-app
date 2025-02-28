@@ -292,7 +292,7 @@ if __name__ == "__main__":
     async def run_test():
         service = AuditService()
         try:
-            result = await service.audit_project("20180076", use_ai=True)
+            result = await service.audit_project("20130142", use_ai=True)
             print(json.dumps(result, ensure_ascii=False, indent=2))
         finally:
             await service.close()
