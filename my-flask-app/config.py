@@ -14,7 +14,7 @@ STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
 PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
 DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')  # 부서 목록 CSV 경로 추가
 # 네트워크 드라이브 경로 (Z:로 변경)
-NETWORK_BASE_PATH = r"Z:"  # Z: 드라이브 네트워크 경로 변경
+NETWORK_BASE_PATH = r"Y:"  # Z: 드라이브 네트워크 경로 변경, Y: 로컬 드라이브 경로 변경
 
 # Discord 설정
 # 환경 변수
