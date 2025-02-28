@@ -20,6 +20,17 @@ class ProjectDocumentSearcher:
         # CSV 파일 경로
         self.project_list_csv = PROJECT_LIST_CSV
         
+        # DataFrame 초기화
+        self._project_df = None
+        
+        # 검색 결과 캐시 초기화
+        self._cache = {}
+        
+        # 검색 제외 패턴
+        self._skip_patterns = {'backup', '백업', 'old', '이전', 'temp', '임시'}
+        self._valid_extensions = {'.pdf', '.doc', '.docx', '.xls', '.xlsx'}
+        self._exclude_extensions = {'.tmp', '.bak'}
+        
         # 디렉토리 생성
         os.makedirs(self.projects_dir, exist_ok=True)
 

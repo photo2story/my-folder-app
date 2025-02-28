@@ -19,7 +19,8 @@ class AuditService:
     def __init__(self):
         self.searcher = ProjectDocumentSearcher()
         self._cache = {}
-        self._session = None  # aiohttp 세션
+        self._session = None
+        self._last_request_time = 0  # AI 요청 시간 추적용
         
     async def _get_session(self):
         """비동기 HTTP 세션 관리"""
@@ -65,7 +66,10 @@ class AuditService:
 
     async def audit_project(self, project_id, use_ai=False, ctx=None):
         """프로젝트 감사 수행 (비동기)"""
+        session = None
         try:
+            session = await self._get_session()  # 세션 생성
+            
             await self.send_progress_message(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
             
             # 프로젝트 정보 조회
@@ -119,7 +123,7 @@ class AuditService:
             if use_ai:
                 await self.send_progress_message(ctx, "🤖 AI 분석을 시작합니다...")
                 try:
-                    result['ai_analysis'] = await analyze_with_gemini(result)
+                    result['ai_analysis'] = await analyze_with_gemini(result, session)  # 세션 전달
                     await self.send_progress_message(ctx, "✨ AI 분석이 완료되었습니다")
                 except Exception as ai_err:
                     print(f"[DEBUG] AI analysis failed: {str(ai_err)}")
@@ -143,6 +147,9 @@ class AuditService:
             }
             await self.send_to_discord(error_result, ctx)
             return error_result
+        finally:
+            if session:
+                await session.close()  # 세션 정리
 
     async def send_to_discord(self, data, ctx=None):
         """Discord로 감사 결과 비동기 전송"""
@@ -292,3 +299,5 @@ if __name__ == "__main__":
             await service.close()
     
     asyncio.run(run_test()) 
+
+# python audit_service.py

@@ -26,6 +26,7 @@ class DocumentAnalyzer:
     def __init__(self):
         self._session = None
         self._cache = {}
+        self._last_request_time = {}  # 인스턴스 속성으로 변경
         
     async def get_session(self):
         """비동기 HTTP 세션 관리"""
@@ -60,20 +61,27 @@ class DocumentAnalyzer:
         """Rate limit 준수"""
         async with _rate_limit:
             now = datetime.now()
-            if self._last_request_time.get(os.getpid()):
+            if self._last_request_time.get(os.getpid()):  # self. 추가
                 elapsed = (now - self._last_request_time[os.getpid()]).total_seconds()
                 if elapsed < MIN_REQUEST_INTERVAL:
                     await asyncio.sleep(MIN_REQUEST_INTERVAL - elapsed)
-            self._last_request_time[os.getpid()] = now
+            self._last_request_time[os.getpid()] = now  # self. 추가
 
     async def analyze_batch(self, projects: List[Dict]) -> List[Dict]:
         """프로젝트 배치 분석"""
         tasks = [self.analyze_with_gemini(project) for project in projects]
         return await asyncio.gather(*tasks)
 
-    async def analyze_with_gemini(self, project_data: Dict) -> str:
-        """개별 프로젝트 분석"""
+    async def analyze_with_gemini(self, project_data: dict, session: aiohttp.ClientSession = None) -> str:
+        """프로젝트 문서 분석을 수행"""
         try:
+            # 세션 관리
+            if session is None:
+                session = await self.get_session()
+                should_close = True
+            else:
+                should_close = False
+
             cache_key = self._generate_cache_key(project_data)
             if cache_key in self._cache:
                 return self._cache[cache_key]
@@ -128,7 +136,6 @@ class DocumentAnalyzer:
 
             # Discord 알림 (선택적)
             if DISCORD_WEBHOOK_URL:
-                session = await self.get_session()
                 notification = f"🔍 프로젝트 {project_data['project_id']} 분석 완료 (위험도: {risk_score})"
                 async with session.post(DISCORD_WEBHOOK_URL, json={'content': notification}) as resp:
                     await resp.read()
@@ -138,10 +145,13 @@ class DocumentAnalyzer:
         except Exception as e:
             error_msg = f"AI 분석 오류: {str(e)}"
             if DISCORD_WEBHOOK_URL:
-                session = await self.get_session()
                 async with session.post(DISCORD_WEBHOOK_URL, json={'content': f"❌ {error_msg}"}) as resp:
                     await resp.read()
             return error_msg
+
+        finally:
+            if should_close and session:
+                await session.close()
 
     def clear_cache(self):
         """캐시 초기화"""
@@ -156,9 +166,9 @@ class DocumentAnalyzer:
 # 전역 인스턴스
 analyzer = DocumentAnalyzer()
 
-async def analyze_with_gemini(project_data: Dict) -> str:
+async def analyze_with_gemini(project_data: dict, session: aiohttp.ClientSession = None) -> str:
     """기존 인터페이스 유지를 위한 래퍼"""
-    return await analyzer.analyze_with_gemini(project_data)
+    return await analyzer.analyze_with_gemini(project_data, session)
 
 def clear_analysis_cache():
     """기존 인터페이스 유지를 위한 래퍼"""

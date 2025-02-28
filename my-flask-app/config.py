@@ -27,11 +27,11 @@ GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 # 검색 대상 문서 유형
 DOCUMENT_TYPES = {
     'contract': {'name': '계약서', 'keywords': ['계약서', 'contract']},
-    'specification': {'name': '과업지시서', 'keywords': ['과업지시서', '과업지시', '내용서', 'specification']},
+    'specification': {'name': '과업지시서', 'keywords': ['과업지시', '과업', '내용서', 'specification']},
     'initiation': {'name': '착수계', 'keywords': ['착수계', '착수', 'initiation']},
     'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정','협약', 'agreement']},
     'budget': {'name': '실행예산', 'keywords': ['실행예산', '실행' 'budget']},
-    'deliverable': {'name': '성과품', 'keywords': ['성과품', 'deliverable']},
+    'deliverable': {'name': '성과품', 'keywords': ['성과품','성과','보고','1장', 'deliverable']},
     # 'final_deliverable': {'name': '최종성과품', 'keywords': ['최종성과품', 'final deliverable']},
     'completion': {'name': '준공계', 'keywords': ['준공계', 'completion']},
     'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation']},
