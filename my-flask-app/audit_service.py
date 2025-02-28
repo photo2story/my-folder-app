@@ -35,9 +35,8 @@ class AuditService:
             project_id = result['project_id']
             department = result['department'].split('_')[0]
             
-            # 결과 JSON 파일명 생성
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"audit_{department}_{project_id}_{timestamp}.json"
+            # 간단한 파일명 형식으로 변경
+            filename = f"audit_{department}_{project_id}.json"
             filepath = Path(RESULTS_DIR) / filename
             
             print(f"[DEBUG] Saving to: {filepath}")
@@ -68,7 +67,7 @@ class AuditService:
         """프로젝트 감사 수행 (비동기)"""
         session = None
         try:
-            session = await self._get_session()  # 세션 생성
+            session = aiohttp.ClientSession()  # 매번 새로운 세션 생성
             
             await self.send_progress_message(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
             
@@ -123,7 +122,7 @@ class AuditService:
             if use_ai:
                 await self.send_progress_message(ctx, "🤖 AI 분석을 시작합니다...")
                 try:
-                    result['ai_analysis'] = await analyze_with_gemini(result, session)  # 세션 전달
+                    result['ai_analysis'] = await analyze_with_gemini(result, session)
                     await self.send_progress_message(ctx, "✨ AI 분석이 완료되었습니다")
                 except Exception as ai_err:
                     print(f"[DEBUG] AI analysis failed: {str(ai_err)}")
@@ -149,7 +148,7 @@ class AuditService:
             return error_result
         finally:
             if session:
-                await session.close()  # 세션 정리
+                await session.close()
 
     async def send_to_discord(self, data, ctx=None):
         """Discord로 감사 결과 비동기 전송"""

@@ -9,6 +9,7 @@ from functools import lru_cache
 from io import StringIO
 import pandas as pd
 from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, STATIC_DATA_PATH
+import copy
 
 class ProjectDocumentSearcher:
     def __init__(self):
@@ -133,43 +134,48 @@ class ProjectDocumentSearcher:
 
         return results, total_found
 
-    async def search_all_documents(self, project_id, max_depth=3):
-        """프로젝트 문서 검색 (비동기 최적화)"""
+    async def search_all_documents(self, project_id: str) -> dict:
+        """모든 문서 유형에 대한 검색 수행"""
         print(f"\n[DEBUG] Starting async document search for project: {project_id}")
         
-        # 캐시 키에 마지막 수정 시간 포함
-        mtime = os.path.getmtime(self.project_list_csv)
-        cache_key = f"docs_{project_id}_{max_depth}_{mtime}"
-        
+        # 캐시 확인
+        cache_key = f"docs_{project_id}"
         if cache_key in self._cache:
             print("[DEBUG] Using cached results")
-            return self._cache[cache_key]
+            # 캐시된 결과를 복사하여 반환 (깊은 복사)
+            return copy.deepcopy(self._cache[cache_key])
 
-        project_info = await self.get_project_info(project_id)
-        if not project_info:
+        try:
+            project_info = await self.get_project_info(project_id)
+            if not project_info:
+                return {}
+
+            project_path = Path(project_info['original_folder'])
+            if not project_path.exists():
+                print(f"[ERROR] Project path does not exist: {project_path}")
+                return {}
+
+            print(f"[DEBUG] Processing project path: {project_path}")
+            results, total_found = await self._scan_directory(project_path, max_depth=3)
+
+            # 결과 요약
+            print("\n[DEBUG] Search Results Summary:")
+            found_any = False
+            for doc_type, items in results.items():
+                if items:
+                    found_any = True
+                    print(f"[DEBUG] - {DOCUMENT_TYPES[doc_type]['name']}: {len(items)} saved (total: {total_found[doc_type]})")
+            
+            if not found_any:
+                print("[WARNING] No documents found in any category")
+
+            # 결과를 캐시에 저장 (깊은 복사)
+            self._cache[cache_key] = copy.deepcopy(results)
+            return results
+
+        except Exception as e:
+            print(f"[ERROR] Document search failed: {str(e)}")
             return {}
-
-        project_path = Path(project_info['original_folder'])
-        if not project_path.exists():
-            print(f"[ERROR] Project path does not exist: {project_path}")
-            return {}
-
-        print(f"[DEBUG] Processing project path: {project_path}")
-        results, total_found = await self._scan_directory(project_path, max_depth=max_depth)
-
-        # 결과 요약
-        print("\n[DEBUG] Search Results Summary:")
-        found_any = False
-        for doc_type, items in results.items():
-            if items:
-                found_any = True
-                print(f"[DEBUG] - {DOCUMENT_TYPES[doc_type]['name']}: {len(items)} saved (total: {total_found[doc_type]})")
-        
-        if not found_any:
-            print("[WARNING] No documents found in any category")
-
-        self._cache[cache_key] = results
-        return results
 
     async def search_document(self, project_path, doc_type, depth=0):
         """프로젝트 폴더에서 특정 유형의 문서 관련 폴더를 단계별로 검색"""
