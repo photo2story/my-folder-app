@@ -296,3 +296,4 @@ if __name__ == "__main__":
     create_project_list(root_path, TARGET_DEPARTMENTS)
 
 # python get_data.py
+# python get_data.py --verbose

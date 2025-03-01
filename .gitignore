@@ -166,6 +166,8 @@ audit*.json
 
 !depart*.csv
 !project*.csv
+!contract*.csv
+!audit*.csv
 
 # Other Flutter build directories
 android/build/

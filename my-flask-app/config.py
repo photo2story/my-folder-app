@@ -1,41 +1,103 @@
 # my-flask-app/config.py
 import os
+from pathlib import Path  # Path 클래스를 사용하기 위해 pathlib 모듈 임포트
+import logging
 from dotenv import load_dotenv
+from config_assets import AUDIT_FILTERS, AUDIT_FILTERS_depart, DOCUMENT_TYPES
 
 load_dotenv()
 
-# Google API 설정
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')  # .env 파일에서 API 키를 가져옴
+# 로깅 설정
+logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+logger = logging.getLogger(__name__)
 
-# 프로젝트 루트 경로 (app.py 기준 상위 디렉토리)
+# Google API 설정
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
+
+# 프로젝트 루트 경로
 PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 STATIC_DATA_PATH = os.path.join(PROJECT_ROOT, 'static', 'data')
 STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
 PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
-DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')  # 부서 목록 CSV 경로 추가
-# 네트워크 드라이브 경로 (Z:로 변경)
-NETWORK_BASE_PATH = r"Y:"  # Z: 드라이브 네트워크 경로 변경, Y: 로컬 드라이브 경로 변경
+DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
+AUDIT_TARGETS_CSV = os.path.join(STATIC_DATA_PATH, 'audit_targets.csv')  # 감사 대상 CSV 경로 추가
+
+# 네트워크 드라이브 설정 (캐싱)
+_NETWORK_DRIVE_CACHE = None
+_PATH_CACHE = {}
+
+def get_network_drive(verbose=False):
+    """사용 가능한 네트워크 드라이브 찾기 (캐싱 적용)"""
+    global _NETWORK_DRIVE_CACHE
+    
+    if _NETWORK_DRIVE_CACHE is not None:
+        return _NETWORK_DRIVE_CACHE
+
+    # 기본값 설정
+    _NETWORK_DRIVE_CACHE = 'Z:'
+    
+    if verbose:
+        drives = ['Z:', 'Y:', 'X:', 'U:']
+        for drive in drives:
+            try:
+                if os.path.exists(drive):
+                    _NETWORK_DRIVE_CACHE = drive
+                    logger.debug(f"Found network drive: {drive}")
+                    break
+            except Exception:
+                continue
+        
+        if _NETWORK_DRIVE_CACHE == 'Z:':
+            logger.warning("No network drive found, using default Z:")
+    
+    return _NETWORK_DRIVE_CACHE
+
+def get_full_path(relative_path, check_exists=False, verbose=False):
+    """상대 경로를 절대 경로로 변환하되, 네트워크 조회를 최소화"""
+    if not relative_path:
+        return None
+    
+    cache_key = str(relative_path)
+    if cache_key in _PATH_CACHE:
+        return _PATH_CACHE[cache_key]
+    
+    drive = get_network_drive(verbose=False)  # verbose를 False로 고정
+    
+    if ':' in relative_path:
+        _, path = relative_path.split(':', 1)
+        full_path = f"{drive}{path}"
+    else:
+        full_path = os.path.join(drive, relative_path)
+
+    # 경로 정규화 (실제 파일 시스템 접근 없이)
+    full_path = str(Path(full_path))
+    
+    # 네트워크 드라이브 확인 최소화
+    if check_exists and verbose:  # check_exists가 True이고 verbose가 True일 때만 확인
+        if not os.path.exists(full_path):
+            logger.warning(f"Path does not exist: {full_path}")
+
+    _PATH_CACHE[cache_key] = full_path
+    if verbose:
+        logger.debug(f"Converted path: {relative_path} -> {full_path}")
+    
+    return full_path
+
+def clear_path_cache():
+    """경로 캐시 초기화"""
+    global _PATH_CACHE, _NETWORK_DRIVE_CACHE
+    _PATH_CACHE = {}
+    _NETWORK_DRIVE_CACHE = None
+    logger.info("Path cache cleared")
+
+# 네트워크 드라이브 초기화 (시작 시 한 번만)
+NETWORK_BASE_PATH = get_network_drive()
 
 # Discord 설정
-# 환경 변수
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', '0'))
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
-# 검색 대상 문서 유형
-DOCUMENT_TYPES = {
-    'contract': {'name': '계약서', 'keywords': ['계약서', 'contract']},
-    'specification': {'name': '과업지시서', 'keywords': ['과업지시', '과업', '내용서', 'specification']},
-    'initiation': {'name': '착수계', 'keywords': ['착수계',  'initiation']},
-    'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정','협약', 'agreement']},
-    'budget': {'name': '실행예산', 'keywords': ['실행예산', '실행' 'budget']},
-    'deliverable': {'name': '성과품', 'keywords': ['성과품','성과','보고서','1장','도면','일반도','평면도', 'deliverable']},
-    # 'final_deliverable': {'name': '최종성과품', 'keywords': ['최종성과품', 'final deliverable']},
-    'completion': {'name': '준공계', 'keywords': ['준공계', 'completion']},
-    'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation']},
-    'certificate': {'name': '실적증명', 'keywords': ['실적증명', '증명', 'certificate']}
-}
-# python config.py
-
+# 감사 대상 필터링 설정 (config_assets에서 가져옴)
+# config_assets에서 정의된 AUDIT_FILTERS와 AUDIT_FILTERS_depart를 사용

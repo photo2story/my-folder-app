@@ -67,10 +67,10 @@ class DocumentAnalyzer:
         
         return max(0, base_score)
 
-    def _generate_cache_key(self, project_id: str, documents: dict) -> str:
+    def _generate_cache_key(self, project_data: dict) -> str:
         """캐시 키 생성 (문서 상태 해시 포함, 날짜 제거)"""
-        docs_hash = hashlib.md5(str(documents).encode()).hexdigest()
-        return f"{project_id}_{docs_hash}"
+        docs_hash = hashlib.md5(str(project_data['documents']).encode()).hexdigest()
+        return f"{project_data['project_id']}_{docs_hash}"
 
     async def _wait_for_rate_limit(self):
         """Rate limit 준수 및 재시도 처리"""
@@ -115,15 +115,7 @@ class DocumentAnalyzer:
             else:
                 should_close = False
 
-            # project_id 추출 또는 기본값 설정
-            project_id = project_data.get('project_id', 'Unknown')
-            project_info = project_data.get('project_info', {})
-            documents = project_data.get('documents', {})
-
-            # 부서 정보 추출 (department가 없으면 기본값 설정)
-            department = project_info.get('department', 'Unknown') if project_info else project_data.get('department', 'Unknown')
-
-            cache_key = self._generate_cache_key(project_id, documents)
+            cache_key = self._generate_cache_key(project_data)
             if cache_key in self._cache:
                 logger.debug(f"캐시에서 결과 반환: {cache_key}")
                 return self._cache[cache_key]
@@ -131,7 +123,7 @@ class DocumentAnalyzer:
             # 문서 상태 분석
             missing_docs = []
             existing_docs = []
-            for doc_type, info in documents.items():
+            for doc_type, info in project_data['documents'].items():
                 doc_name = DOCUMENT_TYPES[doc_type]['name']
                 if info['exists']:
                     files_count = len(info['details'])
@@ -144,8 +136,8 @@ class DocumentAnalyzer:
 
             # 상세화된 프롬프트
             prompt = f"""
-프로젝트 {project_id} 문서 분석:
-부서: {department}
+프로젝트 {project_data['project_id']} 문서 분석:
+부서: {project_data['department']}
 
 현황:
 - 확인된 문서: {', '.join(existing_docs)}
@@ -177,13 +169,13 @@ class DocumentAnalyzer:
             # Discord 알림 (선택적, 에러 처리 추가)
             if DISCORD_WEBHOOK_URL:
                 try:
-                    notification = f"🔍 프로젝트 {project_id} 분석 완료 (위험도: {risk_score})"
-                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': notification}, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                    notification = f"🔍 프로젝트 {project_data['project_id']} 분석 완료 (위험도: {risk_score})"
+                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': notification}) as resp:
                         await resp.read()
                 except Exception as e:
                     logger.error(f"Discord 알림 실패: {str(e)}")
 
-            logger.info(f"프로젝트 {project_id} 분석 완료, 위험도: {risk_score}/100")
+            logger.info(f"프로젝트 {project_data['project_id']} 분석 완료, 위험도: {risk_score}/100")
             return analysis
 
         except Exception as e:
@@ -191,7 +183,7 @@ class DocumentAnalyzer:
             logger.error(error_msg)
             if DISCORD_WEBHOOK_URL:
                 try:
-                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': f"❌ {error_msg}"}, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': f"❌ {error_msg}"}) as resp:
                         await resp.read()
                 except Exception as discord_e:
                     logger.error(f"Discord 에러 알림 실패: {str(discord_e)}")
@@ -237,12 +229,7 @@ if __name__ == "__main__":
         # 실제 project_id="20180076" 데이터로 테스트
         test_data = {
             'project_id': '20180076',
-            'project_info': {
-                'department_code': '01010',
-                'department_name': '도로',
-                'project_name': '20180076 영락공원 진입도로 개설공사 기본 및 실시설계 용역',
-                'original_folder': 'Z:01010도로20180076 영락공원 진입도로 개설공사 기본 및 실시설계 용역'
-            },
+            'department': '01010_도로',  # 또는 '01010_도로' 등
             'documents': {
                 'contract': {'exists': True, 'details': [
                     {'name': '00 계약관련.zip'}, {'name': '191223_변경계약서(1차).pdf'}, {'name': '200506_변경계약서(2차).pdf'}
@@ -278,3 +265,4 @@ if __name__ == "__main__":
 
     asyncio.run(test())
 # python gemini.py
+ 
