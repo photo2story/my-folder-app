@@ -1,4 +1,5 @@
 # my_flask_app/audit_target_generator.py
+# my_flask_app/audit_target_generator.py
 import pandas as pd
 import argparse
 import os
@@ -31,7 +32,7 @@ def select_audit_targets(filters=None, output_csv=None):
             filters['status'] = ['준공', '진행']
     
     logger.info("Using audit filters from config_assets.py. Modify AUDIT_FILTERS in config_assets.py to adjust filtering conditions:")
-    logger.info(f"- Status: {filters.get('status', 'Not specified')} (준공: 성과품 완벽히 포함해야 함, 100% 문서 필요 / 진행: 성과품 미완성 가능, 부분 문서 허용)")
+    logger.info(f"- Status: {filters.get('status', 'Not specified')} (준공: 성과품 완벽히 포함, 진행: 성과품 미완성 가능)")
     logger.info(f"- Year: {filters.get('year', 'Not specified')} (2024년 준공 프로젝트만 감사)")
     logger.info(f"- Department: {filters.get('department', 'Not specified')}")
 
@@ -79,7 +80,7 @@ def select_audit_targets(filters=None, output_csv=None):
 
     # 필터링된 데이터
     filtered_df = df[mask][['사업코드', 'PM부서', '사업명', '진행상태']]
-    filtered_df.columns = ['project_id', 'department_name', 'ProjectName', 'status']
+    filtered_df.columns = ['project_id', 'department_name', 'ProjectName', 'status']  # project_name을 ProjectName으로 변경
 
     # 부서, 진행여부 생성
     filtered_df['Depart'] = filtered_df['department_name'].map(
@@ -105,7 +106,7 @@ def select_audit_targets(filters=None, output_csv=None):
     audit_targets.to_csv(output_csv, index=False, encoding='utf-8-sig')
 
     logger.info(f"새로운 감사 대상이 {output_csv}에 저장되었습니다. 총 프로젝트 수: {len(audit_targets)}")
-    logger.info(f"Audit targets filtered by status: {filters['status']} with document requirements applied (준공: 100% 문서 필요, 진행: 부분 문서 허용)")
+    logger.info(f"Audit targets filtered by status: {filters['status']} with document requirements applied")
 
     # DataFrame 반환 (후속 처리용)
     return audit_targets, filtered_df['project_id'].tolist(), filtered_df['Depart'].map(

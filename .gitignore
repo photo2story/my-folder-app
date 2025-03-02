@@ -164,11 +164,13 @@ node_modules/
 data*.csv
 audit*.json
 *.json
+static/projects/*.json
 
 !depart*.csv
 !project*.csv
 !contract*.csv
 !audit*.csv
+!combined_report_*.csv
 
 # Other Flutter build directories
 android/build/
@@ -200,5 +202,3 @@ key.properties
 **/upload-keystore.jks
 **/upload-keystore.jks.old
 **/android/key.properties
-
- __pycache__/
