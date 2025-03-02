@@ -158,44 +158,66 @@ class AuditService:
             logger.error(f"Project folder does not exist: {folder_path}")
             return projects
 
-        # 2) search_project_data.py의 process_single_project 호출 (project_id와 department_code 동적 전달, max_found=3 고정)
+        # 2) search_project_data.py의 process_single_project 호출
         search_result = await self.searcher.process_single_project(project_id, department_code)
-        if search_result and 'documents' in search_result:
-            documents = search_result['documents']
-            total_files = sum(len(doc_info) for doc_info in documents.values() if doc_info and isinstance(doc_info, (list, dict)))  # 리스트 또는 딕셔너리 확인
-            if total_files > 0:
-                processed_documents = {}
-                # 모든 DOCUMENT_TYPES를 순회하며 처리
-                for doc_type in DOCUMENT_TYPES.keys():
-                    doc_data = documents.get(doc_type, [])
-                    if isinstance(doc_data, list):  # 리스트로 반환된 경우
-                        processed_documents[doc_type] = {
-                            'exists': len(doc_data) > 0,
-                            'details': [{'name': path} for path in doc_data if isinstance(path, str)]
-                        }
-                    elif isinstance(doc_data, dict):  # 이미 딕셔너리로 반환된 경우
-                        processed_documents[doc_type] = {
-                            'exists': doc_data.get('exists', False),
-                            'details': [{'name': path} for path in doc_data.get('details', []) if isinstance(path, (str, dict))]
-                        }
-                    else:
-                        logger.warning(f"Unknown documents format for {doc_type}: {doc_data}")
-                        processed_documents[doc_type] = {
-                            'exists': False,
-                            'details': []
-                        }
+        if search_result:
+            logger.debug(f"Raw search result for project {numeric_project_id}: {search_result}")
+            
+            documents = search_result.get('documents', {})
+            processed_documents = {}
+            
+            # 모든 DOCUMENT_TYPES를 순회하며 처리
+            for doc_type, type_info in DOCUMENT_TYPES.items():
+                doc_data = documents.get(doc_type, [])
                 
+                if isinstance(doc_data, list):
+                    # 리스트인 경우 (파일 경로 목록)
+                    details = [{'name': str(path), 'path': str(path)} for path in doc_data if path]
+                    processed_documents[doc_type] = {
+                        'exists': bool(details),
+                        'details': details
+                    }
+                    logger.debug(f"Processed list {doc_type}: {len(details)} files")
+                elif isinstance(doc_data, dict):
+                    # 딕셔너리인 경우
+                    details = doc_data.get('details', [])
+                    if isinstance(details, list):
+                        processed_details = [
+                            {'name': str(item), 'path': str(item)} if isinstance(item, (str, Path))
+                            else item if isinstance(item, dict) and 'name' in item
+                            else {'name': str(item), 'path': str(item)}
+                            for item in details if item
+                        ]
+                        processed_documents[doc_type] = {
+                            'exists': bool(processed_details),
+                            'details': processed_details
+                        }
+                        logger.debug(f"Processed dict {doc_type}: {len(processed_details)} files")
+                else:
+                    # 기타 경우 빈 결과로 처리
+                    processed_documents[doc_type] = {
+                        'exists': False,
+                        'details': []
+                    }
+                    logger.debug(f"Empty result for {doc_type}")
+
+            total_files = sum(len(doc_info['details']) for doc_info in processed_documents.values())
+            logger.info(f"Total processed files: {total_files}")
+
+            if total_files > 0 or processed_documents:
                 projects.append({
                     'project_id': numeric_project_id,
                     'department_code': dept_code,
                     'department_name': dept_name,
                     'project_name': project_info['project_name'],
                     'original_folder': folder_path,
-                    'status': status,  # Status 추가
-                    'contractor': contractor,  # Contractor 추가
-                    'documents': processed_documents  # 구조화된 documents 사용
+                    'status': status,  # 수정된 status 사용
+                    'contractor': contractor,  # 수정된 contractor 사용
+                    'documents': processed_documents
                 })
                 logger.info(f"Found project path for {numeric_project_id} in {dept_code}_{dept_name}: {folder_path}")
+                logger.info(f"Project metadata - Status: {status}, Contractor: {contractor}")
+                logger.info(f"Total files found: {total_files}")
         
         return projects
 

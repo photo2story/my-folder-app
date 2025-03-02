@@ -163,6 +163,7 @@ node_modules/
 !result*.csv
 data*.csv
 audit*.json
+*.json
 
 !depart*.csv
 !project*.csv
