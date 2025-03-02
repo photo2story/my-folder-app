@@ -1,4 +1,4 @@
-## /my-flask-app/get_data.py
+## /my_flask_app/get_data.py
 
 import os
 import sys

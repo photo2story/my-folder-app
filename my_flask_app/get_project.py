@@ -1,4 +1,4 @@
-# my-flask-app/get_project.py : 프로젝트 정보 검색
+# my_flask_app/get_project.py : 프로젝트 정보 검색
 
 import pandas as pd
 import re

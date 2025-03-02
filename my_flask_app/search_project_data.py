@@ -1,4 +1,4 @@
-# my-flask-app/search_project_data.py
+# /my_flask_app/search_project_data.py
 import os
 import asyncio
 import aiofiles
@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 import pandas as pd
-from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH
+from my_flask_app.config import PROJECT_LIST_CSV, NETWORK_BASE_PATH
 from config_assets import DOCUMENT_TYPES
 import re
 

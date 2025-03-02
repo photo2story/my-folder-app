@@ -1,6 +1,7 @@
 # test/test_search_project_data.py
 import pytest
 import asyncio
+import json
 from unittest.mock import patch
 from my_flask_app.search_project_data import ProjectDocumentSearcher
 from pathlib import Path

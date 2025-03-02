@@ -1,4 +1,4 @@
-# my-flask-app/config_assets.py
+# my_flask_app/config_assets.py
 # 폴더 스캔 설정
 SCAN_CONFIG = {
     'max_category_depth': 10,      # 깊은 트리 구조를 커버 (필요 시 조정)

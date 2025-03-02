@@ -21,7 +21,7 @@ import re
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
 # Add my-flask-app directory to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my-flask-app')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my_flask_app')))
 
 # 사용자 정의 모듈 임포트
 from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_DATA_PATH
@@ -65,10 +65,7 @@ TOKEN = os.getenv('DISCORD_APPLICATION_TOKEN')
 CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID'))
 GEMINI_API_KEY = os.getenv('GOOGLE_API_KEY')  # Gemini API 키 로드
 
-# GITHUB_RAW_BASE_URL = "https://raw.githubusercontent.com/photo2story/my-flask-app/main/static/images"
-# CSV_PATH = f"{GITHUB_RAW_BASE_URL}/stock_market.csv"
-# GITHUB_RAW_BASE_URL = config.STATIC_IMAGES_PATH
-# CSV_PATH = config.CSV_PATH
+
 
 intents = discord.Intents.default()
 intents.message_content = True

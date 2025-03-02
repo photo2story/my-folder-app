@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# my-flask-app/gemini.py
+# my_flask_app/gemini.py
 import google.generativeai as genai
 import os
 import asyncio

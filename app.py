@@ -12,7 +12,7 @@ from flask_discord import DiscordOAuth2Session
 from flask_cors import CORS
 
 # my-flask-app 모듈 임포트 경로 조정
-sys.path.append(os.path.join(os.path.dirname(__file__), 'my-flask-app'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'my_flask_app'))
 from audit_service import AuditService
 
 # 명시적으로 .env 파일 경로를 지정하여 환경 변수 로드

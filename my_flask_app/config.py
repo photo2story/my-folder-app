@@ -1,4 +1,4 @@
-# my-flask-app/config.py
+# my_flask_app/config.py
 import os
 from pathlib import Path  # Path 클래스를 사용하기 위해 pathlib 모듈 임포트
 import logging

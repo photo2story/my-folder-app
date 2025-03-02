@@ -1,4 +1,4 @@
-# my-flask-app/audit_target_generator.py
+# my_flask_app/audit_target_generator.py
 import pandas as pd
 import argparse
 import os

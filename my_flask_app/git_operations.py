@@ -1,4 +1,4 @@
-# /my-flask-app/git_operations.py
+# /my_flask_app/git_operations.py
 
 import git
 import os

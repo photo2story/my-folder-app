@@ -1,4 +1,4 @@
-# /my-flask-app/search_project_data.py
+# /my_flask_app/search_project_data.py
 
 import os
 import json

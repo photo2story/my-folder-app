@@ -1,4 +1,4 @@
-# my-flask-app/export_report.py
+# my_flask_app/export_report.py
 
 import os
 import json
