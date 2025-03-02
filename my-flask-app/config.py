@@ -21,6 +21,7 @@ STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
 PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
 DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
 AUDIT_TARGETS_CSV = os.path.join(STATIC_DATA_PATH, 'audit_targets.csv')  # 감사 대상 CSV 경로 추가
+CONTRACT_STATUS_CSV = os.path.join(STATIC_DATA_PATH, 'contract_status.csv')
 
 # 네트워크 드라이브 설정 (캐싱)
 _NETWORK_DRIVE_CACHE = None

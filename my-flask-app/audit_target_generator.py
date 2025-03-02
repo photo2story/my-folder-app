@@ -14,6 +14,9 @@ def generate_unique_id(department_code, project_id):
     """부서 코드와 프로젝트 ID를 결합하여 유니크 ID 생성"""
     return f"{department_code}_{project_id}"
 
+# my-flask-app/audit_target_generator.py
+# ... (기존 코드 유지)
+
 def select_audit_targets(filters=None, output_csv=None):
     """
     필터 조건으로 새로운 감사 대상을 선정하고 CSV로 저장하며, DataFrame 반환
@@ -26,14 +29,22 @@ def select_audit_targets(filters=None, output_csv=None):
     # CLI 인수 또는 config에서 필터 읽기
     if filters is None:
         filters = AUDIT_FILTERS
-        filters['status'] = ['진행', '중지']  # 기본값 수정
+        # status 필터를 모든 가능한 값으로 설정 (사용자 조정 가능)
+        if not filters.get('status'):
+            filters['status'] = ['준공', '진행', '중지', '탈락']
+    
+    logger.info("Using audit filters from config_assets.py. Modify AUDIT_FILTERS in config_assets.py to adjust filtering conditions:")
+    logger.info(f"- Status: {filters.get('status', 'Not specified')}")
+    logger.info(f"- Is Main Contractor: {filters.get('is_main_contractor', 'Not specified')}")
+    logger.info(f"- Year: {filters.get('year', 'Not specified')}")
+    logger.info(f"- Department: {filters.get('department', 'Not specified')}")
 
     # 출력 CSV 경로 설정 (기본값 사용)
     if output_csv is None:
         output_csv = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
 
     # CSV 파일 읽기 (UTF-8 with BOM 인코딩)
-    input_file = os.path.join(STATIC_DATA_PATH, 'contract.csv')
+    input_file = os.path.join(STATIC_DATA_PATH, 'contract_status.csv')
     try:
         df = pd.read_csv(input_file, encoding='utf-8-sig')
     except FileNotFoundError:
@@ -54,8 +65,6 @@ def select_audit_targets(filters=None, output_csv=None):
     mask = True
     if 'status' in filters and filters['status']:
         mask &= df['진행상태'].isin(filters['status'])
-    if 'is_main_contractor' in filters and filters['is_main_contractor']:
-        mask &= df['주관사'].isin(filters['is_main_contractor'])
     if 'year' in filters and filters['year']:
         mask &= df['변경준공일(차수)'].dt.year.isin(filters['year'])
     if 'department' in filters and filters['department']:
@@ -71,11 +80,11 @@ def select_audit_targets(filters=None, output_csv=None):
     filtered_df['Depart'] = filtered_df['department_name'].map(
         lambda dept: DEPARTMENT_NAMES.get(DEPARTMENT_MAPPING.get(dept, '99999'), 'UnknownDepartment')
     )
-    filtered_df['Status'] = filtered_df['status'].apply(lambda x: x if x in ['진행', '중지'] else None)
+    filtered_df['Status'] = filtered_df['status'].apply(lambda x: x if x in ['진행', '중지', '준공', '탈락'] else None)
     filtered_df['Contractor'] = filtered_df['is_main_contractor']
     filtered_df['ProjectName'] = filtered_df['project_name']
 
-    # 진행여부가 None인 행 제거 (진행 또는 중지만 유지)
+    # 진행여부가 None인 행 제거
     filtered_df = filtered_df.dropna(subset=['Status'])
 
     # Depart_ProjectID 생성 (유니크 ID)
@@ -102,8 +111,7 @@ def select_audit_targets(filters=None, output_csv=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="새로운 감사 대상 프로젝트 필터링")
     parser.add_argument('--year', type=int, nargs='+', default=AUDIT_FILTERS['year'], help="필터링할 준공 연도 (여러 개 가능)")
-    parser.add_argument('--status', type=str, nargs='+', default=['진행', '중지'], help="필터링할 진행 상태 (여러 개 가능)")
-    parser.add_argument('--is-main-contractor', type=str, nargs='+', default=AUDIT_FILTERS['is_main_contractor'], help="필터링할 주관사 여부 (주관사/비주관사)")
+    parser.add_argument('--status', type=str, nargs='+', default=AUDIT_FILTERS['status'], help="필터링할 진행 상태 (여러 개 가능: '준공', '진행', '중지', '탈락')")
     parser.add_argument('--department', type=str, nargs='+', default=None, help="필터링할 부서 코드 (기본값: AUDIT_FILTERS_depart)")
     parser.add_argument('--output-csv', type=str, default=os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv'), help="출력 CSV 파일 경로")
     parser.add_argument('--verbose', action='store_true', help="상세 로그 출력")
@@ -115,13 +123,13 @@ if __name__ == "__main__":
     filters = {
         'year': args.year,
         'status': args.status,
-        'is_main_contractor': args.is_main_contractor,
         'department': args.department or AUDIT_FILTERS_depart
     }
     audit_targets_df, project_ids, department_codes = select_audit_targets(filters, args.output_csv)
 
     logger.info(f"감사 대상 수: {len(project_ids)}")
     for pid, dc in zip(project_ids, department_codes):
-        logger.info(f"Project ID: {pid}, Department Code: {dc}")
-        
+        logger.info(f"Project ID: {pid}, Department Code: {dc}")        
+
+
 # python audit_target_generator.py --verbose

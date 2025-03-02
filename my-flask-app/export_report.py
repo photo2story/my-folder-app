@@ -37,7 +37,7 @@ async def load_audit_files(department_code, verbose=False):
     
     return results
 
-async def create_department_report(department_code, verbose=False):
+async def create_department_report(department_code, output_path, verbose=False):
     """부서별 보고서 CSV 생성"""
     audit_data = await load_audit_files(department_code, verbose)
     if not audit_data:
@@ -74,13 +74,12 @@ async def create_department_report(department_code, verbose=False):
     # 중복 프로젝트 제거 (가장 최근 감사 결과만 유지)
     df = df.drop_duplicates(subset=['project_id'], keep='first')
     
-    # 보고서 저장
-    report_dir = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'report')
+    # 보고서 저장 (지정된 출력 경로로 저장)
+    report_dir = os.path.dirname(output_path)
     os.makedirs(report_dir, exist_ok=True)
-    output_path = os.path.join(report_dir, f"report_{department_code}.csv")
     df.to_csv(output_path, index=False, encoding='utf-8')
 
-    # GitHub에 파일 업로드
+    # GitHub에 파일 업로드 (존재하는 경우)
     try:
         from git_operations import move_files_to_images_folder
         await move_files_to_images_folder(output_path)
@@ -111,30 +110,29 @@ async def get_department_codes():
         print(f"[ERROR] Failed to load department codes: {str(e)}")
         return []
 
-async def main(dept_code=None, verbose=False):
+async def main(dept_code=None, output_path=None, verbose=False):
     """보고서 생성 메인 함수"""
     start_time = datetime.now()
     print("=== Starting Report Generation ===")
     print(f"Timestamp: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     
-    department_codes = [dept_code] if dept_code else get_department_codes()
-    
-    if not department_codes:
-        print("[ERROR] No departments to process")
+    if not dept_code or not output_path:
+        print("[ERROR] Department code and output path are required")
         return
     
-    total_projects = 0
-    for dept_code in department_codes:
-        print(f"\nProcessing department: {dept_code}")
-        df = create_department_report(dept_code, verbose)
-        if df is not None:
-            total_projects += len(df)
+    print(f"\nProcessing department: {dept_code}")
+    df = await create_department_report(dept_code, output_path, verbose)
+    
+    if df is not None:
+        total_projects = len(df)
+    else:
+        total_projects = 0
     
     end_time = datetime.now()
     duration = (end_time - start_time).total_seconds()
     
     print("\n=== Report Generation Summary ===")
-    print(f"Departments processed: {len(department_codes)}")
+    print(f"Departments processed: 1")
     print(f"Total projects: {total_projects}")
     print(f"Duration: {duration:.2f} seconds")
     print("================================")
@@ -272,20 +270,19 @@ def calculate_risk_score(missing_docs):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Export department-wise project audit reports")
-    parser.add_argument('--dept', type=str, help="Specific department code (e.g., 01020)")
+    parser.add_argument('--dept', type=str, required=True, help="Specific department code (e.g., 01010)")
+    parser.add_argument('--output', type=str, required=True, help="Output CSV file path (e.g., ./report/report_01010.csv)")
     parser.add_argument('--verbose', action='store_true', help="Enable detailed debug output")
     args = parser.parse_args()
     
     print("\n=== Starting Report Generation Test ===")
     print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # 테스트용 부서 코드 (args.dept가 없을 경우)
-    test_dept = args.dept or "01010"  # 도로설계부를 기본값으로 사용
-    
+    # 비동기 테스트 실행
     async def run_test():
         try:
-            print(f"\nTesting report generation for department: {test_dept}")
-            df = await create_department_report(test_dept, verbose=args.verbose)
+            print(f"\nTesting report generation for department: {args.dept}")
+            df = await create_department_report(args.dept, args.output, verbose=args.verbose)
             
             if df is not None:
                 print(f"\nReport generation successful!")
@@ -298,14 +295,13 @@ if __name__ == "__main__":
                         total_count = df[f'{doc_type}_count'].sum()
                         print(f"- {doc_type}: {exists_count} projects have documents (total {total_count} files)")
             else:
-                print(f"\nNo data found for department {test_dept}")
+                print(f"\nNo data found for department {args.dept}")
                 
         except Exception as e:
             print(f"\n[ERROR] Test failed: {str(e)}")
     
-    # 비동기 테스트 실행
     asyncio.run(run_test())
     
     print("\n=== Test Completed ===")
 
-# python export_report.py --dept 01010 --verbose
+# python export_report.py --dept 01010 --output ./report/report_01010.csv --verbose

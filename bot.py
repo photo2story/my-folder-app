@@ -195,17 +195,36 @@ async def audit(ctx, *, query: str = None):
         if not query:
             help_message = (
                 "🔍 프로젝트 감사 명령어 사용법:\n"
-                "!audit [project_id] - 특정 프로젝트 감사\n"
+                "!audit [project_id] [department_code] [use_ai] - 특정 프로젝트 감사\n"
                 "!audit all - 전체 프로젝트 감사\n"
-                "!audit [project_id] true - AI 분석 포함\n"
-                "!audit all true - 전체 프로젝트 AI 분석 포함"
+                "use_ai는 'true' 또는 'use ai'로 입력 가능 (예: !audit 20240178 06010 true)"
             )
             await ctx.send(help_message)
             return
 
+        # 쿼리 파싱 (project_id, department_code, use_ai 추출)
         args = query.split()
+        if len(args) < 1:
+            await ctx.send("❌ 올바른 형식이 아닙니다. !audit [project_id] [department_code] [use_ai]를 입력하세요.")
+            return
+
         project_id = args[0].lower()
-        use_ai = len(args) > 1 and args[1].lower() == 'true'
+        department_code = None
+        use_ai = False
+
+        # project_id에서 숫자만 추출 (영문 접두사 제거)
+        numeric_project_id = re.sub(r'[^0-9]', '', project_id)
+
+        # department_code와 use_ai 추출
+        if len(args) > 1:
+            if re.match(r'^\d{5}$', args[1]):  # 5자리 숫자로 department_code 검증
+                department_code = args[1].zfill(5)  # 5자리로 패딩
+                if len(args) > 2:
+                    use_ai = args[2].lower() in ['true', 'use ai']
+            else:
+                use_ai = args[1].lower() in ['true', 'use ai']
+                if len(args) > 2 and re.match(r'^\d{5}$', args[2]):
+                    department_code = args[2].zfill(5)
 
         if project_id == 'all':
             await ctx.send("🔍 전체 프로젝트 감사를 시작합니다...")
@@ -230,7 +249,7 @@ async def audit(ctx, *, query: str = None):
                     if idx % 10 == 0:  # 진행상황 10개 단위로 보고
                         await ctx.send(f"🔄 진행중... {progress}")
                     
-                    result = await audit_service.audit_project(current_id, use_ai)
+                    result = await audit_service.audit_project(current_id, use_ai, ctx)
                     all_results.append(result)
                     
                     if 'error' not in result:
@@ -271,15 +290,16 @@ async def audit(ctx, *, query: str = None):
             await ctx.send(report)
             
         else:
-            # 단일 프로젝트 감사
-            result = await audit_service.audit_project(project_id, use_ai, ctx)
+            # 단일 프로젝트 감사 (numeric_project_id와 department_code 사용)
+            result = await audit_service.audit_project(numeric_project_id, department_code, use_ai, ctx)
             if 'error' in result:
                 await ctx.send(f"❌ 감사 실패: {result['error']}")
                 
     except Exception as e:
         await log_debug(ctx, f"감사 명령어 실행 중 오류 발생", error=e)
         await ctx.send(f"❌ 오류 발생: {str(e)}")
-
+        
+        
 @bot.command(name='clear_cache')
 async def clear_cache(ctx):
     """캐시 초기화 명령어"""
@@ -288,6 +308,45 @@ async def clear_cache(ctx):
         await ctx.send("캐시가 초기화되었습니다.")
     except Exception as e:
         await ctx.send(f"캐시 초기화 중 오류 발생: {str(e)}")
+
+
+@bot.command(name='project')
+async def project(ctx, *, project_id: str = None):
+    """프로젝트 정보 조회 명령어"""
+    try:
+        if not project_id or not re.match(r'^\d+$', project_id):  # 숫자만 포함된 project_id 확인
+            help_message = (
+                "🔍 프로젝트 정보 조회 명령어 사용법:\n"
+                "!project [project_id] - 특정 프로젝트 ID로 정확히 일치하는 프로젝트 조회 (예: !project 20240178, 숫자만 입력, 접미사 없는 프로젝트만)"
+            )
+            await ctx.send(help_message)
+            return
+
+        # get_project.py에서 프로젝트 데이터 조회
+        from get_project import get_project
+        projects = get_project(project_id)
+
+        if not projects:
+            await ctx.send(f"❌ 프로젝트 ID {project_id}에 해당하는 정확히 일치하는 데이터가 없습니다 (접미사 없는 프로젝트).")
+            return
+
+        # 디스코드에 결과 전송 (가독성 개선)
+        message = f"📋 **프로젝트 ID {project_id}에 해당하는 정확히 일치하는 프로젝트 목록 (접미사 없음)**\n"
+        message += "------------------------\n"
+        for idx, project in enumerate(projects, 1):
+            message += f"\n{idx}. **사업코드**: {project['사업코드']}\n"
+            message += f"   **사업명**: {project['사업명']}\n"
+            message += f"   **부서**: {project['PM부서']} (코드: {project['부서코드']})\n"
+            message += f"   **진행상태**: {project['진행상태']}\n"
+            message += f"   **주관사 여부**: {project['주관사']}\n"
+            message += "------------------------\n"
+        
+        message += "\n사용자가 원하는 프로젝트를 선택하세요 (예: !audit [사업코드] [use_ai])."
+        await ctx.send(message)
+
+    except Exception as e:
+        await log_debug(ctx, f"프로젝트 조회 명령어 실행 중 오류 발생", error=e)
+        await ctx.send(f"❌ 오류 발생: {str(e)}")
 
 async def run_bot():
     """봇 실행"""

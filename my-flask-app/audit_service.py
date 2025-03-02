@@ -533,7 +533,6 @@ if __name__ == "__main__":
     parser.add_argument('--use-ai', action='store_true', help="AI 분석 사용")
     parser.add_argument('--year', type=int, nargs='+', default=AUDIT_FILTERS['year'], help="필터링할 준공 연도 (기본값: 2024)")
     parser.add_argument('--status', type=str, nargs='+', default=['진행', '중지'], help="필터링할 진행 상태 (기본값: 진행, 중지)")
-    parser.add_argument('--is-main-contractor', type=str, nargs='+', default=AUDIT_FILTERS['is_main_contractor'], help="필터링할 주관사 여부 (기본값: 주관사, 비주관사)")
     parser.add_argument('--department', type=str, nargs='+', default=AUDIT_FILTERS['department'] or AUDIT_FILTERS_depart, help="필터링할 부서 코드 (기본값: 01010, 06010)")
     args = parser.parse_args()
     
@@ -560,7 +559,6 @@ if __name__ == "__main__":
         filters = {
             'year': args.year,
             'status': args.status,
-            'is-main-contractor': args.is_main_contractor,
             'department': args.department
         }
         asyncio.run(service.process_audit_targets(filters, args.use_ai))
@@ -571,3 +569,4 @@ if __name__ == "__main__":
 # python audit_service.py
 # python audit_service.py --project-id 20180076 --department-code 01010 --use-ai
 # python audit_service.py --project-id 20240178 --department-code 06010 --use-ai
+# python audit_service.py --project-id 20240178 --use-ai
