@@ -38,3 +38,4 @@ orjson
 diskcache
 psutil
 pytest
+pytest-asyncio

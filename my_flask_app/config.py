@@ -1,9 +1,9 @@
-# my_flask_app/config.py
+# /my_flask_app/config.py
 import os
 from pathlib import Path  # Path 클래스를 사용하기 위해 pathlib 모듈 임포트
 import logging
 from dotenv import load_dotenv
-from config_assets import AUDIT_FILTERS, AUDIT_FILTERS_depart, DOCUMENT_TYPES
+from my_flask_app.config_assets import AUDIT_FILTERS, AUDIT_FILTERS_depart, DOCUMENT_TYPES
 
 load_dotenv()
 

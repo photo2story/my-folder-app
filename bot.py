@@ -20,7 +20,7 @@ import re
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
-# Add my-flask-app directory to sys.path
+# 플라스크 앱 디렉토리 추가
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my_flask_app')))
 
 # 사용자 정의 모듈 임포트
