@@ -1,4 +1,5 @@
-# my-flask-app/get_project.py
+# my-flask-app/get_project.py : 프로젝트 정보 검색
+
 import pandas as pd
 import re
 from config import CONTRACT_STATUS_CSV
@@ -141,7 +142,7 @@ if __name__ == "__main__":
     
     # 2단계: PM부서가 "환경사업부"이고, project_id와 일치하는 프로젝트 필터링
     # project_id에서 영문 접두사만 제거 (숫자와 접미사 유지)
-    project_id = "C20240178"  # 예시로 영문 접두사 포함 project_id 사용
+    project_id = "20240178"  # 예시로 영문 접두사 포함 project_id 사용
     clean_project_id = re.sub(r'^[A-Za-z]', '', str(project_id))
     
     # PM부서가 "환경사업부"이고, 사업코드_clean이 clean_project_id와 정확히 일치하는 행 필터링

@@ -6,11 +6,11 @@ import asyncio
 import aiofiles
 import logging
 import time
-from pathlib import Path  # Path 클래스를 사용하기 위해 pathlib 모듈 임포트
+from pathlib import Path
 from datetime import datetime
 from functools import lru_cache
 import pandas as pd
-from config import PROJECT_LIST_CSV, STATIC_DATA_PATH, get_full_path
+from config import PROJECT_LIST_CSV, STATIC_DATA_PATH, get_full_path, NETWORK_BASE_PATH
 from config_assets import DOCUMENT_TYPES
 from concurrent.futures import ThreadPoolExecutor
 import re
@@ -59,6 +59,10 @@ class ProjectDocumentSearcher:
         
         # 디렉토리 생성
         os.makedirs(self.projects_dir, exist_ok=True)
+
+        # 캐시 통계
+        self.cache_hits = 0
+        self.cache_misses = 0
 
     async def _load_project_list(self):
         """프로젝트 목록 로드"""
@@ -117,8 +121,10 @@ class ProjectDocumentSearcher:
         """디렉토리 항목을 비동기적으로 스캔 (캐싱 최최화)"""
         cache_key = str(path)
         if cache_key in self._dir_cache:
+            self.cache_hits += 1
             return self._dir_cache[cache_key]
 
+        self.cache_misses += 1
         try:
             loop = asyncio.get_event_loop()
             entries = await loop.run_in_executor(self.executor, os.scandir, str(path))
@@ -135,9 +141,11 @@ class ProjectDocumentSearcher:
         """파일 이름에서 문서 유형 매칭 (중복 방지, 우선순위 적용, 재검사 포함)"""
         file_lower = file_name.lower()
         if file_lower in self._file_cache:
+            self.cache_hits += 1
             logger.debug(f"Cache hit for {file_name}: {self._file_cache[file_lower]}")
             return self._file_cache[file_lower]
 
+        self.cache_misses += 1
         for doc_type in DOCUMENT_PRIORITY:
             if KEYWORD_PATTERNS[doc_type].search(file_lower):
                 logger.debug(f"Matched {file_name} with {doc_type} using pattern: {KEYWORD_PATTERNS[doc_type].pattern}")
@@ -159,7 +167,7 @@ class ProjectDocumentSearcher:
 
     async def search_document(self, project_path, doc_type, depth=0, max_found=3, found_count=0):
         """프로젝트 폴더에서 특정 유형의 문서 파일을 검색 (최대 3개까지)"""
-        if found_count >= max_found or depth > 7:  # max_depth를 20으로 증가
+        if found_count >= max_found or depth > 7:
             return []
 
         found_items = []
@@ -309,18 +317,24 @@ class ProjectDocumentSearcher:
             return None
 
     async def search_all_documents(self, project_id, department_code=None):
-        """모든 문서 유형에 대한 검색 수행 (부서별 병렬 처리)"""
+        """모든 문서 유형에 대한 검색 수행 (부서별 병렬 처리, audit_service와 호환성 보장)"""
         try:
             # 프로젝트 정보 조회
             project_info = await self.get_project_info(project_id, department_code)
             if not project_info:
                 logger.error(f"프로젝트 ID {project_id}를 부서 {department_code}에서 찾을 수 없습니다.")
-                return {}
+                return {
+                    'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES},
+                    'performance': {'search_time': 0, 'document_counts': {}}
+                }
             
             project_path = project_info['original_folder']
             if not Path(project_path).exists():
                 logger.error(f"프로젝트 경로를 찾을 수 없습니다: {project_path}")
-                return {}
+                return {
+                    'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES},
+                    'performance': {'search_time': 0, 'document_counts': {}}
+                }
             
             # 각 문서 유형별로 병렬 검색
             all_documents = {}
@@ -334,26 +348,42 @@ class ProjectDocumentSearcher:
             results = await asyncio.gather(*tasks)
             
             for doc_type, found_items in zip(DOCUMENT_TYPES.keys(), results):
-                if found_items:
-                    all_documents[doc_type] = found_items[:3]  # 최대 3개로 확실히 제한
+                all_documents[doc_type] = {
+                    'exists': bool(found_items),
+                    'details': found_items[:3]  # 최대 3개로 확실히 제한
+                }
+                if self.verbose and found_items:
                     logger.info(f"{DOCUMENT_TYPES[doc_type]['name']}: {len(found_items[:3])}개 발견 ({time.time() - search_start:.2f}초)")
             
             search_time = time.time() - search_start
-            logger.info(f"\n전체 문서 검색 완료: {len(all_documents)}개 유형 발견 ({search_time:.2f}초)")
+            document_counts = {doc_type: len(all_documents[doc_type]['details']) for doc_type in all_documents}
+            logger.info(f"\n전체 문서 검색 완료: {len([d for d in all_documents.values() if d['exists']])}개 유형 발견 ({search_time:.2f}초)")
             
-            return all_documents
+            return {
+                'documents': all_documents,
+                'performance': {
+                    'search_time': search_time,
+                    'document_counts': document_counts
+                }
+            }
             
         except Exception as e:
             logger.error(f"문서 검색 중 오류 발생: {str(e)}")
             if self.verbose:
                 logger.exception("상세 오류:")
-            return {}
+            return {
+                'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES},
+                'performance': {'search_time': time.time() - search_start if 'search_start' in locals() else 0, 'document_counts': {}}
+            }
 
     def clear_cache(self):
         """캐시 초기화"""
         self._cache.clear()
         self._dir_cache.clear()
         self._file_cache.clear()
+        self.cache_hits = 0
+        self.cache_misses = 0
+        logger.info("Searcher cache cleared")
 
 if __name__ == "__main__":
     import argparse
@@ -377,3 +407,5 @@ if __name__ == "__main__":
 
 # python search_project_data.py
 # python search_project_data.py --project-id 20180076 --department-code 01010 --verbose
+# python search_project_data.py --project-id 20240178 --department-code 06010 --verbose
+# python search_project_data.py --project-id 20240178 --verbose
