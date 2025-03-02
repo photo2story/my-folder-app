@@ -14,6 +14,7 @@ from config import PROJECT_LIST_CSV, STATIC_DATA_PATH, get_full_path, NETWORK_BA
 from config_assets import DOCUMENT_TYPES
 from concurrent.futures import ThreadPoolExecutor
 import re
+from unittest.mock import patch, AsyncMock
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')

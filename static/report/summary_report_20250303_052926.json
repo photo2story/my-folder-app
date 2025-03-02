@@ -1,0 +1,78 @@
+{
+  "timestamp": "2025-03-03 05:29:26",
+  "total_projects": 58,
+  "successful_audits": 52,
+  "failed_audits": 6,
+  "document_statistics": {
+    "contract": {
+      "found": 52,
+      "missing": 0,
+      "total_files": 143
+    },
+    "specification": {
+      "found": 49,
+      "missing": 3,
+      "total_files": 140
+    },
+    "initiation": {
+      "found": 41,
+      "missing": 11,
+      "total_files": 115
+    },
+    "agreement": {
+      "found": 33,
+      "missing": 19,
+      "total_files": 93
+    },
+    "budget": {
+      "found": 51,
+      "missing": 1,
+      "total_files": 137
+    },
+    "deliverable1": {
+      "found": 46,
+      "missing": 6,
+      "total_files": 133
+    },
+    "deliverable2": {
+      "found": 40,
+      "missing": 12,
+      "total_files": 106
+    },
+    "completion": {
+      "found": 44,
+      "missing": 8,
+      "total_files": 127
+    },
+    "certificate": {
+      "found": 39,
+      "missing": 13,
+      "total_files": 100
+    },
+    "evaluation": {
+      "found": 3,
+      "missing": 49,
+      "total_files": 3
+    }
+  },
+  "department_statistics": {
+    "01010_도로": {
+      "total": 25,
+      "documents_found": 185,
+      "documents_missing": 65,
+      "risk_score": 86.6
+    },
+    "06010_환경": {
+      "total": 27,
+      "documents_found": 213,
+      "documents_missing": 57,
+      "risk_score": 86.29629629629629
+    }
+  },
+  "risk_levels": {
+    "high": 0,
+    "medium": 4,
+    "low": 48
+  },
+  "csv_report": "D:\\github\\my-folder-app\\static\\report\\audit_summary_20250303_052926.csv"
+}

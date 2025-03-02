@@ -1,21 +1,23 @@
-# my_flask_app/audit_service.py
+# /my_flask_app/audit_service.py
+
+
 import os
 import asyncio
 import aiofiles
 from datetime import datetime
 import json
 import aiohttp
+import re
 from pathlib import Path
 from search_project_data import ProjectDocumentSearcher
-from gemini import analyze_with_gemini, clear_analysis_cache
-from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, get_full_path
-from config_assets import DOCUMENT_TYPES
-import traceback
-import time
+from gemini import analyze_with_gemini
+from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, CONTRACT_STATUS_CSV
+from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES, AUDIT_FILTERS  # AUDIT_FILTERS 추가
 import logging
 import pandas as pd
 import orjson
-from functools import lru_cache  # lru_cache import 추가
+import time
+from get_project import get_project_info  # get_project.py에서 함수 임포트
 
 # JSON 파일 저장 경로 설정
 RESULTS_DIR = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'results')
@@ -26,361 +28,354 @@ logger = logging.getLogger(__name__)
 class AuditService:
     def __init__(self):
         self.searcher = ProjectDocumentSearcher(verbose=False)
-        self._cache = {}
         self._session = None
-        self._last_request_time = 0  # AI 요청 시간 추적용
-        
+
     async def _get_session(self):
-        if not hasattr(self, '_session') or (self._session is None or self._session.closed):
+        """aiohttp 세션 관리"""
+        if self._session is None:
             self._session = aiohttp.ClientSession()
         return self._session
 
-    async def save_audit_result(self, result, department_code):
-        try:
-            logger.debug("\n[DEBUG] === Saving Audit Result to JSON ===")
-            project_id = result['project_id']
-            
-            # 부서 코드로 파일명 생성
-            filename = f"audit_{department_code}_{project_id}.json"
-            filepath = Path(RESULTS_DIR) / filename
-            
-            logger.debug(f"[DEBUG] Saving to: {filepath}")
-            if not os.path.exists(RESULTS_DIR):
-                os.makedirs(RESULTS_DIR, exist_ok=True)
-            elif filepath.parent != Path(RESULTS_DIR) and not os.path.exists(filepath.parent):
-                os.makedirs(filepath.parent, exist_ok=True)
-            
-            json_data = orjson.dumps(result, option=orjson.OPT_INDENT_2 | orjson.OPT_NON_STR_KEYS).decode('utf-8')
-            async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
-                await f.write(json_data)
-            
-            logger.debug(f"[DEBUG] JSON file saved successfully")
-            return str(filepath)
-            
-        except Exception as e:
-            logger.error(f"[DEBUG] Error saving JSON file: {str(e)}")
-            return None
-
-    async def send_progress_message(self, ctx, message):
-        session = await self._get_session()
-        try:
-            if ctx is None or isinstance(ctx, bool):
-                logger.warning(f"[DEBUG] Invalid ctx provided, skipping Discord message: {message}")
-                return
-            if ctx and hasattr(ctx, 'send'):
-                await ctx.send(message)
-            elif DISCORD_WEBHOOK_URL:
-                async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}) as response:
-                    await response.read()
-        except Exception as e:
-            logger.error(f"[DEBUG] Error sending progress message: {str(e)}")
-
-    @lru_cache(maxsize=1)
-    def _load_project_df(self):
-        return pd.read_csv(PROJECT_LIST_CSV, dtype={'department_code': str, 'project_id': str})
-
-    async def get_project_info_by_dept(self, project_id, department_code=None):
-        df = self._load_project_df()
-        if department_code:
-            project = df[(df['project_id'] == str(project_id)) & (df['department_code'] == str(department_code))]
-        else:
-            project = df[df['project_id'] == str(project_id)]
-        
-        if len(project) == 0:
-            logger.error(f"Project ID {project_id} not found in project list for department {department_code}")
-            return None
-        
-        row = project.iloc[0]
-        return {
-            'department_code': str(row['department_code']).zfill(5),
-            'department_name': row['department_name'],
-            'project_name': row['project_name'],
-            'original_folder': get_full_path(row['original_folder'], verbose=False)
-        }
-
-    async def audit_project(self, project_id, department_code=None, use_ai=False, ctx=None):
-        session = None
-        start_time = time.time()
-        try:
-            session = await self._get_session()
-            
-            logger.info(f"\n=== 프로젝트 {project_id} 감사 시작 ===")
-            
-            # 부서 코드가 지정되지 않았으면 기본 부서 선택
-            project_info = await self.get_project_info_by_dept(project_id, department_code)
-            if not project_info:
-                raise ValueError(f'Project ID {project_id} not found in project list for department {department_code}')
-            
-            # 프로젝트 정보 추출
-            project_path = project_info['original_folder']
-            dept_code = project_info['department_code']
-            dept_name = project_info['department_name']
-            
-            logger.info(f"부서: {dept_code}_{dept_name}")
-            logger.info(f"이름: {project_info['project_name']}")
-            
-            # 네트워크 드라이브 캐싱 추가
-            logger.debug(f"Attempting to cache network path: {project_path}")
-            project_path = await self.searcher._cache_network_files(project_path) if hasattr(self.searcher, '_cache_network_files') else project_path
-            logger.debug(f"Cached project path: {project_path}")
-            
-            if not Path(project_path).exists():
-                raise FileNotFoundError(
-                    f'Project path {project_path} does not exist. '
-                    f'Ensure {NETWORK_BASE_PATH} drive is accessible.'
-                )
-            
-            # 문서 검색 수행
-            logger.info("\n=== 문서 검색 시작 ===")
-            search_start = time.time()
-            search_result = await self.searcher.process_single_project(project_id, department_code)
-            if not search_result or 'performance' not in search_result:
-                raise ValueError(f"프로젝트 {project_id} 검색 실패 또는 성능 데이터 누락")
-            
-            search_time = search_result['performance']['search_time']
-            all_documents = search_result['documents']
-            
-            # 검색 결과를 audit_project 형식으로 변환
-            result = {
-                'project_id': str(project_id),
-                'department': f"{dept_code}_{dept_name}",
-                'project_name': str(project_info['project_name']),
-                'project_path': project_path,
-                'documents': {
-                    doc_type: {
-                        'exists': bool(files),
-                        'details': files
-                    } for doc_type, files in all_documents.items()
-                },
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'performance': {
-                    'total_time': time.time() - start_time,
-                    'search_time': search_time,
-                    'document_counts': search_result['performance']['document_counts'],
-                    'ai_time': 0,
-                    'save_time': 0
-                }
-            }
-            
-            # 중간 결과 보고
-            found_count = sum(1 for docs in result['documents'].values() if docs['exists'])
-            total_count = len(DOCUMENT_TYPES)
-            logger.info(f"\n=== 문서 검색 완료 ({search_time:.2f}초) ===")
-            logger.info(f"- 발견된 문서 유형: {found_count}/{total_count}개")
-            logger.info(f"- 총 발견 파일 수: {sum(len(docs['details']) for docs in result['documents'].values() if docs['exists'])}개")
-            
-            # AI 분석 수행 (요청 시)
-            if use_ai:
-                logger.info("\n=== AI 분석 시작 ===")
-                ai_start = time.time()
-                try:
-                    result['ai_analysis'] = await analyze_with_gemini(result, session)
-                    result['performance']['ai_time'] = time.time() - ai_start
-                    logger.info(f"=== AI 분석 완료 ({result['performance']['ai_time']:.2f}초) ===")
-                except Exception as ai_err:
-                    logger.error(f"AI 분석 실패: {str(ai_err)}")
-                    result['ai_analysis'] = f"AI analysis failed: {str(ai_err)}"
-            
-            # JSON 파일로 저장
-            logger.info("\n=== 결과 저장 중 ===")
-            save_start = time.time()
-            json_path = await self.save_audit_result(result, dept_code)
-            if json_path:
-                result['json_file'] = json_path
-                result['performance']['save_time'] = time.time() - save_start
-                logger.info(f"결과 저장 완료: {json_path}")
-            
-            # 최종 결과 전송
-            await self.send_to_discord(result, ctx)
-            
-            total_time = time.time() - start_time
-            result['performance']['total_time'] = total_time
-            logger.info(f"\n=== 감사 완료 ({total_time:.2f}초) ===")
-            logger.info(f"성능 요약:")
-            logger.info(f"- 총 소요 시간: {total_time:.2f}초")
-            logger.info(f"- 문서 검색 시간: {search_time:.2f}초")
-            logger.info(f"- AI 분석 시간: {result['performance']['ai_time']:.2f}초")
-            logger.info(f"- JSON 저장 시간: {result['performance']['save_time']:.2f}초")
-            logger.info(f"- 발견된 문서 유형: {found_count}/{total_count}개")
-            logger.info(f"- 총 발견 파일 수: {sum(len(docs['details']) for docs in result['documents'].values() if docs['exists'])}개")
-            return result
-            
-        except Exception as e:
-            error_result = {
-                'error': str(e),
-                'project_id': project_id,
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'performance': {
-                    'total_time': time.time() - start_time
-                }
-            }
-            logger.error(f"\n=== 감사 실패 ===")
-            logger.error(f"프로젝트 {project_id} 처리 중 오류 발생: {str(e)}")
-            await self.send_to_discord(error_result, ctx)
-            return error_result
-        finally:
-            if session:
-                await session.close()
-
-    async def send_to_discord(self, data, ctx=None):
-        session = await self._get_session()
-        try:
-            logger.debug("\n[DEBUG] === Sending to Discord ===")
-            
-            # 에러 결과 처리
-            if 'error' in data:
-                logger.debug(f"[DEBUG] Sending error message for project {data['project_id']}")
-                message = (
-                    f"❌ **Audit Error**\n"
-                    f"Project ID: {data['project_id']}\n"
-                    f"Error: {data['error']}\n"
-                    f"Time: {data['timestamp']}"
-                )
-                await self.send_progress_message(ctx, message)
-                return
-
-            logger.debug(f"[DEBUG] Preparing success message for project {data['project_id']}")
-            
-            # 정상 결과 처리
-            message = (
-                f"📋 **Project Audit Result**\n"
-                f"ID: {data['project_id']}\n"
-                f"Department: {data['department']}\n"
-                f"Name: {data['project_name']}\n"
-                f"Path: {data['project_path']}\n\n"
-                f"📑 Documents:\n"
-            )
-
-            # 문서 상태 요약
-            found_docs = []
-            missing_docs = []
-            for doc_type, info in data['documents'].items():
-                doc_name = DOCUMENT_TYPES[doc_type]['name']
-                if info['exists']:
-                    found_docs.append(f"{doc_name} ({len(info['details'])}개)")
-                else:
-                    missing_docs.append(doc_name)
-
-            logger.debug(f"[DEBUG] Found documents: {len(found_docs)}")
-            logger.debug(f"[DEBUG] Missing documents: {len(missing_docs)}")
-
-            if found_docs:
-                message += "✅ Found:\n- " + "\n- ".join(found_docs) + "\n\n"
-            if missing_docs:
-                message += "❌ Missing:\n- " + "\n- ".join(missing_docs) + "\n\n"
-
-            if 'ai_analysis' in data:
-                logger.debug("[DEBUG] Including AI analysis in message")
-                message += f"🤖 AI Analysis:\n{data['ai_analysis']}\n\n"
-
-            if 'json_file' in data:
-                logger.debug("[DEBUG] Including JSON file path in message")
-                message += f"\n💾 Results saved to: {data['json_file']}"
-
-            message += f"\n⏰ {data['timestamp']}"
-            
-            # 메시지 전송
-            await self.send_progress_message(ctx, message)
-            logger.debug("[DEBUG] === Discord Message Sent ===\n")
-            
-        except Exception as e:
-            error_msg = f"Discord notification error: {str(e)}"
-            logger.error(f"\n[DEBUG] ERROR in send_to_discord: {error_msg}")
-            if ctx:
-                await ctx.send(f"❌ {error_msg}")
-
-    def clear_cache(self):
-        """서비스 캐시 초기화"""
-        self._cache.clear()
-        self.searcher.clear_cache()
-        clear_analysis_cache()
-        
     async def close(self):
-        """리소스 정리"""
-        if hasattr(self, '_session') and self._session:
+        """세션 정리"""
+        if self._session is not None:
             await self._session.close()
             self._session = None
 
-    async def generate_summary_report(self, results):
-        """전체 감사 결과에 대한 종합 보고서 생성"""
+    async def save_audit_result(self, result, department_code):
+        """감사 결과를 JSON으로 저장"""
+        project_id = result['project_id']
+        filename = f"audit_{department_code}_{project_id}.json"
+        filepath = Path(RESULTS_DIR) / filename
+        
+        if not os.path.exists(RESULTS_DIR):
+            os.makedirs(RESULTS_DIR, exist_ok=True)
+        
+        json_data = orjson.dumps(result, option=orjson.OPT_INDENT_2 | orjson.OPT_NON_STR_KEYS).decode('utf-8')
+        async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
+            await f.write(json_data)
+        return str(filepath)
+
+    async def send_to_discord(self, data, ctx=None):
+        """디스코드로 결과 전송 (ctx가 있으면 채널에 직접 전송, 없으면 웹훅 사용, 데이터 유형 처리 개선)"""
+        # data가 리스트일 경우 각 요소를 개별적으로 처리
+        if isinstance(data, list):
+            success = True
+            for item in data:
+                if not await self._send_single_to_discord(item, ctx):
+                    success = False
+            return success
+        else:
+            return await self._send_single_to_discord(data, ctx)
+
+    async def _send_single_to_discord(self, data, ctx=None):
+        """단일 감사 결과를 Discord로 전송 (내부 함수)"""
+        if not isinstance(data, dict):
+            logger.error(f"Invalid audit data format: {data}")
+            return False
+
+        message = (
+            f"📋 **Project Audit Result**\n"
+            f"ID: {data.get('project_id', 'Unknown')}\n"
+            f"Department: {data.get('department', data.get('department_code', 'Unknown'))}\n"
+            f"Name: {data.get('project_name', f'Project {data.get('project_id', 'Unknown')}')}\n"
+            f"Path: {data.get('project_path', 'Unknown')}\n\n"  # 'original_folder' 대신 'project_path' 사용
+            f"📑 Documents:\n"
+        )
+
+        found_docs = []
+        missing_docs = []
+        documents = data.get('documents', {})
+        for doc_type, doc_info in documents.items():
+            doc_name = DOCUMENT_TYPES.get(doc_type, {}).get('name', doc_type)
+            if doc_info.get('exists', False):  # exists가 True인 경우
+                found_docs.append(f"{doc_name} ({len(doc_info.get('details', []))}개)")
+            else:
+                missing_docs.append(doc_name)
+
+        if found_docs:
+            message += "✅ Found:\n- " + "\n- ".join(found_docs) + "\n\n"
+        if missing_docs:
+            message += "❌ Missing:\n- " + "\n- ".join(missing_docs)
+
+        if 'ai_analysis' in data and data['ai_analysis']:
+            message += f"\n🤖 AI Analysis:\n{data['ai_analysis']}"
+
+        message += f"\n⏰ {data.get('timestamp', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}"
+
         try:
-            logger.info("\n[DEBUG] === Generating Summary Report ===")
+            if ctx:
+                # ctx가 있는 경우 디스코드 채널에 직접 메시지 전송
+                await ctx.send(message)
+                logger.info(f"Sent audit result to Discord channel: {message}")
+            elif DISCORD_WEBHOOK_URL:
+                # ctx가 없으면 웹훅으로 전송
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}, timeout=10) as response:
+                        if response.status != 204:
+                            logger.warning(f"Webhook response status: {response.status}")
+                            print(f"Failed to send to Discord webhook: {message}")
+                            return False
+                logger.info("Audit result successfully sent to Discord webhook")
+            else:
+                print(message)
+            return True
+        except Exception as e:
+            logger.error(f"Error sending to Discord: {str(e)}")
+            if ctx:
+                await ctx.send(f"❌ 디스코드 전송 오류: {str(e)}")
+            else:
+                print(f"Failed to send to Discord: {message}")
+            return False
+
+    async def search_projects_by_id(self, project_id, department_code=None):
+        """project_id와 department_code를 기반으로 프로젝트 정보 및 폴더를 찾아 검색 (get_project_info 사용, process_single_project 호출, max_found=3 고정)"""
+        numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))
+        projects = []
+        
+        # 1) get_project_info를 호출하여 프로젝트 정보 찾기 (비동기 처리로 변환, department_code 동적 전달)
+        loop = asyncio.get_event_loop()
+        project_info = await loop.run_in_executor(None, lambda: get_project_info(project_id, department_code=department_code))
+        if not project_info:
+            logger.error(f"Project ID {numeric_project_id} not found in project list or contract status for department {department_code or '01010'}")
+            return projects
+
+        # 부서 코드와 프로젝트 경로 추출
+        dept_code = project_info['department_code']
+        dept_name = project_info['department_name']
+        folder_path = project_info['original_folder']
+        
+        # 경로 존재 여부 확인
+        if not await asyncio.to_thread(os.path.exists, folder_path):
+            logger.error(f"Project folder does not exist: {folder_path}")
+            return projects
+
+        # 2) search_project_data.py의 process_single_project 호출 (project_id와 department_code 동적 전달, max_found=3 고정)
+        search_result = await self.searcher.process_single_project(project_id, department_code)
+        if search_result and 'documents' in search_result:
+            documents = search_result['documents']
+            total_files = sum(len(doc_info) for doc_info in documents.values() if doc_info)  # process_single_project의 반환 형식 반영
+            if total_files > 0:
+                projects.append({
+                    'project_id': numeric_project_id,
+                    'department_code': dept_code,
+                    'department_name': dept_name,
+                    'project_name': project_info['project_name'],
+                    'original_folder': folder_path,
+                    'documents': documents
+                })
+                logger.info(f"Found project path for {numeric_project_id} in {dept_code}_{dept_name}: {folder_path}")
+        
+        return projects
+
+    async def audit_project(self, project_id, department_code=None, use_ai=False, ctx=None):
+        """단일 프로젝트 감사 (project_id와 부서 코드를 기반으로 검색 및 처리, use-ai 옵션으로 제미니 분석 추가)"""
+        start_time = time.time()
+        try:
+            logger.info(f"\n=== 프로젝트 {project_id} (ID: {re.sub(r'[^0-9]', '', str(project_id))}) 감사 시작 ===")
             
-            # 결과 파일명 생성
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            summary_filename = f"summary_report_{timestamp}.json"
-            summary_path = os.path.join(RESULTS_DIR, summary_filename)
+            if ctx:
+                await ctx.send(f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
+
+            # project_id와 department_code로 부서와 폴더를 찾아 검색
+            projects = await self.search_projects_by_id(project_id, department_code)
+            if not projects:
+                raise ValueError(f'Project ID {project_id} not found in project list or contract status for department {department_code or "01010"}')
             
-            # 통계 데이터 수집
-            summary = {
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'total_projects': len(results),
-                'successful_audits': sum(1 for r in results if 'error' not in r),
-                'failed_audits': sum(1 for r in results if 'error' in r),
-                'document_statistics': {
-                    doc_type: {
-                        'found': 0,
-                        'missing': 0
-                    } for doc_type in DOCUMENT_TYPES.keys()
-                },
-                'department_statistics': {},
-                'detailed_results': results
-            }
-            
-            # 부서별, 문서별 통계 수집
-            for result in results:
-                if 'error' not in result:
-                    dept = result['department']
-                    if dept not in summary['department_statistics']:
-                        summary['department_statistics'][dept] = {
-                            'total': 0,
-                            'documents_found': 0,
-                            'documents_missing': 0
+            # 부서별로 감사 수행 (중복 제거)
+            all_results = []
+            for project_info in projects:
+                result = {
+                    'project_id': project_info.get('project_id'),
+                    'project_name': project_info.get('project_name'),
+                    'department': f"{project_info.get('department_code')}_{project_info.get('department_name')}",
+                    'documents': {},
+                    'project_path': project_info.get('original_folder'),
+                    'ai_analysis': None,
+                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    'performance': {
+                        'total_time': 0,
+                        'search_time': 0,
+                        'ai_time': 0,
+                        'save_time': 0
+                    }
+                }
+                
+                # 문서 검색 시간 (이미 search_projects_by_id에서 수행)
+                search_time = time.time() - start_time
+                
+                # documents 데이터 구조화 (gemini.py가 기대하는 형식으로 변환)
+                for doc_type, doc_data in project_info['documents'].items():
+                    if isinstance(doc_data, list):  # 리스트로 반환된 경우
+                        result['documents'][doc_type] = {
+                            'exists': len(doc_data) > 0,
+                            'details': [{'name': path} for path in doc_data]
                         }
+                    elif isinstance(doc_data, dict):  # 이미 딕셔너리로 반환된 경우
+                        result['documents'][doc_type] = {
+                            'exists': doc_data.get('exists', False),
+                            'details': [{'name': path} for path in doc_data.get('details', []) if isinstance(path, str)] or []
+                        }
+                    else:
+                        logger.warning(f"Unknown documents format for {doc_type}: {doc_data}")
+                        result['documents'][doc_type] = {
+                            'exists': False,
+                            'details': []
+                        }
+                
+                # AI 분석 (use-ai 옵션에 따라 조건부 실행)
+                ai_analysis = None
+                ai_time = 0
+                if use_ai:
+                    if ctx:
+                        await ctx.send(f"\n=== AI 분석 시작 ({project_info['department_name']}) ===")
+                    logger.info(f"\n=== AI 분석 시작 ({project_info['department_name']}) ===")
+                    ai_start = time.time()
                     
-                    dept_stats = summary['department_statistics'][dept]
-                    dept_stats['total'] += 1
+                    # AI 분석을 위한 데이터 구조화
+                    ai_input = {
+                        'project_id': project_info['project_id'],
+                        'department': project_info['department_name'],
+                        'project_name': project_info['project_name'],
+                        'documents': result['documents']  # 구조화된 documents 사용
+                    }
                     
-                    for doc_type, info in result['documents'].items():
-                        if info['exists']:
-                            summary['document_statistics'][doc_type]['found'] += 1
-                            dept_stats['documents_found'] += 1
-                        else:
-                            summary['document_statistics'][doc_type]['missing'] += 1
-                            dept_stats['documents_missing'] += 1
+                    try:
+                        ai_analysis = await analyze_with_gemini(ai_input, await self._get_session())
+                    except Exception as e:
+                        logger.error(f"AI 분석 오류: {str(e)}")
+                        ai_analysis = f"AI 분석 중 오류 발생: {str(e)}"
+                    
+                    ai_time = time.time() - ai_start
+                    if ctx:
+                        await ctx.send(f"=== AI 분석 완료 ({ai_time:.2f}초) ({project_info['department_name']})\nAI Analysis: {ai_analysis}")
+                    logger.info(f"=== AI 분석 완료 ({ai_time:.2f}초) ({project_info['department_name']})\nAI Analysis: {ai_analysis}")
+                
+                result['ai_analysis'] = ai_analysis if use_ai else None
+                result['performance']['search_time'] = search_time
+                result['performance']['ai_time'] = ai_time
+                
+                # 결과 저장
+                save_start = time.time()
+                json_path = await self.save_audit_result(result, project_info['department_code'])
+                if json_path:
+                    result['result_file'] = json_path  # 'json_file' 대신 'result_file' 사용
+                    result['performance']['save_time'] = time.time() - save_start
+                    if ctx:
+                        await ctx.send(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
+                    logger.info(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
+                
+                # Discord로 결과 전송
+                await self.send_to_discord(result, ctx)
+                result['performance']['total_time'] = time.time() - start_time
+                all_results.append(result)
             
-            # 보고서 저장
-            if not os.path.exists(RESULTS_DIR):
-                os.makedirs(RESULTS_DIR, exist_ok=True)
-            json_data = orjson.dumps(summary, option=orjson.OPT_INDENT_2 | orjson.OPT_NON_STR_KEYS).decode('utf-8')
-            async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
-                await f.write(json_data)
+            if ctx:
+                await ctx.send(f"\n=== 모든 부서에 대한 감사 완료 ({time.time() - start_time:.2f}초) ===")
             
-            logger.info(f"[DEBUG] Summary report saved to: {summary_path}")
-            return summary_path, summary
+            logger.info(f"\n=== 모든 부서에 대한 감사 완료 ({time.time() - start_time:.2f}초) ===")
+            logger.info(f"- 총 소요 시간: {time.time() - start_time:.2f}초")
+            logger.info(f"- 발견된 부서: {len(projects)}개")
+            logger.info(f"- 총 발견 파일 수: {sum(len(doc_info.get('details', [])) for p in projects for doc_info in p['documents'].values() if isinstance(doc_info, dict))}")
+
+            return all_results[0] if len(all_results) == 1 else all_results
             
         except Exception as e:
-            logger.error(f"[ERROR] Failed to generate summary report: {str(e)}")
+            error_msg = f"프로젝트 {project_id} 처리 중 오류 발생: {str(e)}"
+            logger.error(error_msg)
+            if ctx:
+                await ctx.send(f"❌ 오류 발생: {error_msg}")
+            error_result = {
+                'error': str(e),
+                'project_id': project_id,
+                'department_code': department_code,
+                'department': f"{department_code}_{DEPARTMENT_NAMES.get(department_code, 'Unknown')}" if department_code else 'Unknown',
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'performance': {'total_time': time.time() - start_time}
+            }
+            await self.send_to_discord(error_result, ctx)
+            return error_result
+
+    async def audit_multiple_projects(self, project_ids, department_codes, use_ai=False):
+        """다중 프로젝트 배치 감사 (병렬 처리)"""
+        numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in project_ids]
+        tasks = [asyncio.create_task(self.audit_project(pid, dept, use_ai)) for pid, dept in zip(numeric_project_ids, department_codes)]
+        return await asyncio.gather(*tasks)
+
+    async def process_audit_targets(self, filters=None, use_ai=False):
+        """감사 대상 리스트를 생성하고 배치로 감사 수행 (권한 문제 해결)"""
+        from audit_target_generator import select_audit_targets  # 동적 임포트
+
+        try:
+            # static/data 디렉토리 존재 여부 및 권한 확인
+            data_dir = os.path.join(STATIC_DATA_PATH, 'data')
+            os.makedirs(data_dir, exist_ok=True)  # 디렉토리 생성, 이미 존재하면 무시
+            
+            # 권한 확인 및 수정 (Windows에서 필요 시)
+            if not os.access(data_dir, os.W_OK):
+                logger.warning(f"No write permission for {data_dir}. Attempting to change permissions...")
+                try:
+                    import stat
+                    os.chmod(data_dir, stat.S_IWRITE | stat.S_IREAD)
+                    logger.info(f"Permissions updated for {data_dir}")
+                except Exception as e:
+                    logger.error(f"Failed to update permissions for {data_dir}: {str(e)}")
+                    raise
+
+            # 감사 대상 선택
+            audit_targets_df, project_ids, department_codes = select_audit_targets(filters or AUDIT_FILTERS)
+            numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in project_ids]
+            results = await self.audit_multiple_projects(numeric_project_ids, department_codes, use_ai)
+            
+            # 결과 저장
+            audit_targets_df['AuditResult'] = [
+                result.get('ai_analysis', 'No result') if 'error' not in result else f"Error: {result['error']}"
+                for result in results
+            ]
+            
+            output_csv = os.path.join(STATIC_DATA_PATH, 'data', 'audit_results.csv')  # data 서브디렉토리 사용
+            audit_targets_df.to_csv(output_csv, index=False, encoding='utf-8-sig')
+            logger.info(f"감사 결과가 {output_csv}에 저장되었습니다. 총 프로젝트 수: {len(audit_targets_df)}")
+            return audit_targets_df, results
+            
+        except Exception as e:
+            logger.error(f"감사 대상 처리 오류: {str(e)}")
             return None, None
 
 if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description="프로젝트 문서 검색")
-    parser.add_argument('--project-id', type=str, required=True, help="검색할 프로젝트 ID")
-    parser.add_argument('--department-code', type=str, default=None, help="부서 코드 (예: 01010, 01030)")
+    parser.add_argument('--project-id', type=str, nargs='+', required=False, help="검색할 프로젝트 ID (여러 개 가능)")
+    parser.add_argument('--department-code', type=str, nargs='+', default=None, help="부서 코드 (여러 개 가능, 예: 01010, 06010)")
     parser.add_argument('--use-ai', action='store_true', help="AI 분석 사용")
     args = parser.parse_args()
     
-    if args.use_ai:
-        logging.getLogger().setLevel(logging.INFO)
+    async def main():
+        logger.info("=== 프로젝트 문서 검색 시작 ===")
+        service = AuditService()
+        
+        try:
+            if args.project_id:
+                numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in args.project_id]
+                department_codes = args.department_code if args.department_code else [None] * len(numeric_project_ids)
+                if len(department_codes) != len(numeric_project_ids):
+                    raise ValueError("부서 코드와 프로젝트 ID의 개수가 일치해야 합니다.")
+                
+                if len(numeric_project_ids) == 1:
+                    await service.audit_project(args.project_id[0], department_codes[0], args.use_ai, ctx=None)
+                else:
+                    await service.audit_multiple_projects(numeric_project_ids, department_codes, args.use_ai)
+            else:
+                await service.process_audit_targets(use_ai=args.use_ai)
+        finally:
+            await service.close()
+            logger.info("\n=== 검색 완료 ===")
     
-    logger.info("=== 프로젝트 문서 검색 시작 ===")
-    service = AuditService()
+    asyncio.run(main())
     
-    asyncio.run(service.audit_project(args.project_id, args.department_code, args.use_ai))
-    
-    logger.info("\n=== 검색 완료 ===")
-    asyncio.run(service.close())
 # python audit_service.py
 # python audit_service.py --project-id 20180076 --department-code 01010 --use-ai
+# python audit_service.py --project-id 20240178 --use-ai
+# python audit_service.py --project-id 20240178 --department-code 06010 --use-ai
+# python audit_service.py --project-id 20240178 --use-ai
