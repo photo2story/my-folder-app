@@ -132,12 +132,12 @@ def create_project_list(root_path, target_departments=None, force_scan=False, ve
         print(f"Department list not found: {DEPART_LIST_PATH}")
         return
     
-    df_dept = pd.read_csv(DEPART_LIST_PATH)
+    df_dept = pd.read_csv(DEPART_LIST_PATH, dtype={'department_code': str})  # department_code를 문자열로 읽기
     print(f"\nLoaded {len(df_dept)} departments")
     
     all_projects = []
     for _, dept in df_dept.iterrows():
-        dept_code = str(dept['department_code']).zfill(5)
+        dept_code = str(dept['department_code']).zfill(5)  # 5자리로 패딩
         dept_name = dept['department_name']
         dept_folder = f"{dept_code}_{dept_name}"
         dept_path = os.path.join(root_path, dept_folder)
@@ -157,7 +157,7 @@ def create_project_list(root_path, target_departments=None, force_scan=False, ve
             for project in projects:
                 relative_path = project['path'].split(':', 1)[1] if ':' in project['path'] else project['path']
                 project['path'] = relative_path.lstrip('\\/')
-                project['department_code'] = dept_code
+                project['department_code'] = dept_code  # 패딩 적용된 dept_code 사용
                 project['department_name'] = dept_name
             all_projects.extend(projects)
             print(f"- Found {len(projects)} projects")
@@ -165,16 +165,15 @@ def create_project_list(root_path, target_departments=None, force_scan=False, ve
     if all_projects:
         structured_data = [
             {
-                'department_code': p['department_code'],
-                'department_name': p['department_name'],
                 'project_id': p['project_id'],
+                'department_name': p['department_name'],
                 'project_name': p['name'],
                 'original_folder': p['path']
             } for p in all_projects
         ]
         
         df = pd.DataFrame(structured_data)
-        df = df.sort_values(['department_code', 'project_id'])
+        df = df.sort_values([ 'project_id'], 'department_code')
         df.to_csv(PROJECT_LIST_CSV, index=False, encoding='utf-8')
         print(f"\nSaved {len(df)} projects to {PROJECT_LIST_CSV}")
     else:
