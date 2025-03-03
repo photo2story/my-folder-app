@@ -1,4 +1,4 @@
-# my_flask_app/audit_target_generator.py
+# my_flask-app/audit_target_generator.py
 import pandas as pd
 import argparse
 import os
@@ -14,35 +14,41 @@ logger = logging.getLogger(__name__)
 def find_project_folder(project_id):
     """
     project_id로 프로젝트 폴더를 검색하여 경로 반환, 없으면 'No folder' 반환
-    project_list.csv에서 project_id를 검색하고 original_folder 값을 사용하며, Z: 드라이브를 기본으로 설정
+    project_list.csv에서 8자리 숫자 project_id를 검색하고 original_folder 값을 그대로 사용하며, Z: 드라이브를 기본으로 설정
+    audit_targets_new.csv는 검색하지 않음
     """
-    # project_id에서 접두사(C, R 등) 제거하고 숫자만 추출
-    numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))
+    # project_id에서 영문 접두사/접미사 제거 후 8자리 숫자만 추출
+    numeric_project_id = re.sub(r'^[A-Za-z]|[A-Za-z]$', '', str(project_id))
+    # 8자리 숫자인지 확인 (8자리 숫자가 아닌 경우 기본값 처리)
+    if not (len(numeric_project_id) == 8 and numeric_project_id.isdigit()):
+        logger.warning(f"Invalid project_id format for {project_id}, expected 8-digit number, got: {numeric_project_id}")
+        numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))[:8]  # 숫자만 추출, 최대 8자리
+        if not (len(numeric_project_id) == 8 and numeric_project_id.isdigit()):
+            logger.error(f"Could not extract 8-digit number from project_id: {project_id}")
+            return "No folder"
     
     # Z: 드라이브를 기본 네트워크 드라이브로 설정
     NETWORK_BASE_PATH = "Z:\\"
     
-    # 프로젝트 리스트에서 경로 확인
+    # 프로젝트 리스트에서 경로 확인 (audit_targets_new.csv 제외)
+    logger.debug(f"Searching project folder for project_id: {project_id} (numeric: {numeric_project_id}) in project_list.csv only")
     try:
         df_projects = pd.read_csv(PROJECT_LIST_CSV, encoding='utf-8-sig')
-        df_projects['project_id'] = df_projects['project_id'].apply(lambda x: re.sub(r'[^0-9]', '', str(x)))
-        project_row = df_projects[df_projects['project_id'] == numeric_project_id]
+        # project_list.csv의 project_id에서 8자리 숫자만 추출
+        df_projects['numeric_project_id'] = df_projects['project_id'].apply(lambda x: re.sub(r'^[A-Za-z]|[A-Za-z]$', '', str(x)))
+        project_row = df_projects[df_projects['numeric_project_id'] == numeric_project_id]
         
         if not project_row.empty:
             original_folder = project_row['original_folder'].iloc[0]
-            # original_folder에서 특수 문자 및 공백 정리 (유연하게 처리)
-            clean_path = original_folder.replace('ㅣ', '_').replace(' ', '_').replace('(', '').replace(')', '').replace(',', '_').replace('-', '_')
-            # 경로에서 불필요한 접두사 제거 (부서 코드 등)
-            clean_path = re.sub(r'^99999_준공|07010_상하수도|01010_도로부|.*_.*\\', '', clean_path)
-            
-            full_path = os.path.join(NETWORK_BASE_PATH, clean_path)
+            # original_folder를 그대로 사용 (공백, 특수문자, 괄호 등 유지)
+            full_path = os.path.join(NETWORK_BASE_PATH, original_folder)
             
             if os.path.exists(full_path):
                 logger.debug(f"Found project folder for ID {project_id} (numeric: {numeric_project_id}): {full_path}")
                 return full_path
             else:
-                logger.warning(f"Project folder not found for ID {project_id} (numeric: {numeric_project_id}) in cleaned path: {full_path}")
-                return os.path.join(NETWORK_BASE_PATH, original_folder)  # 원본 경로 반환
+                logger.warning(f"Project folder not found for ID {project_id} (numeric: {numeric_project_id}) in original path: {full_path}")
+                return "No folder"
         else:
             logger.warning(f"No project found in project_list.csv for numeric ID {numeric_project_id} (original: {project_id})")
     except FileNotFoundError:
@@ -55,19 +61,7 @@ def find_project_folder(project_id):
         logger.error(f"Network drive Z: not accessible: {NETWORK_BASE_PATH}")
         return "No folder"
 
-    # 기본 경로 검색 (숫자 기반)
-    base_paths = [
-        os.path.join(NETWORK_BASE_PATH, numeric_project_id),  # 기본 project_id
-        os.path.join(NETWORK_BASE_PATH, f"Y{numeric_project_id}"),  # Y 접두사 포함
-        os.path.join(NETWORK_BASE_PATH, f"{numeric_project_id}_"),  # project_id_ 접미사
-    ]
-
-    for path in base_paths:
-        if os.path.exists(path):
-            logger.debug(f"Found project folder via default search for ID {project_id} (numeric: {numeric_project_id}): {path}")
-            return path
-    
-    logger.warning(f"Project folder not found for ID {project_id} (numeric: {numeric_project_id}) after extensive search on Z:")
+    logger.warning(f"Project folder not found for ID {project_id} (numeric: {numeric_project_id}) after search in project_list.csv")
     return "No folder"
 
 def select_audit_targets(filters=None, output_csv=None):
@@ -98,8 +92,12 @@ def select_audit_targets(filters=None, output_csv=None):
     input_file = os.path.join(STATIC_DATA_PATH, 'contract_status.csv')
     try:
         df_contract = pd.read_csv(input_file, encoding='utf-8-sig')
-        # 사업코드에서 숫자만 추출하여 새로운 컬럼 생성
-        df_contract['numeric_project_id'] = df_contract['사업코드'].apply(lambda x: re.sub(r'[^0-9]', '', str(x)))
+        # 사업코드에서 영문 접두사/접미사 제거 후 8자리 숫자만 추출
+        df_contract['numeric_project_id'] = df_contract['사업코드'].apply(lambda x: re.sub(r'^[A-Za-z]|[A-Za-z]$', '', str(x))[:8])
+        # 8자리 숫자만 유지 (숫자가 아닌 경우 빈 문자열 처리)
+        df_contract['numeric_project_id'] = df_contract['numeric_project_id'].apply(
+            lambda x: x if (len(x) == 8 and x.isdigit()) else ''
+        )
     except FileNotFoundError:
         logger.error(f"파일을 찾을 수 없습니다: {input_file}")
         raise
@@ -107,10 +105,13 @@ def select_audit_targets(filters=None, output_csv=None):
         logger.error(f"CSV 파일 읽기 오류: {str(e)}")
         raise
 
-    # project_id에서 접두사(C, R 등) 유지 (필터링에 영향 주지 않음)
-    df_contract['project_id'] = df_contract['사업코드'].apply(lambda x: str(x).strip())
+    # 열 목록 디버깅 로그로 출력
+    logger.debug(f"Columns in contract_status.csv: {df_contract.columns.tolist()}")
 
-    # 필터링 조건 적용
+    # project_id에서 영문 접두사/접미사 제거 후 8자리 숫자 유지 (필터링에 영향 주지 않음)
+    df_contract['project_id'] = df_contract['사업코드'].apply(lambda x: re.sub(r'^[A-Za-z]|[A-Za-z]$', '', str(x))[:8])
+
+    # 필터링 조건 적용 (numeric_project_id가 8자리 숫자인 경우만 유지)
     mask = True
     if 'status' in filters and filters['status']:
         mask &= df_contract['진행상태'].isin(filters['status'])
@@ -124,6 +125,9 @@ def select_audit_targets(filters=None, output_csv=None):
     if 'year' in filters and filters['year']:
         mask &= pd.to_datetime(df_contract['변경준공일(차수)'], errors='coerce').dt.year.isin(filters['year'])
         logger.info(f"Filtering for year {filters['year']}: Only 2024 completed projects will be audited")
+
+    # numeric_project_id가 8자리 숫자인 경우만 유지
+    mask &= df_contract['numeric_project_id'].str.len().eq(8) & df_contract['numeric_project_id'].str.isdigit()
 
     # 필터링된 데이터 (contract_status.csv에서 모든 필드 가져오기)
     filtered_df = df_contract[mask][['사업코드', 'PM부서', '사업명', '진행상태', '주관사', 'numeric_project_id']]
@@ -142,7 +146,7 @@ def select_audit_targets(filters=None, output_csv=None):
 
     filtered_df['Contractor'] = filtered_df.apply(get_contractor, axis=1)
 
-    # ProjectID를 숫자만 남기도록 수정
+    # ProjectID를 8자리 숫자로 변환 (영문 접두사/접미사 제거)
     filtered_df['ProjectID'] = filtered_df['numeric_project_id']
 
     # Depart_ProjectID 생성 (부서코드_ProjectID)
@@ -155,7 +159,7 @@ def select_audit_targets(filters=None, output_csv=None):
         axis=1
     )
 
-    # 프로젝트 폴더 미리 확인 및 search_folder 추가 (필터링에 영향 없음)
+    # 프로젝트 폴더 미리 확인 및 search_folder 추가 (필터링에 영향 없음, project_list.csv만 사용)
     filtered_df['search_folder'] = filtered_df['ProjectID'].apply(find_project_folder)
 
     # numeric_project_id 컬럼 제거
@@ -170,10 +174,10 @@ def select_audit_targets(filters=None, output_csv=None):
     logger.info(f"Audit targets filtered by status: {filters['status']} with document requirements applied (준공: 100% 문서 필요, 진행: 부분 문서 허용)")
 
     # DataFrame 반환 (project_id와 search_folder 사용)
-    numeric_project_ids = filtered_df['ProjectID'].tolist()
+    project_ids = filtered_df['ProjectID'].tolist()
     search_folders = filtered_df['search_folder'].tolist()
 
-    return audit_targets, numeric_project_ids, search_folders
+    return audit_targets, project_ids, search_folders
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="새로운 감사 대상 프로젝트 필터링")
