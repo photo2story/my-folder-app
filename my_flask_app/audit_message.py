@@ -1,6 +1,10 @@
+# my_flask_app/audit_message.py
+
 import discord
 import aiohttp
+from datetime import datetime
 from config import DISCORD_WEBHOOK_URL
+from config_assets import DOCUMENT_TYPES
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,7 +44,7 @@ async def send_audit_to_discord(data):
                         missing_docs = []
                         documents = item.get('documents', {})
                         for doc_type in documents.keys():
-                            doc_name = DOC_TYPES.get(doc_type, {}).get('name', doc_type)
+                            doc_name = DOCUMENT_TYPES.get(doc_type, {}).get('name', doc_type)  # DOC_TYPES → DOCUMENT_TYPES 수정
                             doc_info = documents.get(doc_type, {'exists': False, 'details': []})
                             if doc_info.get('exists', False):
                                 count = len(doc_info.get('details', []))
@@ -90,7 +94,7 @@ async def send_audit_to_discord(data):
                     missing_docs = []
                     documents = data.get('documents', {})
                     for doc_type in documents.keys():
-                        doc_name = DOC_TYPES.get(doc_type, {}).get('name', doc_type)
+                        doc_name = DOCUMENT_TYPES.get(doc_type, {}).get('name', doc_type)  # DOC_TYPES → DOCUMENT_TYPES 수정
                         doc_info = documents.get(doc_type, {'exists': False, 'details': []})
                         if doc_info.get('exists', False):
                             count = len(doc_info.get('details', []))

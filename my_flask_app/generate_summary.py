@@ -151,7 +151,7 @@ def load_audit_results(results_dir, verbose=False):
                         # contract_status.csv에서 백업으로 가져오기
                         status, contractor = get_status_contractor_from_contract(project_id, contract_df)
                     
-                    depart_project_id = f"{dept_code}_{project_id}"
+                    depart_project_id = f"{project_id}_{dept_code}"
                     results[project_id] = {
                         'documents': data['documents'],
                         'depart_project_id': depart_project_id,

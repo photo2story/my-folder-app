@@ -302,7 +302,7 @@ class ProjectDocumentSearcher:
             }
             
             # JSON 파일로 저장 (부서별로 별도 저장)
-            json_path = os.path.join(self.projects_dir, f'{dept_code}_{project_id}.json')
+            json_path = os.path.join(self.projects_dir, f'{project_id}_{dept_code}.json')
             async with aiofiles.open(json_path, 'w', encoding='utf-8') as f:
                 await f.write(json.dumps(result, ensure_ascii=False, indent=2))
             
