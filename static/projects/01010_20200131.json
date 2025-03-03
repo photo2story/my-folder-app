@@ -34,18 +34,18 @@
     "specification": [
       {
         "type": "file",
-        "name": "Final Project Report - Appendix H(specification).pdf",
-        "path": "Final Project Report - Appendix H(specification).pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\01 설계단계\\00 관련자료 모음\\20200908 TA-8987 Final Project Report\\Final Project Report - Appendix H(specification).pdf",
-        "depth": 3,
-        "doc_type": "specification"
-      },
-      {
-        "type": "file",
         "name": "타당성조사 과업범위 문의.docx",
         "path": "타당성조사 과업범위 문의.docx",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\01 제안단계 RFP등\\타당성조사 과업범위 문의.docx",
         "depth": 2,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "Final Project Report - Appendix H(specification).pdf",
+        "path": "Final Project Report - Appendix H(specification).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\01 설계단계\\00 관련자료 모음\\20200908 TA-8987 Final Project Report\\Final Project Report - Appendix H(specification).pdf",
+        "depth": 3,
         "doc_type": "specification"
       }
     ],
@@ -112,10 +112,10 @@
       }
     ]
   },
-  "timestamp": "2025-03-03 05:20:08",
+  "timestamp": "2025-03-03 07:39:03",
   "performance": {
-    "total_time": 2.1320056915283203,
-    "search_time": 2.103001594543457,
+    "total_time": 0.8722553253173828,
+    "search_time": 0.8432543277740479,
     "document_counts": {
       "contract": 3,
       "specification": 2,

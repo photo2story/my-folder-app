@@ -102,9 +102,9 @@
       },
       {
         "type": "file",
-        "name": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
-        "path": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
+        "name": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금-파일 사이즈.pdf",
+        "path": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금-파일 사이즈.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금-파일 사이즈.pdf",
         "depth": 3,
         "doc_type": "deliverable1"
       }
@@ -156,26 +156,26 @@
       },
       {
         "type": "file",
-        "name": "20230316 Nepal SASEC Road3 실적증명서.pdf",
-        "path": "20230316 Nepal SASEC Road3 실적증명서.pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서.pdf",
-        "depth": 2,
-        "doc_type": "certificate"
-      },
-      {
-        "type": "file",
         "name": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
         "path": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서(2).pdf",
         "depth": 2,
         "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "20230316 Nepal SASEC Road3 실적증명서.pdf",
+        "path": "20230316 Nepal SASEC Road3 실적증명서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서.pdf",
+        "depth": 2,
+        "doc_type": "certificate"
       }
     ]
   },
-  "timestamp": "2025-03-03 05:20:19",
+  "timestamp": "2025-03-03 07:39:40",
   "performance": {
-    "total_time": 7.365873336791992,
-    "search_time": 7.32387113571167,
+    "total_time": 2.8202872276306152,
+    "search_time": 2.7892918586730957,
     "document_counts": {
       "contract": 3,
       "agreement": 3,

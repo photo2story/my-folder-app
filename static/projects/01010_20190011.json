@@ -10,7 +10,7 @@
         "type": "file",
         "name": "# Main Contract_SASEC-II.pdf",
         "path": "# Main Contract_SASEC-II.pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
         "depth": 4,
         "doc_type": "contract"
       },
@@ -18,16 +18,16 @@
         "type": "file",
         "name": "# Main Contract_SASEC-II.pdf",
         "path": "# Main Contract_SASEC-II.pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
         "depth": 4,
         "doc_type": "contract"
       },
       {
         "type": "file",
-        "name": "계약금액정리(방글라데시)-feat 김성민.xlsx",
-        "path": "계약금액정리(방글라데시)-feat 김성민.xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\계약금액정리(방글라데시)-feat 김성민.xlsx",
-        "depth": 3,
+        "name": "☆☆☆방글라데시 사섹 도로_변경 계약 검토표★★★.xlsx",
+        "path": "☆☆☆방글라데시 사섹 도로_변경 계약 검토표★★★.xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.02 계약내역자료\\☆☆☆방글라데시 사섹 도로_변경 계약 검토표★★★.xlsx",
+        "depth": 2,
         "doc_type": "contract"
       }
     ],
@@ -94,10 +94,10 @@
       }
     ]
   },
-  "timestamp": "2025-03-03 05:19:32",
+  "timestamp": "2025-03-03 07:36:35",
   "performance": {
-    "total_time": 5.246105432510376,
-    "search_time": 5.22009015083313,
+    "total_time": 2.485186815261841,
+    "search_time": 2.455183267593384,
     "document_counts": {
       "contract": 3,
       "specification": 1,
