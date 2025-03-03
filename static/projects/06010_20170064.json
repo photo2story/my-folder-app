@@ -240,10 +240,10 @@
       }
     ]
   },
-  "timestamp": "2025-03-03 07:35:03",
+  "timestamp": "2025-03-03 16:06:05",
   "performance": {
-    "total_time": 0.2579994201660156,
-    "search_time": 0.23096156120300293,
+    "total_time": 220.18770170211792,
+    "search_time": 220.1546745300293,
     "document_counts": {
       "contract": 3,
       "specification": 3,

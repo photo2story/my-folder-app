@@ -1,6 +1,5 @@
 # /my_flask_app/audit_service.py
 
-
 import os
 import asyncio
 import aiofiles
@@ -384,7 +383,7 @@ class AuditService:
 
         try:
             # static/data 디렉토리 존재 여부 및 권한 확인
-            data_dir = os.path.join(STATIC_DATA_PATH, 'data')
+            data_dir = os.path.join(STATIC_DATA_PATH)
             os.makedirs(data_dir, exist_ok=True)  # 디렉토리 생성, 이미 존재하면 무시
             
             # 권한 확인 및 수정 (Windows에서 필요 시)
@@ -401,22 +400,29 @@ class AuditService:
             # 감사 대상 선택
             audit_targets_df, project_ids, department_codes = select_audit_targets(filters or AUDIT_FILTERS)
             
-            if audit_targets_df.empty or 'project_id' not in audit_targets_df.columns:
-                error_msg = "No valid project_id column found in audit_targets_new.csv"
-                logger.error(error_msg)
-                return None, None
+            if audit_targets_df.empty or 'ProjectID' not in audit_targets_df.columns:
+                # ProjectID 열이 없으면 Depart_ProjectID에서 동적으로 생성
+                if 'Depart_ProjectID' in audit_targets_df.columns:
+                    audit_targets_df['ProjectID'] = audit_targets_df['Depart_ProjectID'].apply(lambda x: re.sub(r'[^0-9]', '', str(x).split('_')[-1]))
+                    logger.warning(f"ProjectID column not found, generated from Depart_ProjectID: {audit_targets_df['ProjectID'].head()}")
+                else:
+                    error_msg = "No valid ProjectID or Depart_ProjectID column found in audit_targets_new.csv"
+                    logger.error(error_msg)
+                    return None, None
 
-            numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in project_ids]
+            numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in audit_targets_df['ProjectID'].tolist()]
+            department_codes = [str(dc).zfill(5) for dc in department_codes]  # 부서 코드 5자리로 패딩
+
             logger.info(f"📊 총 {len(numeric_project_ids)}개 프로젝트를 처리합니다...")
             results = await self.audit_multiple_projects(numeric_project_ids, department_codes, use_ai)
             
-            # 결과 저장
+            # 결과 저장 (audit_targets_new.csv와 매핑)
             audit_targets_df['AuditResult'] = [
                 result.get('ai_analysis', 'No result') if 'error' not in result else f"Error: {result['error']}"
                 for result in results
             ]
             
-            output_csv = os.path.join(STATIC_DATA_PATH, 'data', 'audit_results.csv')  # data 서브디렉토리 사용
+            output_csv = os.path.join(STATIC_DATA_PATH, 'audit_results.csv')  # data 서브디렉토리 제거
             audit_targets_df.to_csv(output_csv, index=False, encoding='utf-8-sig')
             logger.info(f"감사 결과가 {output_csv}에 저장되었습니다. 총 프로젝트 수: {len(audit_targets_df)}")
             return audit_targets_df, results
@@ -463,3 +469,4 @@ if __name__ == "__main__":
 # python audit_service.py --project-id 20180076 --use-ai
 # python audit_service.py --project-id 20240178 --department-code 06010 --use-ai
 # python audit_service.py --project-id 20240178 --use-ai
+# python audit_service.py --project-id 20190088 --use-ai # 준공폴더,9999

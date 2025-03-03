@@ -25,7 +25,8 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my_flask_app')))
 
 # 사용자 정의 모듈 임포트
-from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_DATA_PATH, DISCORD_WEBHOOK_URL
+from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_DATA_PATH, DISCORD_WEBHOOK_URL, AUDIT_FILTERS
+from config_assets import DOCUMENT_TYPES as CONFIG_DOCUMENT_TYPES  # config_assets에서 DOCUMENT_TYPES 가져오기
 from search_project_data import ProjectDocumentSearcher
 from audit_service import AuditService
 from export_report import generate_summary_report
@@ -39,7 +40,7 @@ os.makedirs(AUDIT_RESULTS_DIR, exist_ok=True)
 # 로깅 설정
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(message)s',
+    format='%(asctime)s [DEBUG] %(message)s',
     handlers=[logging.StreamHandler()]
 )
 logger = logging.getLogger(__name__)  # logger 객체 전역으로 초기화
@@ -190,110 +191,42 @@ async def audit(ctx, *, query: str = None):
             return
 
         if args[0].lower() == 'all':
-            # audit_targets_new.csv에 있는 모든 프로젝트 감사
+            # audit_targets_new.csv에 있는 모든 프로젝트 감사 (process_audit_targets 호출)
             await send_audit_status_to_discord(ctx, "🔍 audit_targets_new.csv에 있는 모든 프로젝트 감사를 시작합니다...")
             
-            # audit_targets_new.csv 로드
+            # audit_service.process_audit_targets 호출 (AUDIT_FILTERS 사용) 및 디버깅
+            audit_targets_df, results = await audit_service.process_audit_targets(filters=AUDIT_FILTERS, use_ai=False)
+            
+            if isinstance(audit_targets_df, pd.DataFrame) and audit_targets_df.empty:
+                await send_audit_status_to_discord(ctx, "❌ 모든 프로젝트 감사가 실패했습니다.")
+                logger.error("No audit results returned from process_audit_targets")
+                return
+            if not results or (isinstance(results, list) and len(results) == 0):
+                await send_audit_status_to_discord(ctx, "❌ 모든 프로젝트 감사가 실패했습니다.")
+                logger.error("No audit results returned from process_audit_results")
+                return
+            
+            total_projects = len(audit_targets_df) if isinstance(audit_targets_df, pd.DataFrame) else len(results)
+            success_count = sum(1 for r in (audit_targets_df['AuditResult'] if isinstance(audit_targets_df, pd.DataFrame) else results) if 'Error' not in str(r))
+            error_count = total_projects - success_count
+            
+            # 누락된 프로젝트 확인 및 로깅
             audit_targets_csv = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
             if not os.path.exists(audit_targets_csv):
                 await send_audit_status_to_discord(ctx, f"❌ audit_targets_new.csv 파일을 찾을 수 없습니다: {audit_targets_csv}")
                 logger.error(f"CSV file not found: {audit_targets_csv}")
                 return
             
-            df = pd.read_csv(audit_targets_csv, encoding='utf-8-sig')
-            total_projects = len(df)
+            df_targets = pd.read_csv(audit_targets_csv, encoding='utf-8-sig')
+            # Depart_ProjectID에서 ProjectID 추출 (숫자만)
+            df_targets['ProjectID'] = df_targets['Depart_ProjectID'].apply(lambda x: re.sub(r'[^0-9]', '', str(x).split('_')[-1]))
+            all_project_ids = df_targets['ProjectID'].tolist()
+            audited_ids = [re.sub(r'[^0-9]', '', str(r['project_id'])) for r in results if isinstance(r, dict)] if results and isinstance(results, list) else []
+            missing_ids = [pid for pid in all_project_ids if pid not in audited_ids]
             
-            await send_audit_status_to_discord(ctx, f"📊 총 {total_projects}개 프로젝트를 처리합니다...")
-            
-            # 결과 저장용 리스트
-            all_results = []
-            success_count = 0
-            error_count = 0
-            
-            # 각 프로젝트 감사 수행 (project_id 순회)
-            for idx, row in df.iterrows():
-                project_id_col = 'project_id'  # 기본 열 이름
-                if 'project_id' not in df.columns:
-                    possible_cols = ['ProjectID', '사업코드', 'projectId', 'Depart_ProjectID']
-                    for col in possible_cols:
-                        if col in df.columns:
-                            project_id_col = col
-                            break
-                    if project_id_col == 'project_id':
-                        raise KeyError("No valid project_id column found in audit_targets_new.csv")
-                
-                # Depart_ProjectID에서 부서코드와 사업코드를 추출
-                project_id_value = str(row[project_id_col]).strip()
-                if project_id_col == 'Depart_ProjectID':
-                    # '부서코드_C사업코드' 형식에서 부서코드와 사업코드 분리 (예: '01010_C20070089' -> '01010', '20070089')
-                    match = re.match(r'(\d+)_C(\d+)$', project_id_value)
-                    if match:
-                        department_code = match.group(1).zfill(5)  # 부서코드 (5자리로 패딩)
-                        project_id = match.group(2)  # 사업코드 (project_id)
-                    else:
-                        # 정규식 매칭 실패 시 숫자만 추출 (백업)
-                        parts = project_id_value.split('_')
-                        if len(parts) > 1 and parts[1].startswith('C'):
-                            department_code = re.sub(r'[^0-9]', '', parts[0]).zfill(5)
-                            project_id = re.sub(r'[^0-9]', '', parts[1][1:])
-                        else:
-                            department_code = re.sub(r'[^0-9]', '', project_id_value.split('_')[0]).zfill(5)
-                            project_id = re.sub(r'[^0-9]', '', project_id_value.split('_')[1] if len(project_id_value.split('_')) > 1 else project_id_value)
-                else:
-                    # 다른 열 이름의 경우 숫자만 추출
-                    project_id = re.sub(r'[^0-9]', '', project_id_value)
-                    department_code = None  # 부서코드는 별도로 추출 필요
-
-                # 디버깅: 추출된 project_id와 department_code 출력
-                logger.debug(f"Extracted project_id for row {idx + 1}: {project_id}")
-                logger.debug(f"Extracted department_code for row {idx + 1}: {department_code}")
-
-                # 부서 코드 열 확인 및 추출 (기본적으로 Depart_ProjectID에서 이미 추출했으므로 확인만)
-                department_code_col = 'department_code'  # 기본 부서 코드 열 이름
-                if 'department_code' not in df.columns:
-                    possible_dept_cols = ['departmentCode', '부서코드', 'Depart', 'department']
-                    for col in possible_dept_cols:
-                        if col in df.columns:
-                            department_code_col = col
-                            break
-                
-                if department_code is None and department_code_col in row:
-                    department_code = str(row[department_code_col]).zfill(5) if pd.notna(row[department_code_col]) else None
-                    logger.debug(f"Overridden department_code from column {department_code_col}: {department_code}")
-
-                # 상태와 계약자 정보 추출 (CSV에서 직접 가져오기)
-                status = str(row.get('Status', 'Unknown')).strip()
-                contractor = str(row.get('Contractor', 'Unknown')).strip()
-
-                progress = f"({idx + 1}/{total_projects})"
-                
-                if idx % 10 == 0:  # 진행상황 10개 단위로 보고
-                    await send_audit_status_to_discord(ctx, f"🔄 진행중... {progress}")
-                
-                # audit {projectID} 호출 방식으로 단일 프로젝트 감사
-                await send_audit_status_to_discord(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
-                try:
-                    result = await audit_service.audit_project(project_id, department_code, False, ctx)  # 기본 감사 (AI 없이)
-                    all_results.append(result)
-                    
-                    if 'error' not in result:
-                        success_count += 1
-                        await send_audit_status_to_discord(ctx, f"✅ 프로젝트 {project_id} 감사 완료: {result.get('timestamp', '시간정보 없음')} {progress}")
-                        await send_audit_to_discord(result)  # 웹훅으로 결과 전송
-                    else:
-                        error_count += 1
-                        await send_audit_status_to_discord(ctx, f"❌ 프로젝트 {project_id} 감사 실패: {result['error']} {progress}")
-                except Exception as e:
-                    error_count += 1
-                    error_msg = f"Error processing project {project_id}: {str(e)}"
-                    logger.error(error_msg)
-                    await send_audit_status_to_discord(ctx, f"❌ {error_msg} {progress}")
-                    continue
-                
-                await asyncio.sleep(1)  # 각 프로젝트 감사 사이에 1초 대기
-
-            # 종합 보고서 생성
-            summary_path, summary = await generate_summary_report(all_results, verbose=True)
+            if missing_ids:
+                logger.warning(f"Missing projects in audit all: {missing_ids}")
+                await send_audit_status_to_discord(ctx, f"⚠️ 누락된 프로젝트: {', '.join(missing_ids)}")
             
             # 결과 출력
             report = (
@@ -306,12 +239,18 @@ async def audit(ctx, *, query: str = None):
                 "📈 위험도 분석:\n"
             )
             
-            if summary and 'risk_levels' in summary:
-                report += (
-                    f"🔴 고위험: {summary['risk_levels']['high']}개\n"
-                    f"🟡 중위험: {summary['risk_levels']['medium']}개\n"
-                    f"🟢 저위험: {summary['risk_levels']['low']}개\n"
-                )
+            # 종합 보고서 생성 (audit_targets_df 또는 results 사용)
+            try:
+                summary_path, summary = await generate_summary_report(audit_targets_df if isinstance(audit_targets_df, pd.DataFrame) else results, verbose=True)
+                if summary and 'risk_levels' in summary:
+                    report += (
+                        f"🔴 고위험: {summary['risk_levels']['high']}개\n"
+                        f"🟡 중위험: {summary['risk_levels']['medium']}개\n"
+                        f"🟢 저위험: {summary['risk_levels']['low']}개\n"
+                    )
+            except Exception as e:
+                logger.error(f"Failed to generate summary report: {str(e)}")
+                report += "❌ 위험도 분석 생성 실패: 상세 보고서 생성 중 오류 발생.\n"
             
             if summary_path:
                 report += f"\n💾 종합 보고서 저장됨: {summary_path}"
@@ -319,8 +258,8 @@ async def audit(ctx, *, query: str = None):
                     report += f"\n📊 CSV 보고서 저장됨: {summary['csv_report']}"
             
             await send_audit_status_to_discord(ctx, report)
-            await send_audit_to_discord(all_results)  # 웹훅으로 종합 결과 전송
-
+            await send_audit_to_discord(results if isinstance(results, list) else audit_targets_df.to_dict('records'), document_types=CONFIG_DOCUMENT_TYPES)  # DOCUMENT_TYPES 전달
+            
         else:
             # 단일 프로젝트 감사 (project_id로 실행)
             project_id = args[0]  # projectID로 입력
@@ -336,7 +275,7 @@ async def audit(ctx, *, query: str = None):
                     # result가 리스트일 경우 첫 번째 요소, 단일 딕셔너리일 경우 그대로 사용
                     audit_result = result[0] if isinstance(result, list) else result
                     await send_audit_status_to_discord(ctx, f"✅ 프로젝트 {project_id} 감사 완료: {audit_result.get('timestamp', '시간정보 없음')}")
-                    await send_audit_to_discord(result)  # 웹훅으로 결과 전송
+                    await send_audit_to_discord(result, document_types=CONFIG_DOCUMENT_TYPES)  # DOCUMENT_TYPES 전달
             except Exception as e:
                 error_msg = f"Error processing project {project_id}: {str(e)}"
                 logger.error(error_msg)
@@ -372,7 +311,7 @@ async def project(ctx, *, project_id: str = None):
         # 숫자만 추출
         numeric_project_id = re.sub(r'[^0-9]', '', project_id)
         
-        # 디버그 메시지 출력
+        # 디버깅 메시지 출력
         await ctx.send(f"🔍 프로젝트 ID {numeric_project_id} 검색 중...")
         
         # get_project.py에서 프로젝트 데이터 조회
