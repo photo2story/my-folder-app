@@ -10,16 +10,18 @@ import re
 from pathlib import Path
 from search_project_data import ProjectDocumentSearcher
 from gemini import analyze_with_gemini
-from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, CONTRACT_STATUS_CSV
+from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH,STATIC_PATH, CONTRACT_STATUS_CSV
 from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES, AUDIT_FILTERS  # AUDIT_FILTERS 추가
 import logging
 import pandas as pd
 import orjson
 import time
 from get_project import get_project_info  # get_project.py에서 함수 임포트
+import ast
+from audit_message import send_audit_to_discord, send_audit_status_to_discord  # ✅ 추가
 
 # JSON 파일 저장 경로 설정
-RESULTS_DIR = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'results')
+RESULTS_DIR = os.path.join(STATIC_PATH, 'results')  # ✅ `static/data/results` 폴더에 저장
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -42,39 +44,57 @@ class AuditService:
             self._session = None
 
     async def save_audit_result(self, result, department_code):
-        """감사 결과를 JSON으로 저장"""
+        """감사 결과를 JSON으로 저장하며, 잘못된 문자열을 변환"""
         project_id = result['project_id']
-        filename = f"audit_{project_id}_{department_code}.json"
-        filepath = Path(RESULTS_DIR) / filename
         
+        # 기존: audit_20240178_06010.json 형식
+        # filename = f"audit_{project_id}_{department_code}.json"
+        
+        # 변경: audit_20240178.json 형식
+        filename = f"audit_{project_id}.json"
+        
+        filepath = os.path.join(RESULTS_DIR, filename)
+
         if not os.path.exists(RESULTS_DIR):
             os.makedirs(RESULTS_DIR, exist_ok=True)
-        
-        # 부서 코드를 메타데이터에 포함 (파일 이름에 이미 포함됨)
-        result['department_code'] = department_code  # 결과에 부서 코드 추가
-        json_data = orjson.dumps(result, option=orjson.OPT_INDENT_2 | orjson.OPT_NON_STR_KEYS).decode('utf-8')
-        async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
-            await f.write(json_data)
-        logger.info(f"Audit result saved for Project ID {project_id} (Department: {department_code}) to {filepath}")
-        return str(filepath)
 
-    async def send_to_discord(self, data, ctx=None):
-        """디스코드로 결과 전송 (ctx가 있으면 채널에 직접 전송, 없으면 웹훅 사용, 데이터 유형 처리 개선)"""
-        # data가 리스트일 경우 각 요소를 개별적으로 처리
-        if isinstance(data, list):
-            success = True
-            for item in data:
-                if not await self._send_single_to_discord(item, ctx):
-                    success = False
-            return success
-        else:
-            return await self._send_single_to_discord(data, ctx)
+        # JSON 내 문자열 형태의 딕셔너리를 올바르게 변환
+        def fix_document_details(details):
+            if isinstance(details, list):
+                corrected_details = []
+                for item in details:
+                    if isinstance(item, str):
+                        try:
+                            item = json.loads(item.replace("'", "\""))  # 문자열을 JSON으로 변환
+                        except json.JSONDecodeError:
+                            pass  # 변환 실패 시 원래 값 유지
+                    corrected_details.append(item)
+                return corrected_details
+            return details
+
+        # 모든 문서 항목에서 문자열로 저장된 딕셔너리를 변환
+        for doc_type, doc_info in result.get('documents', {}).items():
+            if 'details' in doc_info:
+                doc_info['details'] = fix_document_details(doc_info['details'])
+
+        # JSON 저장
+        async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
+            await f.write(json.dumps(result, ensure_ascii=False, indent=2))
+
+        logger.info(f"✅ 감사 결과 저장 완료: {filepath}")
+        return filepath
+
 
     async def _send_single_to_discord(self, data, ctx=None):
         """단일 감사 결과를 Discord로 전송 (내부 함수)"""
         if not isinstance(data, dict):
             logger.error(f"Invalid audit data format: {data}")
             return False
+
+        # Unknown 프로젝트 결과는 전송하지 않음
+        if data.get('project_id') == 'Unknown' and data.get('department') == 'Unknown':
+            logger.warning("Skipping Unknown project result")
+            return True
 
         message = (
             f"📋 **Project Audit Result**\n"
@@ -119,15 +139,25 @@ class AuditService:
             elif DISCORD_WEBHOOK_URL:
                 # ctx가 없으면 웹훅으로 전송
                 async with aiohttp.ClientSession() as session:
-                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}, timeout=10) as response:
-                        if response.status != 204:
-                            logger.warning(f"Webhook response status: {response.status}")
-                            print(f"Failed to send to Discord webhook: {message}")
-                            return False
-                logger.info("Audit result successfully sent to Discord webhook")
+                    try:
+                        async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}, timeout=10) as response:
+                            if response.status != 204:
+                                logger.warning(f"Webhook response status: {response.status}")
+                                print(f"Failed to send to Discord webhook: {message}")
+                                return False
+                        logger.info("Audit result successfully sent to Discord webhook")
+                        return True
+                    except asyncio.TimeoutError:
+                        logger.error("Timeout while sending to Discord webhook")
+                        print(f"Timeout while sending to Discord webhook: {message}")
+                        return False
+                    except Exception as e:
+                        logger.error(f"Error sending to Discord webhook: {str(e)}")
+                        print(f"Failed to send to Discord webhook: {message}")
+                        return False
             else:
                 print(message)
-            return True
+                return True
         except Exception as e:
             logger.error(f"Error sending to Discord: {str(e)}")
             if ctx:
@@ -348,7 +378,7 @@ class AuditService:
             logger.info(f"\n=== 프로젝트 {project_id} (ID: {re.sub(r'[^0-9]', '', str(project_id))}) 감사 시작 ===")
             
             if ctx:
-                await ctx.send(f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
+                await send_audit_status_to_discord(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
 
             # project_id만으로 부서와 폴더를 찾아 검색
             projects = await self.search_projects_by_id(project_id)
@@ -439,7 +469,10 @@ class AuditService:
                         logger.info(f"\n결과 저장 완료 ({dept_name}): {json_path}")
                     
                     # Discord로 결과 전송
-                    await self.send_to_discord(result, ctx)
+                    try:
+                        await send_audit_to_discord(result)  # ✅ 오류 발생 여부와 상관없이 실행
+                    except Exception as e:
+                        logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
                     result['performance']['total_time'] = time.time() - start_time
                     return [result]
                 else:
@@ -452,9 +485,9 @@ class AuditService:
                     'project_id': project_info.get('project_id'),
                     'project_name': project_info.get('project_name'),
                     'department': f"{project_info.get('department_code')}_{project_info.get('department_name')}",
-                    'status': project_info.get('status', 'Unknown'),  # Status 추가
-                    'contractor': project_info.get('contractor', 'Unknown'),  # Contractor 추가
-                    'documents': project_info['documents'].copy(),  # 원본 데이터 복사
+                    'status': project_info.get('status', 'Unknown'),
+                    'contractor': project_info.get('contractor', 'Unknown'),
+                    'documents': project_info['documents'].copy(),
                     'project_path': project_info.get('original_folder'),
                     'ai_analysis': None,
                     'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -516,10 +549,10 @@ class AuditService:
                         'project_id': project_info['project_id'],
                         'department': project_info['department_name'],
                         'project_name': project_info['project_name'],
-                        'status': project_info['status'],  # Status 추가
-                        'contractor': project_info['contractor'],  # Contractor 추가
+                        'status': project_info['status'],
+                        'contractor': project_info['contractor'],
                         'documents': result['documents'],
-                        'csv_data': csv_data  # CSV 형식 데이터 추가
+                        'csv_data': csv_data
                     }
                     
                     try:
@@ -541,14 +574,17 @@ class AuditService:
                 save_start = time.time()
                 json_path = await self.save_audit_result(result, project_info['department_code'])
                 if json_path:
-                    result['result_file'] = json_path  # 'json_file' 대신 'result_file' 사용
+                    result['result_file'] = json_path
                     result['performance']['save_time'] = time.time() - save_start
                     if ctx:
                         await ctx.send(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
                     logger.info(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
                 
                 # Discord로 결과 전송
-                await self.send_to_discord(result, ctx)
+                try:
+                    await send_audit_to_discord(result)  # ✅ 오류 발생 여부와 상관없이 실행
+                except Exception as e:
+                    logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
                 result['performance']['total_time'] = time.time() - start_time
                 all_results.append(result)
             
@@ -562,7 +598,9 @@ class AuditService:
             logger.info(f"- 총 발견 파일 수: {total_files}")
             logger.info(f"- 발견된 문서 유형 수: {len({doc_type for p in projects for doc_type in p['documents'].keys() if p['documents'][doc_type].get('exists', False)})}")
 
-            return all_results[0] if len(all_results) == 1 else all_results
+            # 결과 반환 시 Unknown 프로젝트 제외
+            valid_results = [r for r in all_results if r.get('project_id') != 'Unknown']
+            return valid_results[0] if len(valid_results) == 1 else valid_results
             
         except Exception as e:
             error_msg = f"프로젝트 {project_id} 처리 중 오류 발생: {str(e)}"
@@ -574,12 +612,15 @@ class AuditService:
                 'project_id': project_id,
                 'department_code': department_code,
                 'department': 'Unknown' if not department_code else f"{department_code}_{DEPARTMENT_NAMES.get(department_code, 'Unknown')}",
-                'status': 'Unknown',  # Status 추가 (오류 시 기본값)
-                'contractor': 'Unknown',  # Contractor 추가 (오류 시 기본값)
+                'status': 'Unknown',
+                'contractor': 'Unknown',
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 'performance': {'total_time': time.time() - start_time}
             }
-            await self.send_to_discord(error_result, ctx)
+            try:
+                await send_audit_to_discord(error_result)  # ✅ 오류 발생 여부와 상관없이 실행
+            except Exception as e:
+                logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
             return error_result
 
     async def audit_multiple_projects(self, project_ids, department_codes, use_ai=False):

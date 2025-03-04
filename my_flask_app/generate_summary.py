@@ -230,7 +230,7 @@ def merge_contract_audit(contract_df, audit_results, audit_map, verbose=False):
             'Status': audit_data['status'] if audit_data else (status if pd.notna(status) else 'Unknown'),
             'Contractor': audit_data['contractor'] if audit_data else 'Unknown',
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'remark': folder_path if exists else remark
+            'remark': remark
         }
         
         for doc_type in doc_types:
@@ -258,59 +258,65 @@ def merge_contract_audit(contract_df, audit_results, audit_map, verbose=False):
 
     return merged_df
 
-def generate_combined_report(results_dir, output_path, verbose=False):
+async def generate_combined_report(results_dir, output_path, verbose=False):
     """계약현황과 감사 결과를 결합한 보고서 생성"""
-    global contract_df  # contract_df를 전역 변수로 설정
-    logger.info("\n=== 통합 보고서 생성 시작 ===")
-    logger.info(f"시작 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    # 계약현황 데이터 로드 (백업으로 사용)
-    contract_df = load_contract_data(verbose)
-    if contract_df.empty and verbose:
-        logger.warning("계약 데이터를 찾을 수 없습니다. audit_targets_new.csv를 기본 소스로 사용합니다.")
-    
-    # 감사 결과 로드
-    audit_results, audit_map = load_audit_results(results_dir, verbose)
-    if not audit_results and verbose:
-        logger.warning("감사 결과를 찾을 수 없습니다.")
-    else:
-        logger.info(f"로드된 감사 결과 수: {len(audit_results)}개")
-    
-    # 데이터 결합
-    merged_df = merge_contract_audit(contract_df, audit_results, audit_map, verbose)
-    
-    if merged_df.empty:
-        logger.error("결합할 데이터가 없습니다.")
-        return
-    
-    # CSV로 저장
-    columns_order = ['project_id', 'department_code', 'department', 'project_name', 'Status', 'Contractor', 'timestamp', 'remark']
-    doc_columns = [f'{doc_type}_exists' for doc_type in DOCUMENT_TYPES.keys()] + [f'{doc_type}_count' for doc_type in DOCUMENT_TYPES.keys()]
-    merged_df = merged_df[columns_order + doc_columns]
-    
-    output_date = datetime.now().strftime("%Y%m%d")
-    output_filename = f'combined_report_{output_date}.csv'
-    final_output_path = os.path.join(os.path.dirname(output_path), output_filename)
-    
-    os.makedirs(os.path.dirname(final_output_path), exist_ok=True)
-    merged_df.to_csv(final_output_path, index=False, encoding='utf-8-sig')
-    
-    logger.info(f"\n=== 통합 보고서 생성 완료 ===")
-    logger.info(f"생성된 보고서: {final_output_path}")
-    logger.info(f"처리된 총 프로젝트 수: {len(merged_df)}개 (처리된 프로젝트: {merged_df['remark'].str.startswith('Z:').sum()}, 처리되지 않은 프로젝트: {len(merged_df) - merged_df['remark'].str.startswith('Z:').sum()})")
-    logger.info("\n문서 통계 (처리된 프로젝트 기준):")
-    doc_types = list(DOCUMENT_TYPES.keys())
-    for doc_type in doc_types:
-        exists_count = merged_df[merged_df['remark'].str.startswith('Z:')][f'{doc_type}_exists'].sum()
-        total_count = merged_df[merged_df['remark'].str.startswith('Z:')][f'{doc_type}_count'].sum()
-        logger.info(f"- {doc_type}: {exists_count}개 프로젝트에서 발견 (총 {total_count}개 파일)")
-    
-    # 성공률 계산 및 출력
-    total_projects = len(pd.read_csv(os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv'), encoding='utf-8-sig'))
-    success_rate = (merged_df['remark'].str.startswith('Z:').sum() / total_projects) * 100 if total_projects > 0 else 0
-    logger.info(f"\n처리 성공률: {success_rate:.1f}% ({merged_df['remark'].str.startswith('Z:').sum()}/{total_projects})")
-    logger.info(f"종료 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    logger.info("="*50)
+    try:
+        global contract_df  # contract_df를 전역 변수로 설정
+        logger.info("\n=== 통합 보고서 생성 시작 ===")
+        logger.info(f"시작 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        # 계약현황 데이터 로드 (백업으로 사용)
+        contract_df = load_contract_data(verbose)
+        if contract_df.empty and verbose:
+            logger.warning("계약 데이터를 찾을 수 없습니다. audit_targets_new.csv를 기본 소스로 사용합니다.")
+        
+        # 감사 결과 로드
+        audit_results, audit_map = load_audit_results(results_dir, verbose)
+        if not audit_results:
+            logger.error("감사 결과를 찾을 수 없습니다.")
+            return None
+        else:
+            logger.info(f"로드된 감사 결과 수: {len(audit_results)}개")
+        
+        # 데이터 결합
+        merged_df = merge_contract_audit(contract_df, audit_results, audit_map, verbose)
+        
+        if merged_df.empty:
+            logger.error("결합할 데이터가 없습니다.")
+            return None
+        
+        # CSV로 저장
+        columns_order = ['project_id', 'department_code', 'department', 'project_name', 'Status', 'Contractor', 'timestamp', 'remark']
+        doc_columns = [f'{doc_type}_exists' for doc_type in DOCUMENT_TYPES.keys()] + [f'{doc_type}_count' for doc_type in DOCUMENT_TYPES.keys()]
+        merged_df = merged_df[columns_order + doc_columns]
+        
+        output_date = datetime.now().strftime("%Y%m%d")
+        output_filename = f'combined_report_{output_date}.csv'
+        final_output_path = os.path.join(os.path.dirname(output_path), output_filename)
+        
+        os.makedirs(os.path.dirname(final_output_path), exist_ok=True)
+        merged_df.to_csv(final_output_path, index=False, encoding='utf-8-sig')
+        
+        logger.info(f"\n=== 통합 보고서 생성 완료 ===")
+        logger.info(f"생성된 보고서: {final_output_path}")
+        logger.info(f"처리된 총 프로젝트 수: {len(merged_df)}개")
+        
+        # 성공률 계산 및 출력
+        total_projects = len(pd.read_csv(os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv'), encoding='utf-8-sig'))
+        success_rate = (merged_df['remark'].str.startswith('Z:').sum() / total_projects) * 100 if total_projects > 0 else 0
+        logger.info(f"\n처리 성공률: {success_rate:.1f}% ({merged_df['remark'].str.startswith('Z:').sum()}/{total_projects})")
+        logger.info(f"종료 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info("="*50)
+        
+        return final_output_path
+        
+    except Exception as e:
+        logger.error(f"통합 보고서 생성 중 오류 발생: {str(e)}")
+        return None
+
+async def main(results_dir, output_path, verbose=False):
+    """메인 실행 함수"""
+    return await generate_combined_report(results_dir, output_path, verbose)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate combined report of contract status and audit results")
@@ -319,6 +325,7 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', action='store_true', help="Enable detailed debug output")
     args = parser.parse_args()
     
-    generate_combined_report(args.results_dir, args.output, args.verbose)
+    import asyncio
+    asyncio.run(main(args.results_dir, args.output, args.verbose))
     
 # python generate_summary.py

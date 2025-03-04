@@ -1,6 +1,6 @@
 # my-folder-app/bot.py
 
-# my-folder-app/bot.py
+
 
 import os
 import sys
@@ -20,6 +20,7 @@ import traceback
 import json
 import re
 import logging  # logging 모듈 추가
+import aiofiles
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -27,7 +28,7 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'my_flask_app')))
 
 # 사용자 정의 모듈 임포트
-from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_DATA_PATH, DISCORD_WEBHOOK_URL
+from config import DOCUMENT_TYPES, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_PATH, STATIC_DATA_PATH, DISCORD_WEBHOOK_URL
 from search_project_data import ProjectDocumentSearcher
 from audit_service import AuditService
 from export_report import generate_summary_report  # 기존 import 유지, generate_combined_report 추가로 임포트
@@ -36,8 +37,10 @@ from get_project import get_project_info
 from audit_message import send_audit_to_discord, send_audit_status_to_discord  # audit_message.py 임포트
 
 # JSON 파일 저장 경로 설정
-AUDIT_RESULTS_DIR = os.path.join(STATIC_DATA_PATH, 'results')
+# 변경: 감사 결과를 'static/results/'에 저장
+AUDIT_RESULTS_DIR = os.path.join(STATIC_PATH, 'results')  # static/data/results
 os.makedirs(AUDIT_RESULTS_DIR, exist_ok=True)
+
 
 # 로깅 설정
 logging.basicConfig(
@@ -204,6 +207,8 @@ async def audit(ctx, *, query: str = None):
                 return
             
             df = pd.read_csv(audit_targets_csv, encoding='utf-8-sig')
+            # ProjectID에서 앞의 영문자(A-Z) 한 글자 제거
+            df['ProjectID'] = df['ProjectID'].apply(lambda x: re.sub(r'^[A-Za-z]', '', str(x)))
             total_projects = len(df)
             
             await send_audit_status_to_discord(ctx, f"📊 총 {total_projects}개 프로젝트를 처리합니다...")
@@ -250,7 +255,6 @@ async def audit(ctx, *, query: str = None):
                             all_results.append(result)
                             success_count += 1
                             await send_audit_status_to_discord(ctx, f"✅ 프로젝트 {project_id} 감사 완료: {result.get('timestamp', '시간정보 없음')} {progress}")
-                            await send_audit_to_discord(result)  # 웹훅으로 결과 전송
                         else:
                             error_count += 1
                             await send_audit_status_to_discord(ctx, f"❌ 프로젝트 {project_id} 감사 실패: {result['error']} {progress}")
@@ -265,7 +269,7 @@ async def audit(ctx, *, query: str = None):
             # 종합 보고서 생성 (generate_combined_report 호출)
             results_dir = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'results')
             output_path = os.path.join(os.path.dirname(STATIC_DATA_PATH), 'report', 'combined_report')
-            summary_path, summary = await generate_combined_report(results_dir, output_path, verbose=True)
+            summary_path = await generate_combined_report(results_dir, output_path, verbose=True)
             
             # 결과 출력 (기존 보고서에 종합 보고서 추가)
             report = (
@@ -278,21 +282,39 @@ async def audit(ctx, *, query: str = None):
                 "📈 위험도 분석:\n"
             )
             
-            if summary and 'risk_levels' in summary:
-                report += (
-                    f"🔴 고위험: {summary['risk_levels']['high']}개\n"
-                    f"🟡 중위험: {summary['risk_levels']['medium']}개\n"
-                    f"🟢 저위험: {summary['risk_levels']['low']}개\n"
-                )
-            
             if summary_path:
-                report += f"\n💾 종합 보고서 저장됨: {summary_path}"
-                if 'csv_report' in summary:
-                    report += f"\n📊 CSV 보고서 저장됨: {summary['csv_report']}"
+                report += f"\n✅ 통합 보고서가 생성되었습니다: {summary_path}"
+            else:
+                report += "\n❌ 통합 보고서 생성에 실패했습니다."
             
-            # 종합 보고서를 Discord에 전송
-            await send_audit_status_to_discord(ctx, report)
-            await send_audit_to_discord(all_results)  # 웹훅으로 종합 결과 전송 (기존 로직 유지)
+            # 감사 결과를 현재 채널에 표시
+            await ctx.send(report)
+            
+            # 결과를 JSON 파일로 저장
+            results_dir = os.path.join(STATIC_PATH, 'results')
+            os.makedirs(results_dir, exist_ok=True)
+            output_path = os.path.join(results_dir, f'audit_results_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json')
+            
+            async with aiofiles.open(output_path, 'w', encoding='utf-8') as f:
+                await f.write(json.dumps(all_results, ensure_ascii=False, indent=2))
+            
+            logger.info(f"감사 결과 저장 완료: {output_path}")
+            
+            # 통합 보고서 생성
+            report_dir = os.path.join(STATIC_PATH, 'report')
+            os.makedirs(report_dir, exist_ok=True)
+            summary_path = await generate_combined_report(results_dir, os.path.join(report_dir, 'combined_report'), verbose=True)
+            
+            # 통합 보고서 상태를 report에 추가
+            if summary_path:
+                report += f"\n✅ 통합 보고서가 생성되었습니다: {summary_path}"
+            else:
+                report += "\n❌ 통합 보고서 생성에 실패했습니다."
+            
+            # 최종 결과를 현재 채널에 표시
+            await ctx.send(report)
+            
+            logger.info(f"감사 결과 저장 완료: {output_path}")
 
         else:
             # 단일 프로젝트 감사 (project_id로 실행)
@@ -309,7 +331,52 @@ async def audit(ctx, *, query: str = None):
                     # result가 리스트일 경우 첫 번째 요소, 단일 딕셔너리일 경우 그대로 사용
                     audit_result = result[0] if isinstance(result, list) else result
                     await send_audit_status_to_discord(ctx, f"✅ 프로젝트 {project_id} 감사 완료: {audit_result.get('timestamp', '시간정보 없음')}")
-                    await send_audit_to_discord(result)  # 웹훅으로 결과 전송
+                    
+                    # 결과 디렉토리 및 파일 경로 설정
+                    results_dir = os.path.join(STATIC_PATH, 'results')
+                    os.makedirs(results_dir, exist_ok=True)
+                    # 결과를 JSON 파일로 저장 (리스트 형태로 저장)
+                    audit_results = [audit_result] if isinstance(audit_result, dict) else audit_result
+                    output_path = os.path.join(results_dir, f'audit_{numeric_project_id}.json')
+                    async with aiofiles.open(output_path, 'w', encoding='utf-8') as f:
+                        await f.write(json.dumps(audit_results, ensure_ascii=False, indent=2))
+                    
+                    logger.info(f"감사 결과 저장 완료: {output_path}")
+                    
+                    # 통합 보고서 생성
+                    report_dir = os.path.join(STATIC_PATH, 'report')
+                    os.makedirs(report_dir, exist_ok=True)
+                    summary_path = await generate_combined_report(results_dir, os.path.join(report_dir, 'combined_report'), verbose=True)
+                    
+                    # 통합 보고서 상태를 report에 추가
+                    # report 내용 생성
+                    report = f"📋 **프로젝트 ID {numeric_project_id} 감사 결과**\n"
+                    report += "------------------------\n"
+                    report += f"부서: {audit_result.get('department', 'Unknown')}\n"
+                    report += f"프로젝트명: {audit_result.get('project_name', 'Unknown')}\n"
+                    report += f"상태: {audit_result.get('status', 'Unknown')}\n"
+                    report += f"계약자: {audit_result.get('contractor', 'Unknown')}\n"
+                    report += "------------------------\n"
+                    report += "📑 문서 현황:\n"
+
+                    for doc_type, info in audit_result.get('documents', {}).items():
+                        doc_name = DOCUMENT_TYPES.get(doc_type, {}).get('name', doc_type)
+                        if info.get('exists', False):
+                            report += f"✅ {doc_name}: {len(info.get('details', []))}개\n"
+                        else:
+                            report += f"❌ {doc_name}: 없음\n"
+
+                    report += "------------------------\n"
+                    report += f"⏰ 감사 완료: {audit_result.get('timestamp', '시간정보 없음')}\n"
+
+                    # 통합 보고서가 생성된 경우 추가
+                    if summary_path:
+                        report += f"📊 통합 보고서: {summary_path}\n"
+                    else:
+                        report += "❌ 통합 보고서 생성 실패\n"
+
+                    # ✅ 메시지를 한 번만 전송
+                    await ctx.send(report)
             except Exception as e:
                 error_msg = f"Error processing project {project_id}: {str(e)}"
                 logger.error(error_msg)

@@ -16,6 +16,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
 
 # 프로젝트 루트 경로
 PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+STATIC_PATH = os.path.join(PROJECT_ROOT, 'static')
 STATIC_DATA_PATH = os.path.join(PROJECT_ROOT, 'static', 'data')
 STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
 PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
