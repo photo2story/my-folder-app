@@ -39,3 +39,4 @@ diskcache
 psutil
 pytest
 pytest-asyncio
+aiofiles
