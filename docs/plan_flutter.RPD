@@ -1,0 +1,160 @@
+📌 Flutter + Flask 기반 프로젝트 감사 관리 앱 개발 계획서 (RPD)
+✅ 목표: 네트워크 드라이브의 프로젝트 데이터를 분석하고, 감사 결과를 Flutter 앱에서 관리하는 시스템 개발
+✅ 개발 환경:
+
+Flutter (Desktop & Mobile)
+Flask (Python API, 선택적 사용)
+GitHub 연동 (원격 데이터 활용, 서버 없이도 운영 가능)
+📍 1. 프로젝트 개요
+🎯 주요 기능
+네트워크 드라이브에서 프로젝트 데이터 수집
+dart:io → Windows, Mac, Linux 지원
+Flask API (선택적 사용) → Web 지원
+프로젝트 감사 (AI 분석 포함)
+프로젝트별 필수 문서 검토, AI 분석 제공 (Gemini)
+Flutter 앱에서 감사 결과 관리
+대시보드 모드: 부서별 감사 결과 조회
+파일 탐색기 모드: 프로젝트별 문서 구조 확인
+GitHub 원격 데이터 연동
+서버 없이도 감사 결과를 GitHub에서 가져와 조회 가능
+📍 2. 개발 단계 및 일정
+💡 1단계씩 직접 눈으로 확인하며 개발 → 테스트 & 피드백 후 개선
+
+🚀 1단계: 기본 구조 개발 (기본 데이터 불러오기 & 트리뷰 구성)
+✅ 목표:
+
+Flutter 앱을 실행하면 네트워크 드라이브의 프로젝트 데이터가 보이도록 구현
+Z:\ 같은 네트워크 드라이브에서 프로젝트 폴더와 문서 리스트 가져오기
+Flutter 트리뷰 UI로 프로젝트 파일 리스트를 표시
+✅ 구현 내용:
+FileExplorerService.dart → 네트워크 드라이브에서 폴더 & 파일 읽기 (dart:io)
+file_explorer_screen.dart → Flutter에서 트리뷰 UI 구현 (flutter_treeview)
+테스트: 프로젝트 폴더가 보이고, 클릭하면 하위 폴더와 파일이 펼쳐지는지 확인
+🚀 2단계: Flask 연동 (웹 & 네트워크 드라이브 데이터 관리)
+✅ 목표:
+
+네트워크 드라이브 접근이 어려운 환경(예: 웹)에서도 프로젝트 파일 정보를 가져올 수 있도록 Flask API 개발
+GitHub에서 데이터를 불러와 서버 없이도 감사 내역을 조회할 수 있도록 준비
+✅ 구현 내용:
+server.py (Flask API) → 네트워크 드라이브에서 폴더 & 파일 JSON으로 반환
+audit_service.py (Flask) → 감사 결과 저장 & 분석
+Flutter → Flask API 호출하여 데이터 가져오기
+GitHub 연동: 감사 결과(static/results/)를 GitHub에 저장하고 Flutter 앱에서 읽기
+🚀 3단계: 감사 기능 구현 (AI 분석 포함)
+✅ 목표:
+
+Flutter 앱에서 특정 프로젝트에 대한 감사 실행
+Flask 서버 없이도 기존 감사 결과를 활용할 수 있도록 GitHub 연동
+✅ 구현 내용:
+audit_service.py (Flask) → 감사 실행 & JSON 저장
+audit_screen.dart (Flutter) → 감사 실행 & 결과 표시 (Gemini AI 분석 포함)
+GitHub에서 감사 결과를 다운로드 & 조회
+테스트: 프로젝트 하나를 감사 실행 후, 결과를 JSON으로 저장하고 Flutter에서 표시
+🚀 4단계: 대시보드 & 파일 탐색기 모드 구현
+✅ 목표:
+
+Flutter에서 대시보드 UI + 파일 탐색기 모드 구현
+서버 없이도 GitHub 데이터를 활용해 감사 결과를 조회 가능
+✅ 구현 내용:
+dashboard_screen.dart → 부서별 감사 결과 (쇼핑몰처럼 대시보드 형식)
+file_explorer_screen.dart → 프로젝트별 문서 탐색 (파일 탐색기 스타일)
+GitHub에서 최신 감사 데이터를 다운로드 후 저장 & 표시
+테스트: 부서별 감사 결과와 프로젝트별 문서를 확인
+📍 3. UI 구성
+📌 1️⃣ 모바일 (세로 모드)
+scss
+복사
+편집
+┌───────────────────────────┐
+│ 부서별 감사 결과 카드 (대시보드) │  ← 부서별 상태 한눈에 보기
+├───────────────────────────┤
+│ 프로젝트 보고서 (Gemini AI 분석 포함) │  ← 클릭 시 AI 분석 결과
+├───────────────────────────┤
+│ 파일 탐색기 (트리 구조) │  ← 문서 파일 리스트
+└───────────────────────────┘
+📌 2️⃣ 데스크탑 (가로 모드)
+scss
+복사
+편집
+┌───────────────┬──────────────────┐
+│  부서 목록 (트리)  │   프로젝트 보고서 & 파일 리스트 │
+│  (왼쪽 메뉴)    │   (탐색기 스타일)         │
+└───────────────┴──────────────────┘
+✅ 트리뷰 & 파일 탐색기 방식으로 직관적 UI
+✅ 네트워크 드라이브 & GitHub 데이터 활용 가능
+
+📍 4. 기술 스택
+✅ Flutter (Dart)
+
+flutter_treeview → 프로젝트 폴더 & 문서 트리뷰 UI
+flutter_bloc → 상태 관리
+✅ Flask (Python)
+Flask + Pandas → 감사 데이터 관리
+Gemini AI API → 문서 분석
+✅ GitHub 연동
+감사 결과 자동 저장 & Flutter에서 불러오기
+📍 5. 고려해야 할 점
+✅ 💡 서버 없이도 앱을 활용할 수 있도록 GitHub 연동 필수
+✅ 💡 네트워크 드라이브가 없는 환경에서도 기존 감사 결과를 조회할 수 있어야 함
+✅ 💡 데스크탑 & 모바일 모두 대응하도록 UI 최적화 필요
+
+📍 6. 결론
+🚀 1단계씩 눈으로 직접 확인하며 개발
+💡 GitHub 연동으로 서버 없이도 감사 내역 활용 가능
+🔥 Flutter 앱에서 직접 파일 탐색기 스타일로 프로젝트 감사 관리
+## 폴더구조
+
+my_folder_app/
+└── my_flutter_app/  # Flutter 앱 루트
+    ├── lib/  # 주요 Flutter 코드
+    │   ├── main.dart  # 앱 실행 진입점
+    │   │
+    │   ├── screens/  # 화면 UI (각 화면별로 파일 구성)
+    │   │   ├── dashboard_screen.dart  # 부서별 감사 결과 대시보드
+    │   │   ├── file_explorer_screen.dart  # 트리뷰 기반 파일 탐색기
+    │   │   ├── audit_report_screen.dart  # 프로젝트 감사 보고서 (Gemini 분석 포함)
+    │   │   ├── settings_screen.dart  # 설정 화면 (서버 URL, GitHub 연동 등)
+    │   │   ├── offline_mode_screen.dart  # 서버 없이 감사 내역 조회 모드
+    │   │   ├── network_error_screen.dart  # 네트워크 오류 시 화면
+    │   │
+    │   ├── services/  # 데이터 처리 & 네트워크 통신 로직
+    │   │   ├── file_service.dart  # 로컬 파일 시스템 및 네트워크 드라이브 접근
+    │   │   ├── api_service.dart  # Flask 서버 API 통신 (감사 데이터 불러오기)
+    │   │   ├── github_service.dart  # GitHub에서 감사 데이터 가져오기
+    │   │   ├── audit_service.dart  # 프로젝트 감사 실행 로직 (서버 API 호출)
+    │   │
+    │   ├── widgets/  # 재사용 가능한 UI 위젯
+    │   │   ├── department_card.dart  # 대시보드에서 부서별 감사 카드
+    │   │   ├── tree_view.dart  # 트리뷰 UI (파일 & 폴더 탐색기)
+    │   │   ├── file_item.dart  # 개별 파일을 나타내는 UI
+    │   │   ├── report_card.dart  # 감사 보고서 카드 위젯
+    │   │   ├── loading_indicator.dart  # 로딩 인디케이터
+    │   │
+    │   ├── models/  # 데이터 모델 클래스
+    │   │   ├── project_model.dart  # 프로젝트 정보 데이터 모델
+    │   │   ├── file_model.dart  # 파일 & 폴더 정보 데이터 모델
+    │   │   ├── audit_report_model.dart  # 감사 보고서 데이터 모델
+    │   │
+    │   ├── utils/  # 헬퍼 함수 및 유틸리티
+    │   │   ├── format_utils.dart  # 날짜 & 파일 크기 포맷팅 함수
+    │   │   ├── constants.dart  # 앱에서 공통적으로 사용하는 상수값
+    │   │
+    │   ├── config/  # 설정 관련 파일
+    │   │   ├── app_config.dart  # 서버 주소, GitHub 연동 등 설정값 관리
+    │   │   ├── env.dart  # 환경 변수 관리
+    │   │
+    │   ├── main.dart  # 앱 실행 엔트리 포인트
+    │
+    ├── assets/  # 정적 리소스 (아이콘, 로고, 글꼴)
+    │   ├── icons/  # 앱 아이콘
+    │   ├── fonts/  # 사용자 지정 글꼴
+    │   ├── images/  # UI에서 사용될 이미지 파일
+    │
+    ├── test/  # Flutter 테스트 코드
+    │   ├── file_service_test.dart  # 파일 탐색기 테스트
+    │   ├── api_service_test.dart  # Flask API 연동 테스트
+    │   ├── github_service_test.dart  # GitHub 연동 테스트
+    │
+    ├── pubspec.yaml  # Flutter 패키지 설정
+    ├── analysis_options.yaml  # 코드 분석 설정
+    ├── README.md  # 프로젝트 설명
