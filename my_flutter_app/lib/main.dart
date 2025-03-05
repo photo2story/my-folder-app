@@ -1,7 +1,9 @@
 // /my_flutter_app/lib/main.dart
 
 import 'package:flutter/material.dart';
-import 'screens/file_explorer_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'screens/dashboard_screen.dart';
+import 'models/project_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'File Explorer',
+      title: 'Project Audit Dashboard',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -34,7 +36,112 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const FileExplorerScreen(),
+      home: const DashboardScreen(),
+      routes: {
+        '/project_details': (context) => ProjectDetailsScreen(),
+      },
+    );
+  }
+}
+
+class ProjectDetailsScreen extends StatelessWidget {
+  const ProjectDetailsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final project = ModalRoute.of(context)!.settings.arguments as ProjectModel;
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(project.projectName),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInfoCard('프로젝트 정보', [
+              '프로젝트 ID: ${project.projectId}',
+              '부서: ${project.department}',
+              '상태: ${project.status}',
+              '계약자: ${project.contractor}',
+            ]),
+            const SizedBox(height: 16),
+            _buildDocumentsSection(project),
+            if (project.aiAnalysis != null) ...[
+              const SizedBox(height: 16),
+              _buildInfoCard('AI 분석 결과', [project.aiAnalysis!]),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(String title, List<String> items) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...items.map((item) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(item),
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDocumentsSection(ProjectModel project) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '문서 현황',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...project.documents.entries.map((entry) {
+              final docType = entry.key;
+              final details = entry.value;
+              final exists = details['exists'] as bool? ?? false;
+              
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    Icon(
+                      exists ? Icons.check_circle : Icons.error,
+                      color: exists ? Colors.green : Colors.red,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(docType),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
     );
   }
 }

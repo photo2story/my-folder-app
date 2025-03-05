@@ -105,6 +105,12 @@ async def on_ready():
         bot_started = True
         await bot.change_presence(activity=discord.Game(name="audit 명령어로 프로젝트 감사"))
 
+@bot.command(name='test_audit')
+async def test_audit(ctx, project_id: str):
+    project_id = "20240178"
+    await audit(ctx, project_id)  # audit 명령어 호출
+
+
 @bot.command()
 @check_duplicate_message()
 async def ping(ctx):
@@ -442,6 +448,8 @@ async def project(ctx, *, project_id: str = None):
     except Exception as e:
         await log_debug(ctx, f"프로젝트 조회 명령어 실행 중 오류 발생\n반환된 데이터: {project_info if 'project_info' in locals() else 'None'}", error=e)
         await ctx.send(f"❌ 오류 발생: {str(e)}")
+
+
 
 async def run_bot():
     """봇 실행"""

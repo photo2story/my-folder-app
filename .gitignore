@@ -165,6 +165,9 @@ data*.csv
 audit*.json
 *.json
 static/projects/*.json
+!audit_20240178.json
+!20240178_06010.json
+
 
 !depart*.csv
 !project*.csv
