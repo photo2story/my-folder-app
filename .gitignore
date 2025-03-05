@@ -173,7 +173,7 @@ static/projects/*.json
 !project*.csv
 !contract*.csv
 !audit*.csv
-!combined_report_*.csv
+!combined_report*.csv
 
 # Other Flutter build directories
 android/build/

@@ -1,7 +1,10 @@
+// /lib/screens/dashboard_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/dashboard_bloc.dart';
 import '../models/project_model.dart';
+import '../models/department_summary.dart';
 import '../services/api_service.dart';
 import '../widgets/department_card.dart';
 
@@ -71,35 +74,66 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget _buildDashboard(BuildContext context, List<ProjectModel> projects) {
-    // 부서별로 그룹화
+    // 부서별로 프로젝트 그룹화
     final departments = <String, List<ProjectModel>>{};
     for (final project in projects) {
       departments.putIfAbsent(project.department, () => []).add(project);
     }
 
+    // 부서별 요약 정보 계산
+    final summaries = departments.map((department, projects) {
+      final completedProjects = projects.where((p) => 
+        p.status.toLowerCase() == '완료' || p.status.toLowerCase() == 'completed'
+      ).length;
+
+      return MapEntry(
+        department,
+        DepartmentSummary(
+          totalProjects: projects.length,
+          completedProjects: completedProjects,
+          inProgressProjects: projects.length - completedProjects,
+          contractExists: _countExistingDocs(projects, 'contract'),
+          specificationExists: _countExistingDocs(projects, 'specification'),
+          initiationExists: _countExistingDocs(projects, 'initiation'),
+          agreementExists: _countExistingDocs(projects, 'agreement'),
+          budgetExists: _countExistingDocs(projects, 'budget'),
+          deliverable1Exists: _countExistingDocs(projects, 'deliverable1'),
+          deliverable2Exists: _countExistingDocs(projects, 'deliverable2'),
+          completionExists: _countExistingDocs(projects, 'completion'),
+          certificateExists: _countExistingDocs(projects, 'certificate'),
+          projects: projects,
+        ),
+      );
+    });
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: departments.length,
+      itemCount: summaries.length,
       itemBuilder: (context, index) {
-        final department = departments.keys.elementAt(index);
-        final projectsInDepartment = departments[department]!;
-        final totalProjects = projectsInDepartment.length;
-        final completedProjects = projectsInDepartment
-            .where((p) => p.status.toLowerCase() == '완료')
-            .length;
-        final riskLevel = _calculateAverageRisk(projectsInDepartment);
+        final department = summaries.keys.elementAt(index);
+        final summary = summaries[department]!;
 
         return DepartmentCard(
           department: department,
-          totalProjects: totalProjects,
-          completedProjects: completedProjects,
-          riskLevel: riskLevel,
-          onTap: () {
-            _showProjectDetails(context, projectsInDepartment);
-          },
+          totalProjects: summary.totalProjects,
+          completedProjects: summary.completedProjects,
+          riskLevel: _calculateRiskLevel(summary),
+          onTap: () => _showProjectDetails(context, summary.projects),
         );
       },
     );
+  }
+
+  int _countExistingDocs(List<ProjectModel> projects, String docType) {
+    return projects.where((p) => 
+      p.documents[docType]?['exists'] == true
+    ).length;
+  }
+
+  int _calculateRiskLevel(DepartmentSummary summary) {
+    // 문서 완성도를 기반으로 위험도 계산 (0~100)
+    // 문서 완성도가 낮을수록 위험도가 높음
+    return (100 - summary.documentCompletionRate).round();
   }
 
   void _showProjectDetails(BuildContext context, List<ProjectModel> projects) {
@@ -113,7 +147,7 @@ class _DashboardViewState extends State<DashboardView> {
             final project = projects[index];
             return ListTile(
               title: Text('${project.projectId} - ${project.projectName}'),
-              subtitle: Text('상태: ${project.status}, 위험도: ${_calculateRisk(project)}%'),
+              subtitle: Text('상태: ${project.status}'),
               onTap: () {
                 Navigator.pop(context);
                 _navigateToProjectDetails(context, project);
@@ -131,22 +165,5 @@ class _DashboardViewState extends State<DashboardView> {
       '/project_details',
       arguments: project,
     );
-  }
-
-  int _calculateAverageRisk(List<ProjectModel> projects) {
-    if (projects.isEmpty) return 0;
-    final totalRisk = projects.fold(0, (sum, project) => sum + _calculateRisk(project));
-    return (totalRisk / projects.length).round();
-  }
-
-  int _calculateRisk(ProjectModel project) {
-    // 문서 완성도를 기반으로 위험도 계산 (0~100)
-    final totalDocs = project.documents.length;
-    if (totalDocs == 0) return 0;
-    
-    final missingDocs = project.documents.values
-        .where((doc) => !doc.containsKey('exists') || !doc['exists'] as bool)
-        .length;
-    return (missingDocs / totalDocs * 100).round();
   }
 } 

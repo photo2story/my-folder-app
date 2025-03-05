@@ -1,3 +1,5 @@
+// /lib/blocs/dashboard_bloc.dart
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../models/project_model.dart';
@@ -66,8 +68,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Future<List<ProjectModel>> _fetchProjects() async {
     try {
-      final response = await apiService.fetchProjects();
-      return response.map((json) => ProjectModel.fromJson(json)).toList();
+      final response = await apiService.fetchAllProjects();
+      return response; // List<ProjectModel>
     } catch (e) {
       throw Exception('프로젝트 데이터 로드 실패: $e');
     }
