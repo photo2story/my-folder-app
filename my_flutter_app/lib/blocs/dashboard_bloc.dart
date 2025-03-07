@@ -30,7 +30,7 @@ class DashboardLoading extends DashboardState {}
 class DashboardLoaded extends DashboardState {
   final List<ProjectModel> projects;
 
-  const DashboardLoaded(this.projects);
+  const DashboardLoaded({required this.projects});
 
   @override
   List<Object> get props => [projects];
@@ -39,7 +39,7 @@ class DashboardLoaded extends DashboardState {
 class DashboardError extends DashboardState {
   final String message;
 
-  const DashboardError(this.message);
+  const DashboardError({required this.message});
 
   @override
   List<Object> get props => [message];
@@ -57,21 +57,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     LoadDashboardData event,
     Emitter<DashboardState> emit,
   ) async {
-    emit(DashboardLoading());
     try {
-      final projects = await _fetchProjects();
-      emit(DashboardLoaded(projects));
+      emit(DashboardLoading());
+      final response = await apiService.fetchProjects();
+      emit(DashboardLoaded(projects: response));
     } catch (e) {
-      emit(DashboardError('데이터 로드 실패: $e'));
-    }
-  }
-
-  Future<List<ProjectModel>> _fetchProjects() async {
-    try {
-      final response = await apiService.fetchAllProjects();
-      return response; // List<ProjectModel>
-    } catch (e) {
-      throw Exception('프로젝트 데이터 로드 실패: $e');
+      emit(DashboardError(message: e.toString()));
     }
   }
 } 

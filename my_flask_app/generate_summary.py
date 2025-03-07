@@ -7,6 +7,7 @@ import re
 from glob import glob
 from datetime import datetime
 import logging  # logging 모듈 추가
+import ast
 
 from config import STATIC_DATA_PATH, CONTRACT_STATUS_CSV, PROJECT_LIST_CSV, NETWORK_BASE_PATH
 from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES
@@ -141,6 +142,9 @@ def load_audit_results(results_dir, verbose=False):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
+                if isinstance(data, list):
+                    data = data[0]  # 리스트인 경우 첫 번째 항목 사용
+                
                 if 'error' not in data:
                     project_id = re.sub(r'[^0-9]', '', str(data['project_id']))
                     dept_code = data['department'].split('_')[0] if '_' in data['department'] else '99999'
@@ -152,8 +156,35 @@ def load_audit_results(results_dir, verbose=False):
                         status, contractor = get_status_contractor_from_contract(project_id, contract_df)
                     
                     depart_project_id = f"{project_id}_{dept_code}"
+                    
+                    # documents 필드 처리
+                    processed_documents = {}
+                    for doc_type, doc_info in data['documents'].items():
+                        processed_details = []
+                        if doc_info.get('exists', False) and 'details' in doc_info:
+                            for detail in doc_info['details']:
+                                try:
+                                    # name과 path가 문자열화된 딕셔너리인 경우 파싱
+                                    if isinstance(detail.get('name'), str) and detail.get('name').startswith('{'):
+                                        name_dict = ast.literal_eval(detail['name'])
+                                        path_dict = ast.literal_eval(detail['path'])
+                                        processed_details.append({
+                                            'name': name_dict.get('name', ''),
+                                            'path': path_dict.get('full_path', path_dict.get('path', ''))
+                                        })
+                                    else:
+                                        processed_details.append(detail)
+                                except Exception as e:
+                                    logger.warning(f"Failed to parse detail in {doc_type}: {str(e)}")
+                                    processed_details.append(detail)
+                        
+                        processed_documents[doc_type] = {
+                            'exists': doc_info.get('exists', False),
+                            'details': processed_details
+                        }
+                    
                     results[project_id] = {
-                        'documents': data['documents'],
+                        'documents': processed_documents,
                         'depart_project_id': depart_project_id,
                         'status': status,
                         'contractor': contractor
@@ -208,31 +239,44 @@ def merge_contract_audit(contract_df, audit_results, audit_map, verbose=False):
     df_targets = pd.read_csv(audit_targets_path, encoding='utf-8-sig')
     # Depart_ProjectID에서 ProjectID 추출 (숫자만)
     df_targets['ProjectID'] = df_targets['Depart_ProjectID'].apply(lambda x: re.sub(r'[^0-9]', '', str(x).split('_')[-1]))
-    all_projects = df_targets[['ProjectID', 'Depart', 'Status', 'ProjectName']].drop_duplicates()
+    
+    # 중복 제거 및 필요한 컬럼만 선택
+    all_projects = df_targets[['ProjectID', 'Depart', 'Status', 'ProjectName', 'Contractor']].drop_duplicates()
+    logger.info(f"감사 대상 프로젝트 수: {len(all_projects)}개")
 
     merged_data = []
+    folder_exists_count = 0
+    folder_not_exists_count = 0
+    
     for _, row in all_projects.iterrows():
         project_id = row['ProjectID']
         dept_code = next((k for k, v in DEPARTMENT_NAMES.items() if v == row['Depart']), '99999')
         status = row['Status']
         project_name = row['ProjectName']
+        contractor = row.get('Contractor', 'Unknown')
         
         # audit_results에서 프로젝트 확인
         numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))
         audit_data = audit_results.get(numeric_project_id)
         exists, remark, folder_path = check_project_path(project_id, dept_code, verbose)
         
+        if exists:
+            folder_exists_count += 1
+        else:
+            folder_not_exists_count += 1
+        
         merged_row = {
             'project_id': numeric_project_id,
             'department_code': dept_code,
             'department': f"{dept_code}_{row['Depart']}",
             'project_name': project_name,
-            'Status': audit_data['status'] if audit_data else (status if pd.notna(status) else 'Unknown'),
-            'Contractor': audit_data['contractor'] if audit_data else 'Unknown',
+            'Status': status if pd.notna(status) else 'Unknown',
+            'Contractor': contractor if pd.notna(contractor) else 'Unknown',
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'remark': remark
+            'remark': remark if not exists else folder_path
         }
         
+        # 문서 정보 처리
         for doc_type in doc_types:
             if audit_data and audit_data['documents'].get(doc_type, {}).get('exists', False):
                 merged_row[f'{doc_type}_exists'] = 1
@@ -248,13 +292,14 @@ def merge_contract_audit(contract_df, audit_results, audit_map, verbose=False):
     merged_df = merged_df.sort_values(['department', 'project_id'], ascending=[True, True])
     
     # 처리 현황 로깅
-    processed_count = len(merged_df[merged_df['remark'].str.startswith('Z:')])  # 폴더가 있는 프로젝트
-    unprocessed_count = len(merged_df[~merged_df['remark'].str.startswith('Z:')])  # 폴더가 없는 프로젝트
-    logger.info(f"\n처리된 프로젝트: {processed_count}개 (폴더 존재)")
-    logger.info(f"처리되지 않은 프로젝트: {unprocessed_count}개 (폴더 없음)")
+    logger.info(f"\n처리된 프로젝트: {folder_exists_count}개 (폴더 존재)")
+    logger.info(f"처리되지 않은 프로젝트: {folder_not_exists_count}개 (폴더 없음)")
+    logger.info(f"전체 프로젝트: {len(merged_df)}개")
     
     if verbose:
-        logger.info(f"최종 결합된 데이터: {len(merged_df)}개 (처리된 프로젝트: {processed_count}, 처리되지 않은 프로젝트: {unprocessed_count})")
+        logger.info(f"최종 결합된 데이터: {len(merged_df)}개")
+        logger.info(f"폴더 있음: {folder_exists_count}개")
+        logger.info(f"폴더 없음: {folder_not_exists_count}개")
 
     return merged_df
 

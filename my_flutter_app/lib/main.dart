@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'screens/dashboard_screen.dart';
 import 'models/project_model.dart';
+import 'screens/file_explorer_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const DashboardScreen(),
+      home: const FileExplorerScreen(),
       routes: {
         '/project_details': (context) => ProjectDetailsScreen(),
       },

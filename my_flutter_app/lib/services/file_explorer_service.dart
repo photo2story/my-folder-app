@@ -7,37 +7,31 @@ import '../models/project_model.dart';
 import 'api_service.dart';
 
 class FileNode {
+  final String name;
   final String path;
-  final String label;
   final bool isDirectory;
-  final DateTime? lastModified;
-  List<FileNode>? children;
+  List<FileNode> children;
 
   FileNode({
+    required this.name,
     required this.path,
-    required this.label,
     required this.isDirectory,
-    this.lastModified,
-    this.children,
+    this.children = const [],
   });
 
   factory FileNode.fromJson(Map<String, dynamic> json) {
     return FileNode(
+      name: json['name'] as String,
       path: json['path'] as String,
-      label: json['label'] as String,
       isDirectory: json['isDirectory'] as bool,
-      lastModified: json['lastModified'] != null
-          ? DateTime.parse(json['lastModified'] as String)
-          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'name': name,
       'path': path,
-      'label': label,
       'isDirectory': isDirectory,
-      'lastModified': lastModified?.toIso8601String(),
     };
   }
 }
@@ -63,10 +57,9 @@ class FileExplorerService extends ChangeNotifier {
       final projects = await _apiService.fetchProjects();
       _rootNodes = projects.map((project) {
         return FileNode(
+          name: project.projectName,
           path: project.projectId,
-          label: project.projectName,
           isDirectory: true,
-          lastModified: DateTime.tryParse(project.timestamp),
         );
       }).toList();
 
