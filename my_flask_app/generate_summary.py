@@ -1,4 +1,4 @@
-# my_flask_app/generate_summary.py
+# /my_flask_app/generate_summary.py
 
 import os
 import json
@@ -8,10 +8,12 @@ from glob import glob
 from datetime import datetime
 import logging
 import ast
+import asyncio
 
-from config import STATIC_DATA_PATH, PROJECT_LIST_CSV, NETWORK_BASE_PATH
+from config import STATIC_DATA_PATH, PROJECT_LIST_CSV, NETWORK_BASE_PATH, STATIC_PATH
 from config_assets import DOCUMENT_TYPES
 import argparse
+from git_operations import sync_files_to_github  # git_operations 임포트
 
 # 로깅 설정
 logging.basicConfig(
@@ -156,7 +158,6 @@ async def generate_combined_report(results_dir, output_path, verbose=False):
         merged_df = merged_df[base_columns + doc_columns]
         
         output_date = datetime.now().strftime("%Y%m%d")
-        # output_filename = f'combined_report_{output_date}.csv'
         output_filename = f'combined_report.csv'
 
         final_output_path = os.path.join(os.path.dirname(output_path), output_filename)
@@ -173,6 +174,10 @@ async def generate_combined_report(results_dir, output_path, verbose=False):
         logger.info(f"\n처리 성공률: {success_rate:.1f}% ({len(audit_results)}/{total_projects})")
         logger.info(f"종료 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         logger.info("="*50)
+        
+        # 생성된 파일을 GitHub에 업로드
+        await sync_files_to_github(final_output_path)
+        logger.info(f"✅ 통합 보고서 GitHub에 업로드 완료: {final_output_path}")
         
         return final_output_path
     except Exception as e:
