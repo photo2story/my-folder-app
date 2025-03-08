@@ -168,12 +168,9 @@ data*.csv
 !audit*.csv
 !combined_report*.csv
 
-# JSON 파일 (기본적으로 무시, 특정 예외 포함)
+# JSON 파일 (기본적으로 무시)
 *.json
 !results/*/audit_*.json  # results 하위의 audit_*.json은 추적
-!report/*/audit_*.json   # report 하위의 audit_*.json은 추적
-!projects/20240178_06010.json  # 특정 파일 명시적 포함
-!static/projects/*.json  # static/projects 하위는 추적
 
 # Other Flutter build directories
 android/build/
