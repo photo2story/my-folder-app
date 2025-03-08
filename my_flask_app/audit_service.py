@@ -10,18 +10,18 @@ import re
 from pathlib import Path
 from search_project_data import ProjectDocumentSearcher
 from gemini import analyze_with_gemini
-from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH,STATIC_PATH, CONTRACT_STATUS_CSV
-from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES, AUDIT_FILTERS  # AUDIT_FILTERS 추가
+from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, STATIC_PATH, CONTRACT_STATUS_CSV
+from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES, AUDIT_FILTERS
 import logging
 import pandas as pd
 import orjson
 import time
-from get_project import get_project_info  # get_project.py에서 함수 임포트
+from get_project import get_project_info
 import ast
-from audit_message import send_audit_to_discord, send_audit_status_to_discord  # ✅ 추가
+from audit_message import send_audit_to_discord, send_audit_status_to_discord
 
 # JSON 파일 저장 경로 설정
-RESULTS_DIR = os.path.join(STATIC_PATH, 'results')  # ✅ `static/data/results` 폴더에 저장
+RESULTS_DIR = os.path.join(STATIC_PATH, 'results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -44,46 +44,42 @@ class AuditService:
             self._session = None
 
     async def save_audit_result(self, result, department_code):
-        """감사 결과를 JSON으로 저장하며, 잘못된 문자열을 변환"""
+        """감사 결과를 부서별 폴더에 JSON으로 저장하며, 잘못된 문자열을 변환"""
         project_id = result['project_id']
+        department = result.get('department', f"{department_code}_Unknown")
         
-        # 기존: audit_20240178_06010.json 형식
-        # filename = f"audit_{project_id}_{department_code}.json"
-        
-        # 변경: audit_20240178.json 형식
+        department_folder = os.path.join(RESULTS_DIR, department)
         filename = f"audit_{project_id}.json"
-        
-        filepath = os.path.join(RESULTS_DIR, filename)
+        filepath = os.path.join(department_folder, filename)
 
-        if not os.path.exists(RESULTS_DIR):
-            os.makedirs(RESULTS_DIR, exist_ok=True)
+        if not os.path.exists(department_folder):
+            os.makedirs(department_folder, exist_ok=True)
 
-        # JSON 내 문자열 형태의 딕셔너리를 올바르게 변환
         def fix_document_details(details):
             if isinstance(details, list):
                 corrected_details = []
                 for item in details:
-                    if isinstance(item, str):
+                    if isinstance(item, str):  # 문자열인 경우 JSON 변환 시도
                         try:
-                            item = json.loads(item.replace("'", "\""))  # 문자열을 JSON으로 변환
+                            corrected_item = json.loads(item.replace("'", "\""))
                         except json.JSONDecodeError:
-                            pass  # 변환 실패 시 원래 값 유지
-                    corrected_details.append(item)
+                            corrected_item = item  # 변환 실패 시 원본 유지
+                        corrected_details.append(corrected_item)
+                    else:
+                        corrected_details.append(item)  # 딕셔너리 등은 그대로 추가
                 return corrected_details
             return details
 
-        # 모든 문서 항목에서 문자열로 저장된 딕셔너리를 변환
         for doc_type, doc_info in result.get('documents', {}).items():
             if 'details' in doc_info:
                 doc_info['details'] = fix_document_details(doc_info['details'])
+                logger.debug(f"Fixed {doc_type} details: {doc_info['details']}")
 
-        # JSON 저장
         async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
             await f.write(json.dumps(result, ensure_ascii=False, indent=2))
 
         logger.info(f"✅ 감사 결과 저장 완료: {filepath}")
         return filepath
-
 
     async def _send_single_to_discord(self, data, ctx=None):
         """단일 감사 결과를 Discord로 전송 (내부 함수)"""
@@ -91,7 +87,6 @@ class AuditService:
             logger.error(f"Invalid audit data format: {data}")
             return False
 
-        # Unknown 프로젝트 결과는 전송하지 않음
         if data.get('project_id') == 'Unknown' and data.get('department') == 'Unknown':
             logger.warning("Skipping Unknown project result")
             return True
@@ -101,9 +96,9 @@ class AuditService:
             f"ID: {data.get('project_id', 'Unknown')}\n"
             f"Department: {data.get('department', data.get('department_code', 'Unknown'))}\n"
             f"Name: {data.get('project_name', f'Project {data.get('project_id', 'Unknown')}')}\n"
-            f"Status: {data.get('status', 'Unknown')}\n"  # Status 추가
-            f"Contractor: {data.get('contractor', 'Unknown')}\n"  # Contractor 추가
-            f"Path: {data.get('project_path', 'Unknown')}\n\n"  # 'original_folder' 대신 'project_path' 사용
+            f"Status: {data.get('status', 'Unknown')}\n"
+            f"Contractor: {data.get('contractor', 'Unknown')}\n"
+            f"Path: {data.get('project_path', 'Unknown')}\n\n"
             f"📑 Documents:\n"
         )
 
@@ -111,15 +106,14 @@ class AuditService:
         missing_docs = []
         documents = data.get('documents', {})
         
-        # 모든 DOCUMENT_TYPES를 순회하며 처리
         for doc_type in DOCUMENT_TYPES.keys():
             doc_info = documents.get(doc_type, {'exists': False, 'details': []})
             doc_name = DOCUMENT_TYPES.get(doc_type, {}).get('name', doc_type)
-            if doc_info.get('exists', False):  # exists가 True인 경우
+            if doc_info.get('exists', False):
                 count = len(doc_info.get('details', []))
                 found_docs.append(f"{doc_name} ({count}개)")
             else:
-                missing_docs.append(f"{doc_name} (0개)")  # 발견되지 않은 문서는 0개로 표시
+                missing_docs.append(f"{doc_name} (0개)")
 
         if found_docs:
             message += "✅ Found:\n- " + "\n- ".join(found_docs) + "\n\n"
@@ -133,28 +127,16 @@ class AuditService:
 
         try:
             if ctx:
-                # ctx가 있는 경우 디스코드 채널에 직접 메시지 전송
                 await ctx.send(message)
                 logger.info(f"Sent audit result to Discord channel: {message}")
             elif DISCORD_WEBHOOK_URL:
-                # ctx가 없으면 웹훅으로 전송
                 async with aiohttp.ClientSession() as session:
-                    try:
-                        async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}, timeout=10) as response:
-                            if response.status != 204:
-                                logger.warning(f"Webhook response status: {response.status}")
-                                print(f"Failed to send to Discord webhook: {message}")
-                                return False
-                        logger.info("Audit result successfully sent to Discord webhook")
-                        return True
-                    except asyncio.TimeoutError:
-                        logger.error("Timeout while sending to Discord webhook")
-                        print(f"Timeout while sending to Discord webhook: {message}")
-                        return False
-                    except Exception as e:
-                        logger.error(f"Error sending to Discord webhook: {str(e)}")
-                        print(f"Failed to send to Discord webhook: {message}")
-                        return False
+                    async with session.post(DISCORD_WEBHOOK_URL, json={'content': message}, timeout=10) as response:
+                        if response.status != 204:
+                            logger.warning(f"Webhook response status: {response.status}")
+                            return False
+                    logger.info("Audit result successfully sent to Discord webhook")
+                    return True
             else:
                 print(message)
                 return True
@@ -162,8 +144,6 @@ class AuditService:
             logger.error(f"Error sending to Discord: {str(e)}")
             if ctx:
                 await ctx.send(f"❌ 디스코드 전송 오류: {str(e)}")
-            else:
-                print(f"Failed to send to Discord: {message}")
             return False
 
     def load_contract_data(self):
@@ -173,35 +153,40 @@ class AuditService:
             if '사업코드' not in df.columns or 'PM부서' not in df.columns or '진행상태' not in df.columns or '사업명' not in df.columns or '주관사' not in df.columns:
                 raise ValueError("CSV must contain '사업코드', 'PM부서', '진행상태', '사업명', and '주관사' columns")
 
-            # PM부서에서 부서 코드로 매핑
             def map_department(pm_dept):
                 dept_name = pm_dept.strip()
                 dept_code = DEPARTMENT_MAPPING.get(dept_name, '99999')
                 return dept_code
 
-            # ProjectID 생성 (사업코드에서 알파벳 제거)
-            df['ProjectID'] = df['사업코드'].apply(lambda x: re.sub(r'[^0-9]', '', str(x)))
-            
-            # 부서 코드 매핑
+            df['ProjectID'] = df['사업코드'].apply(lambda x: str(x))  # 숫자 제거 대신 원래 값 유지
             df['Depart_Code'] = df['PM부서'].apply(map_department)
             df['Depart'] = df['Depart_Code'].map(DEPARTMENT_NAMES).fillna(df['PM부서'])
-            
-            # Contractor 매핑
             df['Contractor'] = df['주관사'].apply(lambda x: '주관사' if x == '주관사' else '비주관사')
-            
             return df[['ProjectID', 'Depart_Code', 'Depart', '진행상태', '사업명', 'Contractor']]
         except Exception as e:
             logger.error(f"Failed to load contract data from {CONTRACT_STATUS_CSV}: {str(e)}")
             return pd.DataFrame()
 
     async def search_projects_by_id(self, project_id, department_code=None):
-        """project_id만 기반으로 프로젝트 정보 및 폴더를 찾아 검색 (부서 코드를 필수로 요구하지 않음)"""
-        numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))
+        """project_id만 기반으로 프로젝트 정보 및 폴더를 찾아 검색"""
+        numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))  # 검색용 숫자 ID
         projects = []
-        
-        # 1) contract_status.csv에서 프로젝트 정보 가져오기 (부서 코드 없이 검색)
+
+        # audit_targets_new.csv에서 원래 ProjectID 가져오기
+        csv_path = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
+        original_project_id = project_id  # 기본값은 입력된 project_id
+        try:
+            df = pd.read_csv(csv_path, encoding='utf-8-sig')
+            project_row = df[df['ProjectID'].str.replace(r'[^0-9]', '', regex=True) == numeric_project_id]
+            if not project_row.empty:
+                original_project_id = project_row['ProjectID'].iloc[0]  # 원래 형식 (예: C20240178)
+                logger.debug(f"Found original ProjectID: {original_project_id}")
+        except Exception as e:
+            logger.error(f"Error reading audit_targets_new.csv: {str(e)}")
+
+        # contract_status.csv에서 정보 가져오기
         contract_df = self.load_contract_data()
-        contract_match = contract_df[contract_df['ProjectID'] == numeric_project_id]
+        contract_match = contract_df[contract_df['ProjectID'] == original_project_id]
         
         if not contract_match.empty:
             row = contract_match.iloc[0]
@@ -211,12 +196,11 @@ class AuditService:
             status = row['진행상태']
             contractor = row['Contractor']
         else:
-            # contract_status.csv에 없으면 get_project_info로 기본 정보 가져오기 (부서 코드 없이)
             loop = asyncio.get_event_loop()
             project_info = await loop.run_in_executor(None, lambda: get_project_info(project_id))
             if not project_info:
-                logger.warning(f"Project ID {numeric_project_id} not found in contract status, using default values")
-                dept_code = '99999'  # 기본 부서 코드
+                logger.warning(f"Project ID {numeric_project_id} not found, using defaults")
+                dept_code = '99999'
                 dept_name = 'Unknown'
                 project_name = f'Project {numeric_project_id}'
                 status = 'Unknown'
@@ -228,31 +212,26 @@ class AuditService:
                 status = project_info.get('status', 'Unknown')
                 contractor = project_info.get('contractor', 'Unknown')
 
-        # 부서 코드가 없으면 contract_status.csv 또는 기본값 사용
         if not department_code:
             department_code = dept_code
 
-        # audit_targets_new.csv에서 search_folder 확인 (없으면 기본 경로 검색)
-        csv_path = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
+        # audit_targets_new.csv에서 search_folder 확인
         search_folder = None
         try:
             df = pd.read_csv(csv_path, encoding='utf-8-sig')
-            project_row = df[df['ProjectID'] == str(project_id)]
+            project_row = df[df['ProjectID'] == original_project_id]
             if not project_row.empty:
                 search_folder = str(project_row['search_folder'].iloc[0])
                 if search_folder in ["No folder", "No directory"]:
-                    logger.warning(f"Project {project_id} has No folder/No directory in audit_targets_new.csv, searching default path")
-                    search_folder = None  # 기본 경로로 검색
-            else:
-                logger.warning(f"Project {project_id} not found in audit_targets_new.csv, searching default path")
+                    logger.warning(f"Project {original_project_id} has No folder, searching default path")
+                    search_folder = None
         except Exception as e:
             logger.error(f"Error reading audit_targets_new.csv: {str(e)}")
 
-        # project_list.csv에서 original_folder 확인 (경로 검색)
-        project_list_path = PROJECT_LIST_CSV
-        if os.path.exists(project_list_path):
+        # project_list.csv에서 original_folder 확인
+        if os.path.exists(PROJECT_LIST_CSV):
             try:
-                df_projects = pd.read_csv(project_list_path, encoding='utf-8-sig')
+                df_projects = pd.read_csv(PROJECT_LIST_CSV, encoding='utf-8-sig')
                 df_projects['project_id'] = df_projects['project_id'].apply(lambda x: re.sub(r'[^0-9]', '', str(x)))
                 project_row_pl = df_projects[df_projects['project_id'] == numeric_project_id]
                 if not project_row_pl.empty:
@@ -260,30 +239,26 @@ class AuditService:
                     folder_path = os.path.join(NETWORK_BASE_PATH, original_folder)
                     if os.path.exists(folder_path):
                         search_folder = folder_path
-                        logger.info(f"Found project folder for Project {project_id}: {search_folder}")
-                    else:
-                        logger.warning(f"Project folder not found: {folder_path}")
-                else:
-                    logger.warning(f"No project found in project_list.csv for numeric ID {numeric_project_id} (original: {project_id})")
+                        logger.info(f"Found project folder: {search_folder}")
             except Exception as e:
                 logger.error(f"Error reading project_list.csv: {str(e)}")
 
-        # 기본 경로 검색 (NETWORK_BASE_PATH 아래)
+        # 기본 경로 검색
         if not search_folder or search_folder in ["No folder", "No directory"]:
             base_paths = [
-                os.path.join(NETWORK_BASE_PATH, numeric_project_id),  # 기본 project_id
-                os.path.join(NETWORK_BASE_PATH, f"Y{numeric_project_id}"),  # Y 접두사 포함
-                os.path.join(NETWORK_BASE_PATH, f"{numeric_project_id}_")  # project_id_ 접미사
+                os.path.join(NETWORK_BASE_PATH, numeric_project_id),
+                os.path.join(NETWORK_BASE_PATH, f"Y{numeric_project_id}"),
+                os.path.join(NETWORK_BASE_PATH, f"{numeric_project_id}_")
             ]
             for path in base_paths:
                 if os.path.exists(path):
                     search_folder = path
-                    logger.info(f"Found default folder path for Project {project_id}: {search_folder}")
+                    logger.info(f"Found default folder: {search_folder}")
                     break
             if not search_folder:
-                logger.warning(f"No default folder path found for Project {project_id} after search on {NETWORK_BASE_PATH}")
+                logger.warning(f"No folder found for Project {original_project_id}")
                 return [{
-                    'project_id': numeric_project_id,
+                    'project_id': original_project_id,  # 원래 project_id 사용
                     'department_code': dept_code,
                     'department_name': dept_name,
                     'project_name': project_name,
@@ -293,12 +268,11 @@ class AuditService:
                     'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES}
                 }]
 
-        # 경로 존재 여부 확인 (search_folder가 No folder/No directory가 아닌 경우)
         if search_folder not in ["No folder", "No directory"]:
             if not await asyncio.to_thread(os.path.exists, search_folder):
-                logger.error(f"Project folder does not exist: {search_folder}")
+                logger.error(f"Folder does not exist: {search_folder}")
                 return [{
-                    'project_id': numeric_project_id,
+                    'project_id': original_project_id,
                     'department_code': dept_code,
                     'department_name': dept_name,
                     'project_name': project_name,
@@ -308,84 +282,84 @@ class AuditService:
                     'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES}
                 }]
 
-            # 2) search_project_data.py의 process_single_project 호출 (project_id만 전달)
-            search_result = await self.searcher.process_single_project(project_id)  # department_code 제거
+            logger.debug(f"Searching project_id: {project_id} in folder: {search_folder}")
+            search_result = await self.searcher.process_single_project(project_id)
+            logger.debug(f"Raw search result: {search_result}")
+
             if search_result:
-                logger.debug(f"Raw search result for project {numeric_project_id}: {search_result}")
-                
                 documents = search_result.get('documents', {})
+                logger.debug(f"Documents from search_result: {documents}")
                 processed_documents = {}
-                
-                # 모든 DOCUMENT_TYPES를 순회하며 처리
                 for doc_type, type_info in DOCUMENT_TYPES.items():
                     doc_data = documents.get(doc_type, [])
-                    
-                    if isinstance(doc_data, list):
-                        # 리스트인 경우 (파일 경로 목록)
-                        details = [{'name': str(path), 'path': str(path)} for path in doc_data if path]
+                    if isinstance(doc_data, list) and doc_data:
+                        details = doc_data
                         processed_documents[doc_type] = {
-                            'exists': bool(details),
+                            'exists': len(details) > 0,
                             'details': details
                         }
-                        logger.debug(f"Processed list {doc_type}: {len(details)} files")
-                    elif isinstance(doc_data, dict):
-                        # 딕셔너리인 경우
-                        details = doc_data.get('details', [])
-                        if isinstance(details, list):
-                            processed_details = [
-                                {'name': str(item), 'path': str(item)} if isinstance(item, (str, Path))
-                                else item if isinstance(item, dict) and 'name' in item
-                                else {'name': str(item), 'path': str(item)}
-                                for item in details if item
-                            ]
-                            processed_documents[doc_type] = {
-                                'exists': bool(processed_details),
-                                'details': processed_details
-                            }
-                            logger.debug(f"Processed dict {doc_type}: {len(processed_details)} files")
+                        logger.debug(f"Processed {doc_type}: exists={len(details) > 0}, details={details}")
                     else:
-                        # 기타 경우 빈 결과로 처리
                         processed_documents[doc_type] = {
                             'exists': False,
                             'details': []
                         }
-                        logger.debug(f"Empty result for {doc_type}")
+                        logger.debug(f"Processed {doc_type}: exists=False, details=[]")
 
                 total_files = sum(len(doc_info['details']) for doc_info in processed_documents.values())
-                logger.info(f"Total processed files: {total_files}")
+                logger.debug(f"Total files calculated: {total_files}")
+                projects.append({
+                    'project_id': original_project_id,
+                    'department_code': dept_code,
+                    'department_name': dept_name,
+                    'project_name': project_name,
+                    'original_folder': search_folder,
+                    'status': status,
+                    'contractor': contractor,
+                    'documents': processed_documents
+                })
+                logger.info(f"Found project path: {search_folder}, Total files: {total_files}")
+            else:
+                logger.warning(f"No search result returned for {original_project_id}")
+                projects.append({
+                    'project_id': original_project_id,
+                    'department_code': dept_code,
+                    'department_name': dept_name,
+                    'project_name': project_name,
+                    'original_folder': search_folder,
+                    'status': status,
+                    'contractor': contractor,
+                    'documents': {doc_type: {'exists': False, 'details': []} for doc_type in DOCUMENT_TYPES}
+                })
 
-                if total_files > 0 or processed_documents:
-                    projects.append({
-                        'project_id': numeric_project_id,
-                        'department_code': dept_code,
-                        'department_name': dept_name,
-                        'project_name': project_name,
-                        'original_folder': search_folder,
-                        'status': status,
-                        'contractor': contractor,
-                        'documents': processed_documents
-                    })
-                    logger.info(f"Found project path for {numeric_project_id}: {search_folder}")
-                    logger.info(f"Project metadata - Status: {status}, Contractor: {contractor}")
-                    logger.info(f"Total files found: {total_files}")
-        
+        logger.debug(f"Returning projects: {projects}")
         return projects
 
     async def audit_project(self, project_id, department_code=None, use_ai=False, ctx=None):
-        """단일 프로젝트 감사 (project_id만 기반으로 검색 및 처리, use-ai 옵션으로 제미니 분석 추가)"""
+        """단일 프로젝트 감사"""
         start_time = time.time()
         try:
             logger.info(f"\n=== 프로젝트 {project_id} (ID: {re.sub(r'[^0-9]', '', str(project_id))}) 감사 시작 ===")
-            
             if ctx:
                 await send_audit_status_to_discord(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
 
-            # project_id만으로 부서와 폴더를 찾아 검색
+            # audit_targets_new.csv에서 원래 ProjectID 가져오기
+            csv_path = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
+            original_project_id = project_id
+            try:
+                df = pd.read_csv(csv_path, encoding='utf-8-sig')
+                numeric_project_id = re.sub(r'[^0-9]', '', str(project_id))
+                project_row = df[df['ProjectID'].str.replace(r'[^0-9]', '', regex=True) == numeric_project_id]
+                if not project_row.empty:
+                    original_project_id = project_row['ProjectID'].iloc[0]  # "C20240178"
+                    logger.debug(f"Found original ProjectID: {original_project_id}")
+            except Exception as e:
+                logger.error(f"Error reading audit_targets_new.csv: {str(e)}")
+
             projects = await self.search_projects_by_id(project_id)
             if not projects:
-                # contract_status.csv에서 프로젝트 정보를 가져와 기본 정보 제공 (부서 코드 없이)
                 contract_df = self.load_contract_data()
-                contract_match = contract_df[contract_df['ProjectID'] == re.sub(r'[^0-9]', '', str(project_id))]
+                contract_match = contract_df[contract_df['ProjectID'] == original_project_id]
                 if not contract_match.empty:
                     row = contract_match.iloc[0]
                     dept_code = row['Depart_Code']
@@ -393,10 +367,10 @@ class AuditService:
                     project_name = row['사업명']
                     status = row['진행상태']
                     contractor = row['Contractor']
-                    folder_path = None  # 경로가 없으므로 None 설정
+                    folder_path = None
 
                     result = {
-                        'project_id': re.sub(r'[^0-9]', '', str(project_id)),
+                        'project_id': original_project_id,
                         'project_name': project_name,
                         'department': f"{dept_code}_{dept_name}",
                         'status': status,
@@ -413,10 +387,7 @@ class AuditService:
                         }
                     }
                     
-                    # 문서 검색 시간 (없음)
                     search_time = time.time() - start_time
-                    
-                    # AI 분석 (use-ai 옵션에 따라 조건부 실행, but 경로가 없으므로 기본값 유지)
                     ai_analysis = None
                     ai_time = 0
                     if use_ai:
@@ -424,9 +395,8 @@ class AuditService:
                             await ctx.send(f"\n=== AI 분석 시작 ({dept_name}) ===")
                         logger.info(f"\n=== AI 분석 시작 ({dept_name}) ===")
                         ai_start = time.time()
-                        
                         ai_input = {
-                            'project_id': re.sub(r'[^0-9]', '', str(project_id)),
+                            'project_id': original_project_id,
                             'department': dept_name,
                             'project_name': project_name,
                             'status': status,
@@ -442,23 +412,20 @@ class AuditService:
                                 **{f'{doc_type}_count': 0 for doc_type in DOCUMENT_TYPES.keys()}
                             }
                         }
-                        
                         try:
                             ai_analysis = await analyze_with_gemini(ai_input, await self._get_session())
                         except Exception as e:
                             logger.error(f"AI 분석 오류: {str(e)}")
                             ai_analysis = f"AI 분석 중 오류 발생: {str(e)}"
-                        
                         ai_time = time.time() - ai_start
                         if ctx:
                             await ctx.send(f"=== AI 분석 완료 ({ai_time:.2f}초) ({dept_name})\nAI Analysis: {ai_analysis}")
                         logger.info(f"=== AI 분석 완료 ({ai_time:.2f}초) ({dept_name})\nAI Analysis: {ai_analysis}")
-                
+                    
                     result['ai_analysis'] = ai_analysis if use_ai else None
                     result['performance']['search_time'] = search_time
                     result['performance']['ai_time'] = ai_time
                     
-                    # 결과 저장 (경로가 없어도 저장)
                     save_start = time.time()
                     json_path = await self.save_audit_result(result, dept_code)
                     if json_path:
@@ -468,17 +435,16 @@ class AuditService:
                             await ctx.send(f"\n결과 저장 완료 ({dept_name}): {json_path}")
                         logger.info(f"\n결과 저장 완료 ({dept_name}): {json_path}")
                     
-                    # Discord로 결과 전송
+                    result['performance']['total_time'] = time.time() - start_time
                     try:
-                        await send_audit_to_discord(result)  # ✅ 오류 발생 여부와 상관없이 실행
+                        await send_audit_to_discord(result)
                     except Exception as e:
                         logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
-                    result['performance']['total_time'] = time.time() - start_time
-                    return [result]
+                    
+                    return [result]  # 리스트로 반환
                 else:
-                    raise ValueError(f"Project ID {project_id} not found in contract status or project list")
-            
-            # 부서별로 감사 수행 (중복 제거)
+                    raise ValueError(f"Project ID {project_id} not found")
+
             all_results = []
             for project_info in projects:
                 result = {
@@ -499,15 +465,11 @@ class AuditService:
                     }
                 }
                 
-                # 문서 검색 시간 (이미 search_projects_by_id에서 수행)
                 search_time = time.time() - start_time
+                logger.debug(f"Documents for project {project_info['project_id']}: {result['documents']}")  # 디버깅 로그 추가
                 
-                # 디버깅: documents 데이터 출력
-                logger.debug(f"Documents for project {project_info['project_id']}: {result['documents']}")
-                
-                # 프로젝트 메타데이터 추가 (CSV 형식 데이터 생성)
                 csv_data = {
-                    'Depart_ProjectID': f"{project_info['department_code']}_{project_info['project_id']}",
+                    'Depart_ProjectID': f"{project_info['department_code']}_{re.sub(r'[^0-9]', '', str(project_info['project_id']))}",
                     'Depart': project_info['department_name'],
                     'Status': project_info['status'],
                     'Contractor': project_info['contractor'],
@@ -533,9 +495,8 @@ class AuditService:
                     'evaluation_exists': 1 if result['documents'].get('evaluation', {}).get('exists', False) else 0,
                     'evaluation_count': len(result['documents'].get('evaluation', {}).get('details', []))
                 }
-                logger.debug(f"Gemini AI에 전달되는 CSV 데이터: {csv_data}")
+                logger.debug(f"Gemini AI CSV 데이터: {csv_data}")
 
-                # AI 분석 (use-ai 옵션에 따라 조건부 실행)
                 ai_analysis = None
                 ai_time = 0
                 if use_ai:
@@ -543,8 +504,6 @@ class AuditService:
                         await ctx.send(f"\n=== AI 분석 시작 ({project_info['department_name']}) ===")
                     logger.info(f"\n=== AI 분석 시작 ({project_info['department_name']}) ===")
                     ai_start = time.time()
-                    
-                    # AI 분석을 위한 데이터 구조화
                     ai_input = {
                         'project_id': project_info['project_id'],
                         'department': project_info['department_name'],
@@ -554,13 +513,11 @@ class AuditService:
                         'documents': result['documents'],
                         'csv_data': csv_data
                     }
-                    
                     try:
                         ai_analysis = await analyze_with_gemini(ai_input, await self._get_session())
                     except Exception as e:
                         logger.error(f"AI 분석 오류: {str(e)}")
                         ai_analysis = f"AI 분석 중 오류 발생: {str(e)}"
-                    
                     ai_time = time.time() - ai_start
                     if ctx:
                         await ctx.send(f"=== AI 분석 완료 ({ai_time:.2f}초) ({project_info['department_name']})\nAI Analysis: {ai_analysis}")
@@ -570,7 +527,6 @@ class AuditService:
                 result['performance']['search_time'] = search_time
                 result['performance']['ai_time'] = ai_time
                 
-                # 결과 저장
                 save_start = time.time()
                 json_path = await self.save_audit_result(result, project_info['department_code'])
                 if json_path:
@@ -580,12 +536,12 @@ class AuditService:
                         await ctx.send(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
                     logger.info(f"\n결과 저장 완료 ({project_info['department_name']}): {json_path}")
                 
-                # Discord로 결과 전송
+                result['performance']['total_time'] = time.time() - start_time
                 try:
-                    await send_audit_to_discord(result)  # ✅ 오류 발생 여부와 상관없이 실행
+                    await send_audit_to_discord(result)
                 except Exception as e:
                     logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
-                result['performance']['total_time'] = time.time() - start_time
+                
                 all_results.append(result)
             
             if ctx:
@@ -598,10 +554,9 @@ class AuditService:
             logger.info(f"- 총 발견 파일 수: {total_files}")
             logger.info(f"- 발견된 문서 유형 수: {len({doc_type for p in projects for doc_type in p['documents'].keys() if p['documents'][doc_type].get('exists', False)})}")
 
-            # 결과 반환 시 Unknown 프로젝트 제외
             valid_results = [r for r in all_results if r.get('project_id') != 'Unknown']
-            return valid_results[0] if len(valid_results) == 1 else valid_results
-            
+            return valid_results if valid_results else all_results  # 리스트 반환
+
         except Exception as e:
             error_msg = f"프로젝트 {project_id} 처리 중 오류 발생: {str(e)}"
             logger.error(error_msg)
@@ -609,155 +564,130 @@ class AuditService:
                 await ctx.send(f"❌ 오류 발생: {error_msg}")
             error_result = {
                 'error': str(e),
-                'project_id': project_id,
+                'project_id': original_project_id,
                 'department_code': department_code,
                 'department': 'Unknown' if not department_code else f"{department_code}_{DEPARTMENT_NAMES.get(department_code, 'Unknown')}",
                 'status': 'Unknown',
                 'contractor': 'Unknown',
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'performance': {'total_time': time.time() - start_time}
+                'performance': {
+                    'total_time': time.time() - start_time,
+                    'search_time': 0,
+                    'ai_time': 0,
+                    'save_time': 0
+                }
             }
             try:
-                await send_audit_to_discord(error_result)  # ✅ 오류 발생 여부와 상관없이 실행
+                await send_audit_to_discord(error_result)
             except Exception as e:
                 logger.error(f"❌ 디스코드 전송 오류: {str(e)}")
-            return error_result
+            return [error_result]  # 리스트 반환
 
     async def audit_multiple_projects(self, project_ids, use_ai=False):
-        """다중 프로젝트 배치 감사 (병렬 처리)"""
-        numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in project_ids]
-        tasks = [asyncio.create_task(self.audit_project(pid, None, use_ai)) for pid in numeric_project_ids]  # department_codes 제거
+        """다중 프로젝트 배치 감사"""
+        tasks = [asyncio.create_task(self.audit_project(pid, None, use_ai)) for pid in project_ids]  # 원래 ID 전달
         return await asyncio.gather(*tasks)
 
     async def process_audit_targets(self, filters=None, use_ai=False, skip_no_folder=False):
-        """감사 대상 리스트를 생성하고 배치로 감사 수행 (권한 문제 해결, skip_no_folder 옵션 추가)"""
-        from audit_target_generator import select_audit_targets  # 동적 임포트
+        """감사 대상 리스트 생성 및 배치 감사"""
+        from audit_target_generator import select_audit_targets
 
         try:
-            # static/data 디렉토리 존재 여부 및 권한 확인
             data_dir = os.path.join(STATIC_DATA_PATH)
-            os.makedirs(data_dir, exist_ok=True)  # 디렉토리 생성, 이미 존재하면 무시
-            
-            # 권한 확인 및 수정 (Windows에서 필요 시)
+            os.makedirs(data_dir, exist_ok=True)
             if not os.access(data_dir, os.W_OK):
-                logger.warning(f"No write permission for {data_dir}. Attempting to change permissions...")
-                try:
-                    import stat
-                    os.chmod(data_dir, stat.S_IWRITE | stat.S_IREAD)
-                    logger.info(f"Permissions updated for {data_dir}")
-                except Exception as e:
-                    logger.error(f"Failed to update permissions for {data_dir}: {str(e)}")
-                    raise
+                logger.warning(f"No write permission for {data_dir}, attempting to fix...")
+                import stat
+                os.chmod(data_dir, stat.S_IWRITE | stat.S_IREAD)
 
-            # 감사 대상 선택
             audit_targets_df, project_ids, department_codes = select_audit_targets(filters or AUDIT_FILTERS)
-            
             if audit_targets_df.empty or 'ProjectID' not in audit_targets_df.columns:
-                # ProjectID 열이 없으면 Depart_ProjectID에서 동적으로 생성
                 if 'Depart_ProjectID' in audit_targets_df.columns:
-                    audit_targets_df['ProjectID'] = audit_targets_df['Depart_ProjectID'].apply(lambda x: re.sub(r'[^0-9]', '', str(x).split('_')[-1]))
-                    logger.warning(f"ProjectID column not found, generated from Depart_ProjectID: {audit_targets_df['ProjectID'].head()}")
+                    audit_targets_df['ProjectID'] = audit_targets_df['Depart_ProjectID'].apply(lambda x: x.split('_')[-1])
+                    logger.warning(f"Generated ProjectID from Depart_ProjectID")
                 else:
-                    error_msg = "No valid ProjectID or Depart_ProjectID column found in audit_targets_new.csv"
-                    logger.error(error_msg)
+                    logger.error("No valid ProjectID or Depart_ProjectID column")
                     return None, None
 
-            numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in audit_targets_df['ProjectID'].tolist()]
-            # department_codes 사용하지 않음
-
-            logger.info(f"📊 총 {len(numeric_project_ids)}개 프로젝트를 처리합니다...")
+            logger.info(f"📊 총 {len(project_ids)}개 프로젝트 처리 시작...")
             results = []
-            
-            # 각 프로젝트 감사 수행 (ProjectID만 사용)
-            for idx, project_id in enumerate(numeric_project_ids):
-                progress = f"({idx + 1}/{len(numeric_project_ids)})"
-                
-                if idx % 10 == 0:  # 진행상황 10개 단위로 보고
+
+            for idx, project_id in enumerate(project_ids):
+                progress = f"({idx + 1}/{len(project_ids)})"
+                if idx % 10 == 0:
                     logger.info(f"🔄 진행중... {progress}")
                 
-                logger.info(f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
+                logger.info(f"🔍 프로젝트 {project_id} 감사 시작...")
                 try:
-                    # audit_targets_new.csv에서 search_folder 확인
-                    search_folder = None
                     csv_path = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
-                    if os.path.exists(csv_path):
-                        df = pd.read_csv(csv_path, encoding='utf-8-sig')
-                        project_row = df[df['ProjectID'] == str(project_id)]
-                        if not project_row.empty:
-                            search_folder = str(project_row['search_folder'].iloc[0])
+                    df = pd.read_csv(csv_path, encoding='utf-8-sig')
+                    project_row = df[df['ProjectID'] == str(project_id)]
+                    search_folder = project_row['search_folder'].iloc[0] if not project_row.empty else None
                     
                     if skip_no_folder and search_folder in ["No folder", "No directory"]:
-                        logger.info(f"Skipping project {project_id} due to No folder/No directory (skip_no_folder=True)")
-                        continue  # No folder/No directory인 경우 패스
+                        logger.info(f"Skipping project {project_id} (No folder, skip_no_folder=True)")
+                        continue
 
                     if search_folder in ["No folder", "No directory"]:
-                        # No folder 또는 No directory인 경우 0,0,0,0,0,0,0 출력 (폴더 검색 생략, 성과 없음)
                         result = {
                             "project_id": project_id,
                             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                             "documents_found": 0,
                             "risk_level": 0,
                             "missing_docs": 0,
-                            "department": df.loc[df['ProjectID'] == str(project_id), 'Depart'].iloc[0] if not df[df['ProjectID'] == str(project_id)].empty else "Unknown",
-                            "status": df.loc[df['ProjectID'] == str(project_id), 'Status'].iloc[0] if not df[df['ProjectID'] == str(project_id)].empty else "Unknown",
-                            "contractor": df.loc[df['ProjectID'] == str(project_id), 'Contractor'].iloc[0] if not df[df['ProjectID'] == str(project_id)].empty else "Unknown",
-                            "project_name": df.loc[df['ProjectID'] == str(project_id), 'ProjectName'].iloc[0] if not df[df['ProjectID'] == str(project_id)].empty else "Unknown",
+                            "department": project_row['Depart'].iloc[0] if not project_row.empty else "Unknown",
+                            "status": project_row['Status'].iloc[0] if not project_row.empty else "Unknown",
+                            "contractor": project_row['Contractor'].iloc[0] if not project_row.empty else "Unknown",
+                            "project_name": project_row['ProjectName'].iloc[0] if not project_row.empty else "Unknown",
                             "result": "0,0,0,0,0,0,0 (Folder missing)"
                         }
                         results.append(result)
-                        logger.info(f"✅ 프로젝트 {project_id} 감사 완료: 0,0,0,0,0,0,0 (Folder missing) {progress}")
+                        logger.info(f"✅ 프로젝트 {project_id} 완료: 0,0,0,0,0,0,0 (Folder missing) {progress}")
                     else:
-                        # 경로가 있는 경우 또는 기본 경로로 검색
-                        result = await self.audit_project(project_id, None, use_ai, None)  # ProjectID만 전달
+                        result = await self.audit_project(project_id, None, use_ai, None)
                         if 'error' not in result[0]:
                             results.append(result[0])
-                            logger.info(f"✅ 프로젝트 {project_id} 감사 완료: {result[0].get('timestamp', '시간정보 없음')} {progress}")
+                            logger.info(f"✅ 프로젝트 {project_id} 완료: {result[0].get('timestamp')} {progress}")
                         else:
-                            logger.error(f"❌ 프로젝트 {project_id} 감사 실패: {result[0]['error']} {progress}")
+                            logger.error(f"❌ 프로젝트 {project_id} 실패: {result[0]['error']} {progress}")
                     
-                    await asyncio.sleep(1)  # 각 프로젝트 감사 사이에 1초 대기
+                    await asyncio.sleep(1)
                 except Exception as e:
                     logger.error(f"Error processing project {project_id}: {str(e)}")
                     continue
             
-            # 결과 저장 (audit_targets_new.csv와 매핑)
             audit_targets_df['AuditResult'] = [
                 result.get('result', 'No result') if 'error' not in result else f"Error: {result['error']}"
                 for result in results
             ]
-            
-            output_csv = os.path.join(STATIC_DATA_PATH, 'audit_results.csv')  # data 서브디렉토리 제거
+            output_csv = os.path.join(STATIC_DATA_PATH, 'audit_results.csv')
             audit_targets_df.to_csv(output_csv, index=False, encoding='utf-8-sig')
-            logger.info(f"감사 결과가 {output_csv}에 저장되었습니다. 총 프로젝트 수: {len(audit_targets_df)}")
+            logger.info(f"감사 결과 저장: {output_csv}, 총 프로젝트 수: {len(audit_targets_df)}")
             return audit_targets_df, results
             
         except Exception as e:
-            error_msg = f"감사 대상 처리 오류: {str(e)}"
-            logger.error(error_msg)
+            logger.error(f"감사 대상 처리 오류: {str(e)}")
             return None, None
 
 if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description="프로젝트 문서 검색")
-    parser.add_argument('--project-id', type=str, nargs='+', required=False, help="검색할 프로젝트 ID (여러 개 가능)")
-    parser.add_argument('--department-code', type=str, nargs='+', default=None, help="부서 코드 (여러 개 가능, 예: 01010, 06010)")  # 여전히 남겨두지만 사용 안 함
+    parser.add_argument('--project-id', type=str, nargs='+', required=False, help="검색할 프로젝트 ID")
+    parser.add_argument('--department-code', type=str, nargs='+', default=None, help="부서 코드")
     parser.add_argument('--use-ai', action='store_true', help="AI 분석 사용")
-    parser.add_argument('--skip-no-folder', action='store_true', help="No folder/No directory 프로젝트를 패스")
+    parser.add_argument('--skip-no-folder', action='store_true', help="No folder 프로젝트 패스")
     args = parser.parse_args()
     
     async def main():
         logger.info("=== 프로젝트 문서 검색 시작 ===")
         service = AuditService()
-        
         try:
             if args.project_id:
-                numeric_project_ids = [re.sub(r'[^0-9]', '', str(pid)) for pid in args.project_id]
-                # department_codes 사용하지 않음
-                if len(numeric_project_ids) == 1:
-                    await service.audit_project(args.project_id[0], None, args.use_ai, ctx=None)  # department_code 제거
+                if len(args.project_id) == 1:
+                    await service.audit_project(args.project_id[0], None, args.use_ai, ctx=None)
                 else:
-                    await service.audit_multiple_projects(numeric_project_ids, None, args.use_ai)  # department_codes 제거
+                    await service.audit_multiple_projects(args.project_id, args.use_ai)
             else:
                 await service.process_audit_targets(use_ai=args.use_ai, skip_no_folder=args.skip_no_folder)
         finally:

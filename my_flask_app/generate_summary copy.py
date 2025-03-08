@@ -22,7 +22,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def load_audit_results(results_dir, verbose=False):
-    """감사 결과 JSON 파일 로드 (하위 디렉토리 포함)"""
+    """감사 결과 JSON 파일 로드"""
     audit_targets_path = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
     df_targets = pd.read_csv(audit_targets_path, encoding='utf-8-sig')
     
@@ -35,14 +35,11 @@ def load_audit_results(results_dir, verbose=False):
         logger.info(f"- {status}: {count}개")
     logger.info("="*50)
     
-    audit_files = []
-    for root, _, files in os.walk(results_dir):  # 하위 디렉토리까지 탐색
-        for file in files:
-            if file.startswith('audit_') and file.endswith('.json'):
-                audit_files.append(os.path.join(root, file))
+    pattern = os.path.join(results_dir, 'audit_*.json')
+    audit_files = glob(pattern)
     
     if not audit_files and verbose:
-        logger.warning(f"No audit files found in {results_dir} or its subdirectories")
+        logger.warning(f"No audit files found in {results_dir}")
     
     results = {}
     for file_path in audit_files:
@@ -84,8 +81,6 @@ def load_audit_results(results_dir, verbose=False):
                         logger.debug(f"ProjectID {project_id} not found in audit_targets_new.csv, skipping")
         except Exception as e:
             logger.error(f"Failed to load {file_path}: {str(e)}")
-    
-    logger.info(f"Loaded {len(audit_files)} audit files from {results_dir} and subdirectories")
     return results
 
 def merge_audit_targets_with_results(audit_results, verbose=False):
