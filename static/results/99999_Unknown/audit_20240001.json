@@ -1,0 +1,58 @@
+{
+  "project_id": "20240001",
+  "project_name": "Project 20240001",
+  "department": "99999_Unknown",
+  "status": "Unknown",
+  "contractor": "Unknown",
+  "documents": {
+    "contract": {
+      "exists": false,
+      "details": []
+    },
+    "specification": {
+      "exists": false,
+      "details": []
+    },
+    "initiation": {
+      "exists": false,
+      "details": []
+    },
+    "agreement": {
+      "exists": false,
+      "details": []
+    },
+    "budget": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable1": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable2": {
+      "exists": false,
+      "details": []
+    },
+    "completion": {
+      "exists": false,
+      "details": []
+    },
+    "certificate": {
+      "exists": false,
+      "details": []
+    },
+    "evaluation": {
+      "exists": false,
+      "details": []
+    }
+  },
+  "project_path": null,
+  "ai_analysis": null,
+  "timestamp": "2025-03-08 13:14:09",
+  "performance": {
+    "total_time": 0,
+    "search_time": 0.23900318145751953,
+    "ai_time": 0,
+    "save_time": 0
+  }
+}
