@@ -10,14 +10,6 @@
       "details": [
         {
           "type": "file",
-          "name": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-          "path": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-          "depth": 0,
-          "doc_type": "contract"
-        },
-        {
-          "type": "file",
           "name": "24-20-협조-90 계약체결.pdf",
           "path": "24-20-협조-90 계약체결.pdf",
           "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\24-20-협조-90 계약체결.pdf",
@@ -30,6 +22,14 @@
           "path": "협조전(계약체결통보)해외계약[샘플].pdf",
           "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.07 실행\\협조전(계약체결통보)해외계약[샘플].pdf",
           "depth": 2,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+          "path": "OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\01 UtT 하도급비\\Invoice01 2021.01.28 $72,600\\OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+          "depth": 5,
           "doc_type": "contract"
         }
       ]
@@ -76,6 +76,14 @@
       "details": [
         {
           "type": "file",
+          "name": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+          "path": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+          "depth": 0,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
           "name": "20200417 실행검토서-양식 - 구조.xlsx",
           "path": "20200417 실행검토서-양식 - 구조.xlsx",
           "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\20200417 실행검토서-양식 - 구조.xlsx",
@@ -84,18 +92,10 @@
         },
         {
           "type": "file",
-          "name": "네팔 SASEC 구조부 수행(실행)방안.hwp",
-          "path": "네팔 SASEC 구조부 수행(실행)방안.hwp",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\네팔 SASEC 구조부 수행(실행)방안.hwp",
-          "depth": 4,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "네팔 SASEC-지반분야 실행검토_0420.hwp",
-          "path": "네팔 SASEC-지반분야 실행검토_0420.hwp",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\네팔 SASEC-지반분야 실행검토_0420.hwp",
-          "depth": 4,
+          "name": "20200428 Nepal Sasec 실행검토서.xlsx",
+          "path": "20200428 Nepal Sasec 실행검토서.xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\01 실행검토서\\20200428 Nepal Sasec 실행검토서.xlsx",
+          "depth": 5,
           "doc_type": "budget"
         }
       ]
@@ -105,17 +105,17 @@
       "details": [
         {
           "type": "file",
-          "name": "네팔출장 보고서_양성석부사장.docx",
-          "path": "네팔출장 보고서_양성석부사장.docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\네팔출장 보고서_양성석부사장.docx",
+          "name": "양성석 네팔 출장 보고서.pdf",
+          "path": "양성석 네팔 출장 보고서.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서.pdf",
           "depth": 3,
           "doc_type": "deliverable1"
         },
         {
           "type": "file",
-          "name": "양성석 네팔 출장 보고서.pdf",
-          "path": "양성석 네팔 출장 보고서.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서.pdf",
+          "name": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
+          "path": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
           "depth": 3,
           "doc_type": "deliverable1"
         },
@@ -143,33 +143,8 @@
       ]
     },
     "completion": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-          "path": "01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-          "depth": 2,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-          "path": "02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-          "depth": 2,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-          "path": "20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-          "depth": 2,
-          "doc_type": "completion"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "certificate": {
       "exists": true,
@@ -184,17 +159,17 @@
         },
         {
           "type": "file",
-          "name": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
-          "path": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+          "name": "20230316 Nepal SASEC Road3 실적증명서.pdf",
+          "path": "20230316 Nepal SASEC Road3 실적증명서.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서.pdf",
           "depth": 2,
           "doc_type": "certificate"
         },
         {
           "type": "file",
-          "name": "20230316 Nepal SASEC Road3 실적증명서.pdf",
-          "path": "20230316 Nepal SASEC Road3 실적증명서.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서.pdf",
+          "name": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+          "path": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서(2).pdf",
           "depth": 2,
           "doc_type": "certificate"
         }
@@ -206,12 +181,12 @@
     }
   },
   "project_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project",
-  "ai_analysis": "문서 분석 결과 (2025-03-08 14:00):\n## 프로젝트 C20200184 문서 분석 결과 및 평가\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트는 주관사로 진행 중이며, 진행 단계임을 고려할 때 필수 문서인 계약서, 공동도급협정, 실행예산이 확보되어 있습니다.  하지만 과업지시서, 착수계, 용역수행평가가 누락되어 있으며,  이는 프로젝트 관리 및 추후 분쟁 발생 시 증빙자료 부족으로 이어질 수 있습니다.  성과품(보고서, 도면) 및 준공계, 실적증명은 존재하지만,  전체적인 문서 완성도 측면에서 부족한 점이 존재합니다.  따라서 \"중\"으로 평가합니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:** 프로젝트의 범위, 목표, 수행 기준 등을 명확히 하여 향후 발생 가능한 갈등을 예방하고,  성과 평가의 기준을 마련하기 위해 가장 시급합니다.\n* **착수계:** 프로젝트의 공식적인 시작을 알리고,  계획대로 진행되도록 하는 중요한 문서입니다.\n* **용역수행평가:** 프로젝트 진행 상황 및 성과를 점검하고,  향후 개선 방향을 설정하는데 필요합니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**위험도 점수 조정 필요성:** 있음\n\n**현재 위험도:** 70/100\n\n**조정 후 위험도:** 80/100 (상향 조정)\n\n**이유:**  현재 위험도 70/100은 누락된 문서의 중요성을 충분히 반영하지 못하고 있습니다.  특히 과업지시서, 착수계의 부재는 프로젝트의 법적, 관리적 위험을 증가시키는 요소입니다. 따라서 위험도를 상향 조정하는 것이 적절합니다.\n\n**개선 방안:**\n\n* **즉시 과업지시서, 착수계, 용역수행평가 작성 및 제출:**  관련 부서와 협의하여 누락된 문서를 최대한 빠르게 작성하고 제출해야 합니다.\n* **문서 관리 체계 개선:**  프로젝트 초기 단계부터 문서 관리 체계를 명확히 하고,  문서 작성 및 제출 기한을 설정하여 누락을 방지해야 합니다.  문서 관리 담당자를 지정하고,  정기적인 문서 점검을 실시하는 것도 효과적입니다.\n* **위험 관리 계획 수립 및 실행:**  프로젝트의 위험 요소를 체계적으로 관리하고,  위험 발생 시 대응 계획을 수립하여 실행해야 합니다.  누락된 문서로 인한 위험을 평가하고,  대응 방안을 마련해야 합니다.  예를 들어, 과업지시서가 없을 경우 발생할 수 있는 위험과 그에 대한 대비책을 명시해야 합니다.\n\n\n상기 개선 방안을 통해 프로젝트의 위험을 최소화하고, 성공적인 프로젝트 완료를 위한 기반을 마련해야 합니다.\n\n\n요약:\n- 확인된 문서: 7개 유형\n- 누락된 문서: 3개 유형\n- 기본 위험도: 70/100\n",
-  "timestamp": "2025-03-08 14:00:45",
+  "ai_analysis": "문서 분석 결과 (2025-03-10 02:11):\n## 프로젝트 C20200184 문서 분석 결과 및 평가\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트가 주관사이며 진행 중인 상태임을 고려했을 때,  필요한 문서의 일부가 누락되어 있습니다.  계약서, 공동도급협정, 실행예산, 성과품(보고서/도면), 실적증명은 확보되었으나, 과업지시서, 착수계, 준공계, 용역수행평가가 누락되어 있습니다.  진행 단계의 기준에 부합하지만,  핵심 문서인 과업지시서와 착수계가 없다는 점이 위험도를 높입니다.  주관사로서 모든 문서를 완비해야 한다는 기준에 미달합니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:** 프로젝트의 범위, 목표, 수행 기준 등을 명확히 하고, 향후 발생 가능한 분쟁을 예방하는 데 필수적입니다.\n* **착수계:** 프로젝트의 공식적인 시작을 알리고, 향후 진행 상황 관리 및 책임 소재를 명확히 하는 데 중요합니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**위험도 점수 조정 필요:**  있음\n\n**현재 위험도:** 70/100\n\n**조정 후 위험도:** 85/100 (상향 조정)\n\n**이유:**  현재 위험도 70/100은 진행 단계의 하한선에 가까운 수치이지만, 주관사임을 고려하고 누락된 문서의 중요성(과업지시서, 착수계)을 감안하면 위험도가 더 높아야 합니다. 특히 과업지시서와 착수계의 부재는 프로젝트 관리의 투명성과 효율성을 저해하고, 향후 문제 발생 시 책임 소재를 불분명하게 만들 수 있습니다.\n\n**개선 방안:**\n\n* **즉시 과업지시서와 착수계를 작성 및 제출:**  관련 부서 및 담당자와 협의하여 최대한 빠르게 작성하고, 관련 절차를 준수하여 제출해야 합니다.\n* **누락 문서 목록 관리 및 진행 상황 점검:**  정기적인 문서 점검을 통해 누락된 문서를 파악하고, 보완 계획을 수립하여 관리해야 합니다.\n* **문서 관리 시스템 개선:**  문서 관리 체계를 개선하여 문서 누락을 방지하고, 프로젝트 진행 상황에 맞춰 필요한 문서를 적시에 확보할 수 있도록 해야 합니다.\n* **준공계 및 용역수행평가 계획 수립:**  프로젝트 완료 단계에 필요한 문서 확보를 위한 계획을 미리 수립하여, 준공 시점에 문제가 발생하지 않도록 예방해야 합니다.\n\n\n위와 같은 개선 방안을 통해 문서 관리 체계를 강화하고, 위험 요소를 최소화해야 합니다.  향후 정기적인 문서 점검을 통해 위험도를 지속적으로 관리하는 것이 중요합니다.\n\n\n요약:\n- 확인된 문서: 6개 유형\n- 누락된 문서: 4개 유형\n- 기본 위험도: 70/100\n",
+  "timestamp": "2025-03-10 02:11:16",
   "performance": {
     "total_time": 0,
-    "search_time": 3.346343755722046,
-    "ai_time": 5.6750171184539795,
+    "search_time": 8.58710241317749,
+    "ai_time": 5.368652820587158,
     "save_time": 0
   }
 }
