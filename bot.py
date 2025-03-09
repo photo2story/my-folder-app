@@ -465,7 +465,7 @@ git reset --hard origin/main
 git reset --hard c108992
 git push origin main --force
 git add .
-git commit -m "Reverted to commit hard c108992 and continued work"
+git commit -m "Reverted to  commit hard c108992 and continued work"
 
 git log --grep="
 
