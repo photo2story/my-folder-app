@@ -288,39 +288,31 @@ class ApiService {
     print("\n=== FETCH PROJECT AUDIT DEBUG ===");
     print("[DEBUG] Fetching audit for project: $projectId");
     
-    // 캐시에 있는 경우 캐시된 데이터 반환
     if (_projectCache.containsKey(projectId)) {
       print("[DEBUG] Returning cached project data for: $projectId");
       return _projectCache[projectId]!;
     }
     
     try {
-      // 프로젝트 ID에서 접두사 처리 (C20240178 -> 20240178)
       final numericProjectId = projectId.replaceAll(RegExp(r'[A-Za-z]'), '');
       print("[DEBUG] Numeric project ID: $numericProjectId");
       
-      // 프로젝트 기본 정보 가져오기
       final projects = await fetchProjects();
       final project = projects.firstWhere(
         (p) => p.projectId == projectId || p.projectId == numericProjectId, 
         orElse: () => _getTestProjectData()
       );
       
-      // 부서 정보 추출 - config_assets.py 매핑 사용
       String departmentCode = '';
       String departmentName = '';
       
       if (project.department.contains('_')) {
-        // 이미 "코드_이름" 형식인 경우
         final parts = project.department.split('_');
         departmentCode = parts[0];
         departmentName = parts.length > 1 ? parts[1] : getDepartmentName(departmentCode);
       } else {
-        // 부서명만 있는 경우
         departmentName = project.department;
         departmentCode = getDepartmentCode(departmentName);
-        
-        // 부서명이 매핑에 없는 경우, 부서명이 코드일 수도 있음
         if (departmentCode == '99999' && DEPARTMENT_NAMES.containsKey(departmentName)) {
           departmentCode = departmentName;
           departmentName = getDepartmentName(departmentCode);
@@ -330,7 +322,6 @@ class ApiService {
       print("[DEBUG] Department code: $departmentCode");
       print("[DEBUG] Department name: $departmentName");
       
-      // JSON 파일 경로 구성 - 부서코드_부서명 형식으로 변경
       final folderPath = "${departmentCode}_$departmentName";
       final jsonPath = kIsWeb
           ? '$githubBaseUrl/$resultsPath/$folderPath/audit_$projectId.json'
@@ -338,16 +329,13 @@ class ApiService {
       
       print("[DEBUG] Attempting to fetch JSON from: $jsonPath");
       
-      // 웹 환경에서의 처리
+      dynamic jsonData;
       if (kIsWeb) {
         final response = await http.get(Uri.parse(jsonPath));
         print("[DEBUG] JSON Response status: ${response.statusCode}");
         
-        // 첫 번째 경로로 실패하면 다른 형식의 경로 시도
         if (response.statusCode != 200) {
           print("[DEBUG] First path failed, trying alternative paths");
-          
-          // 여러 대체 경로 시도
           final alternativePaths = [
             '$githubBaseUrl/$resultsPath/audit_$projectId.json',
             '$githubBaseUrl/$resultsPath/$departmentCode/audit_$projectId.json',
@@ -360,42 +348,19 @@ class ApiService {
             final altResponse = await http.get(Uri.parse(altPath));
             if (altResponse.statusCode == 200) {
               print("[DEBUG] Found JSON at: $altPath");
-              final jsonString = altResponse.body;
-              final dynamic jsonData = json.decode(jsonString);
-              
-              if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-                final projectModel = ProjectModel.fromJson(jsonData[0]);
-                _projectCache[projectId] = projectModel;
-                return projectModel;
-              } else if (jsonData is Map<String, dynamic>) {
-                final projectModel = ProjectModel.fromJson(jsonData);
-                _projectCache[projectId] = projectModel;
-                return projectModel;
-              }
+              jsonData = json.decode(altResponse.body);
+              break;
             }
           }
           
-          print('[ERROR] Failed to fetch JSON from GitHub in any path');
-          return _getTestProjectData();
-        }
-        
-        // 원래 경로에서 성공한 경우
-        final jsonString = response.body;
-        final dynamic jsonData = json.decode(jsonString);
-        print("[DEBUG] JSON data: $jsonData");
-        
-        if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-          final projectModel = ProjectModel.fromJson(jsonData[0]);
-          _projectCache[projectId] = projectModel;
-          return projectModel;
-        } else if (jsonData is Map<String, dynamic>) {
-          final projectModel = ProjectModel.fromJson(jsonData);
-          _projectCache[projectId] = projectModel;
-          return projectModel;
+          if (jsonData == null) {
+            print('[ERROR] Failed to fetch JSON from GitHub in any path');
+            return _getTestProjectData();
+          }
+        } else {
+          jsonData = json.decode(response.body);
         }
       } else {
-        // 로컬 환경에서의 처리
-        // 여러 가능한 경로 시도
         final possiblePaths = [
           '$basePath/$resultsPath/$folderPath/audit_$projectId.json',
           '$basePath/$resultsPath/audit_$projectId.json',
@@ -409,25 +374,63 @@ class ApiService {
           final file = File(path);
           if (await file.exists()) {
             print("[DEBUG] Found file at: $path");
-            final jsonString = await file.readAsString();
-            final dynamic jsonData = json.decode(jsonString);
-            
-            if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-              final projectModel = ProjectModel.fromJson(jsonData[0]);
-              _projectCache[projectId] = projectModel;
-              return projectModel;
-            } else if (jsonData is Map<String, dynamic>) {
-              final projectModel = ProjectModel.fromJson(jsonData);
-              _projectCache[projectId] = projectModel;
-              return projectModel;
-            }
+            jsonData = json.decode(await file.readAsString());
+            break;
           }
         }
         
-        print('[ERROR] JSON file not found in any of the possible paths');
+        if (jsonData == null) {
+          print('[ERROR] JSON file not found in any of the possible paths');
+          return _getTestProjectData();
+        }
       }
       
-      // 모든 시도 실패 시 테스트 데이터 반환
+      // JSON 데이터에서 중복 제거 및 정리
+      if (jsonData is Map<String, dynamic>) {
+        // documents 정리
+        if (jsonData['documents'] != null) {
+          final documents = jsonData['documents'] as Map<String, dynamic>;
+          documents.forEach((docType, docData) {
+            if (docData is Map<String, dynamic>) {
+              final details = docData['details'] as List<dynamic>? ?? [];
+              if (details.isNotEmpty) {
+                final uniqueDetails = <String, dynamic>{};
+                for (var detail in details) {
+                  if (detail is Map<String, dynamic>) {
+                    final fileName = detail['name']?.toString() ?? '';
+                    if (fileName.isNotEmpty && !uniqueDetails.containsKey(fileName)) {
+                      uniqueDetails[fileName] = detail;
+                    }
+                  }
+                }
+                docData['details'] = uniqueDetails.values.toList();
+              }
+            }
+          });
+        }
+        
+        // ai_analysis 생성 또는 업데이트
+        if (jsonData['ai_analysis'] == null || jsonData['ai_analysis'].toString().isEmpty) {
+          final documents = jsonData['documents'] as Map<String, dynamic>? ?? {};
+          final totalDocTypes = 10;
+          final existingDocs = documents.values
+              .where((doc) => doc is Map<String, dynamic> && (doc['exists'] == true || doc['exists'] == 1))
+              .length;
+          final riskScore = ((totalDocTypes - existingDocs) / totalDocTypes * 100).round();
+          
+          jsonData['ai_analysis'] = """
+1. 문서 현황: 총 $totalDocTypes개 중 $existingDocs개 문서 확인
+2. 위험도: $riskScore/100
+3. 분석 결과: ${riskScore > 50 ? '필수 문서 누락으로 인한 위험 존재' : '문서 구성 양호'}
+4. 권장사항: ${riskScore > 0 ? '- 누락된 문서 보완 필요\n- 문서 관리 체계 점검 권장' : '- 현재 상태 유지\n- 정기적인 문서 업데이트 권장'}
+""";
+        }
+        
+        final projectModel = ProjectModel.fromJson(jsonData);
+        _projectCache[projectId] = projectModel;
+        return projectModel;
+      }
+      
       return _getTestProjectData();
     } catch (e, stackTrace) {
       print("[ERROR] Error in fetchProjectAudit:");
@@ -446,7 +449,6 @@ class ApiService {
     print("\n=== FETCH DIRECTORY CONTENTS DEBUG ===");
     print('[DEBUG] Fetching directory contents for path: $dirPath');
     
-    // 캐시에 있는 경우 캐시된 데이터 반환
     if (_directoryCache.containsKey(dirPath)) {
       print("[DEBUG] Returning cached directory contents for: $dirPath (${_directoryCache[dirPath]!.length} items)");
       return _directoryCache[dirPath]!;
@@ -457,7 +459,6 @@ class ApiService {
 
       if (parts.length == 1) {
         final projects = await fetchProjects();
-        // Set을 사용하여 중복 제거
         final departments = <String>{};
         for (var project in projects) {
           if (project.department.isNotEmpty) {
@@ -465,9 +466,7 @@ class ApiService {
           }
         }
 
-        final result = departments.toList()
-          ..sort();  // 정렬 추가
-        
+        final result = departments.toList()..sort();
         final nodes = result.map((dept) => model.FileNode(
           name: dept,
           path: "$dirPath/$dept",
@@ -475,7 +474,6 @@ class ApiService {
           children: [],
         )).toList();
         
-        // 결과를 캐시에 저장
         _directoryCache[dirPath] = nodes;
         return nodes;
       }
@@ -483,7 +481,6 @@ class ApiService {
       if (parts.length == 2) {
         final department = parts[1];
         final projects = await fetchProjects();
-        // Set을 사용하여 중복 제거
         final projectMap = <String, ProjectModel>{};
         
         for (var project in projects.where((p) => p.department == department)) {
@@ -495,10 +492,8 @@ class ApiService {
           path: "$dirPath/${project.projectId}",
           isDirectory: true,
           children: [],
-        )).toList()
-          ..sort((a, b) => a.name.compareTo(b.name));  // 정렬 추가
+        )).toList()..sort((a, b) => a.name.compareTo(b.name));
         
-        // 결과를 캐시에 저장
         _directoryCache[dirPath] = result;
         return result;
       }
@@ -507,7 +502,6 @@ class ApiService {
         final projectId = parts[2];
         final projectData = await fetchProjectAudit(projectId);
         
-        // 문서 타입 순서 정의
         final orderedDocTypes = [
           'contract',
           'specification',
@@ -521,14 +515,16 @@ class ApiService {
           'evaluation'
         ];
         
-        final result = orderedDocTypes.map((type) => model.FileNode(
+        final result = orderedDocTypes.where((type) {
+          final docData = projectData.documents[type];
+          return docData != null && (docData['exists'] == true || docData['exists'] == 1);
+        }).map((type) => model.FileNode(
           name: _getDocumentTypeName(type),
           path: "$dirPath/$type",
           isDirectory: true,
           children: [],
         )).toList();
         
-        // 결과를 캐시에 저장
         _directoryCache[dirPath] = result;
         return result;
       }
@@ -538,26 +534,25 @@ class ApiService {
         final docType = parts[3];
         final projectData = await fetchProjectAudit(projectId);
         
-        // 중복 파일 제거를 위해 Map 사용 (파일명을 키로 사용)
         final uniqueFiles = <String, model.FileNode>{};
-        
         final docDetails = projectData.documents[docType]?['details'] as List<dynamic>? ?? [];
         final projectBasePath = projectData.projectPath ?? '';
 
         for (var detail in docDetails) {
-          final fileName = detail['name']?.toString() ?? '';
-          final filePath = detail['full_path']?.toString() ?? '';
-          if (fileName.isNotEmpty && !uniqueFiles.containsKey(fileName)) {
-            uniqueFiles[fileName] = model.FileNode(
-              name: fileName,
-              path: filePath,
-              isDirectory: false,
-              children: [],
-            );
+          if (detail is Map<String, dynamic>) {
+            final fileName = detail['name']?.toString() ?? '';
+            final filePath = detail['full_path']?.toString() ?? '';
+            if (fileName.isNotEmpty && !uniqueFiles.containsKey(fileName)) {
+              uniqueFiles[fileName] = model.FileNode(
+                name: fileName,
+                path: filePath,
+                isDirectory: false,
+                children: [],
+              );
+            }
           }
         }
 
-        // exists가 true이고 파일이 없는 경우 기본 파일 추가
         if (uniqueFiles.isEmpty && projectData.documents[docType]?['exists'] == true) {
           final fileName = "${docType.toLowerCase()}_${projectId}.pdf";
           if (!uniqueFiles.containsKey(fileName)) {
@@ -571,10 +566,7 @@ class ApiService {
           }
         }
         
-        final result = uniqueFiles.values.toList()
-          ..sort((a, b) => a.name.compareTo(b.name));  // 정렬 추가
-        
-        // 결과를 캐시에 저장
+        final result = uniqueFiles.values.toList()..sort((a, b) => a.name.compareTo(b.name));
         _directoryCache[dirPath] = result;
         return result;
       }

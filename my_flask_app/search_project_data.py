@@ -46,11 +46,11 @@ class ProjectDocumentSearcher:
         # 검색 결과 캐시 초기화
         self._cache = {}
         self._dir_cache = {}
-        self._file_cache = {}  # 파일별 문서 유형 캐싱
+        self._file_cache = {}  # 파일별 문서 유형 캐싱 (문자열 키 사용)
         
         # 검색 제외 패턴
         self._skip_patterns = {'backup', '백업', 'old', '이전', 'temp', '임시'}
-        self._valid_extensions = {'.pdf', '.doc', '.docx', '.xls', '.xlsx', '.hwp', '.zip'}
+        self._valid_extensions = {'.pdf', '.doc', '.docx', '.xls', '.xlsx', '.hwp', '.zip', '.dwg'}
         self._exclude_extensions = {'.tmp', '.bak'}
         
         self.verbose = verbose
@@ -97,7 +97,6 @@ class ProjectDocumentSearcher:
             logger.error(f"Project ID {project_id} not found in project list for department {department_code}")
             return None
         
-        # 지정된 department_code가 있으면 해당 부서의 데이터만 반환, 없으면 첫 번째 부서 반환
         if department_code:
             project_info = next((v for k, v in filtered_projects.items() if v['department_code'] == str(department_code)), None)
             if not project_info:
@@ -108,10 +107,22 @@ class ProjectDocumentSearcher:
             return list(filtered_projects.values())[0]  # 기본적으로 첫 번째 부서 반환
 
     @lru_cache(maxsize=1000)
-    def is_valid_document(self, path):
-        """문서 유효성 검사 (캐시 적용)"""
+    def is_valid_document(self, path, expected_types_str=None):
+        """문서 유효성 검사 (캐시 적용, 확장자 필터링 추가)"""
+        # expected_types를 문자열에서 리스트로 변환
+        expected_types = expected_types_str.split(',') if expected_types_str else None
+        
         ext = Path(path).suffix.lower()
-        return ext in self._valid_extensions and ext not in self._exclude_extensions
+        if ext not in self._valid_extensions or ext in self._exclude_extensions:
+            if self.verbose:
+                logger.debug(f"File {path} excluded: invalid extension {ext}")
+            return False
+        
+        if expected_types and ext not in [f'.{t}' for t in expected_types]:
+            if self.verbose:
+                logger.debug(f"File {path} excluded: extension {ext} not in expected types {expected_types}")
+            return False
+        return True
 
     def _should_skip_path(self, path):
         """검색 제외 경로 확인"""
@@ -120,7 +131,7 @@ class ProjectDocumentSearcher:
 
     async def _scan_directory_entries(self, path):
         """디렉토리 항목을 비동기적으로 스캔 (캐싱 최최화)"""
-        cache_key = str(path)
+        cache_key = str(path)  # 리스트가 아닌 문자열 키 사용
         if cache_key in self._dir_cache:
             self.cache_hits += 1
             return self._dir_cache[cache_key]
@@ -138,7 +149,7 @@ class ProjectDocumentSearcher:
             logger.error(f"디렉토리 스캔 실패 {path}: {str(e)}")
             return []
 
-    def _match_document_type(self, file_name):
+    def _match_document_type(self, file_name, expected_types=None):
         """파일 이름에서 문서 유형 매칭 (중복 방지, 우선순위 적용, 재검사 포함)"""
         file_lower = file_name.lower()
         if file_lower in self._file_cache:
@@ -148,7 +159,11 @@ class ProjectDocumentSearcher:
 
         self.cache_misses += 1
         for doc_type in DOCUMENT_PRIORITY:
-            if KEYWORD_PATTERNS[doc_type].search(file_lower):
+            if KEYWORD_PATTERNS[doc_type].search(file_lower):  # 키워드 매핑
+                # 확장자 검증
+                expected_types_str = ','.join(DOCUMENT_TYPES[doc_type].get('type', ['pdf']))
+                if not self.is_valid_document(file_name, expected_types_str):
+                    continue
                 logger.debug(f"Matched {file_name} with {doc_type} using pattern: {KEYWORD_PATTERNS[doc_type].pattern}")
                 self._file_cache[file_lower] = doc_type
                 return doc_type
@@ -156,6 +171,10 @@ class ProjectDocumentSearcher:
         # 재검사 로직: agreement, completion, evaluation 우선 재검사
         for doc_type in ['agreement', 'completion', 'evaluation']:
             if KEYWORD_PATTERNS[doc_type].search(file_lower):
+                # 확장자 검증
+                expected_types_str = ','.join(DOCUMENT_TYPES[doc_type].get('type', ['pdf']))
+                if not self.is_valid_document(file_name, expected_types_str):
+                    continue
                 logger.debug(f"Re-matched {file_name} with {doc_type} using pattern: {KEYWORD_PATTERNS[doc_type].pattern}")
                 self._file_cache[file_lower] = doc_type
                 if self.verbose:
@@ -168,17 +187,19 @@ class ProjectDocumentSearcher:
 
     async def search_document(self, project_path, doc_type, depth=0, max_found=3, found_count=0):
         """프로젝트 폴더에서 특정 유형의 문서 파일을 검색 (최대 3개까지)"""
-        if found_count >= max_found or depth > 7:
+        if found_count >= max_found or depth > 15:  # 깊이 제한 10 -> 15로 늘림
             return []
 
         found_items = []
         total_found = found_count
         pattern = KEYWORD_PATTERNS[doc_type]
         doc_name = DOCUMENT_TYPES[doc_type]['name']
+        expected_types = DOCUMENT_TYPES[doc_type].get('type', ['pdf'])  # type이 없으면 pdf 기본값
+        expected_types_str = ','.join(expected_types)  # 리스트를 문자열로 변환
 
         try:
             if self.verbose:
-                logger.debug(f"Searching in {project_path}, depth: {depth}, doc_type: {doc_type}")
+                logger.debug(f"Searching in {project_path}, depth: {depth}, doc_type: {doc_type}, expected_types: {expected_types}")
             entries = await self._scan_directory_entries(project_path)
             
             # 파일 먼저 처리 (최대 3개까지만)
@@ -189,9 +210,9 @@ class ProjectDocumentSearcher:
                 try:
                     if entry.is_file():
                         item_path = Path(entry.path)
-                        if self.is_valid_document(item_path):
+                        if self.is_valid_document(item_path, expected_types_str):
                             item_lower = item_path.name.lower()
-                            matched_type = self._match_document_type(item_lower)
+                            matched_type = self._match_document_type(item_lower, expected_types)
                             if matched_type == doc_type:
                                 logger.info(f"[발견] {doc_name}: {item_path.name}")
                                 found_items.append({

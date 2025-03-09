@@ -47,16 +47,16 @@ PROJECT_INFO_PATTERNS = {
 
 # 검색 대상 문서 유형
 DOCUMENT_TYPES = {
-    'contract': {'name': '계약서', 'keywords': ['계약서', '변경계약서', '계약', 'contract']},
-    'specification': {'name': '과업지시서', 'keywords': ['과업지시', '과업', '내용서', 'specification']},
-    'initiation': {'name': '착수계', 'keywords': ['착수', '착수계', 'initiation']},
-    'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정', '협약', 'agreement']},    
-    'budget': {'name': '실행예산', 'keywords': ['실행', '실행예산', 'budget']},
-    'deliverable1': {'name': '성과품(보고서)', 'keywords': ['성과품', '성과', '보고서', '1장', 'deliverable1']},
-    'deliverable2': {'name': '성과품(도면)', 'keywords': ['성과품', '성과', '도면', '일반도', '평면도', 'deliverable2']},
-    'completion': {'name': '준공계', 'keywords': ['준공', '준공계', 'completion']},
-    'certificate': {'name': '실적증명', 'keywords': ['실적증명', '증명', 'certificate']},
-    'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation']}
+    'contract': {'name': '계약서', 'keywords': ['계약서', '변경계약서', '계약', 'contract'], 'type': ['pdf']},
+    'specification': {'name': '과업지시서', 'keywords': ['과업지시', '내용서', 'specification'], 'type': ['pdf', 'hwp']},
+    'initiation': {'name': '착수계', 'keywords': ['착수', '착수계', 'initiation'], 'type': ['pdf']},
+    'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정', '협약', 'agreement'], 'type': ['pdf']},
+    'budget': {'name': '실행예산', 'keywords': ['실행', '실행예산', 'budget'], 'type': ['pdf', 'xls', 'xlsx']},
+    'deliverable1': {'name': '성과품(보고서)', 'keywords': ['성과품', '성과', '보고서', '1장', 'deliverable1'], 'type': ['hwp', 'pdf']},
+    'deliverable2': {'name': '성과품(도면)', 'keywords': ['성과품', '성과', '도면', '일반도', '평면도', 'deliverable2'], 'type': ['dwg', 'pdf']},
+    'completion': {'name': '준공계', 'keywords': ['준공', '준공계', 'completion'], 'type': ['pdf']},
+    'certificate': {'name': '실적증명', 'keywords': ['실적증명', '증명', 'certificate'], 'type': ['pdf']},
+    'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation'], 'type': ['pdf', 'hwp']}
 }
 
 # 부서 매핑 (PM부서 → department_code)
