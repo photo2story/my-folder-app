@@ -1,0 +1,27 @@
+{
+  "project_id": "20220075",
+  "department_code": "04010",
+  "department_name": "도시계획",
+  "project_name": "2022-075. 평택구룡지구 도시개발사업 조사설계 등 용역(2단계)",
+  "project_path": "Z:04010_도시계획\\2팀\\2022-075. 평택구룡지구 도시개발사업 조사설계 등 용역(2단계)",
+  "documents": {
+    "budget": [
+      {
+        "type": "file",
+        "name": "실행예산서.pdf",
+        "path": "실행예산서.pdf",
+        "full_path": "Z:04010_도시계획\\2팀\\2022-075. 평택구룡지구 도시개발사업 조사설계 등 용역(2단계)\\1. 과업 계약 및 착수\\1.07 실행\\실행예산서.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:21:37",
+  "performance": {
+    "total_time": 0.9301981925964355,
+    "search_time": 0.9082379341125488,
+    "document_counts": {
+      "budget": 1
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "project_id": "C20200182",
+  "project_name": "몽골 울란바토르 녹색주택지역 도시재개발사업",
+  "department": "04010_도시계획부",
+  "status": "진행",
+  "contractor": "주관사",
+  "documents": {
+    "contract": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "EFDP_Contract_Final (1) (1).pdf",
+          "path": "EFDP_Contract_Final (1) (1).pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\EFDP_Contract_Final (1) (1).pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "DEIA Contract.docx",
+          "path": "DEIA Contract.docx",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\예비비항목\\DEAI\\DEIA Contract.docx",
+          "depth": 5,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "1. DMS 계약서.pdf",
+          "path": "1. DMS 계약서.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\예비비항목\\DMS\\Contract\\1. DMS 계약서.pdf",
+          "depth": 6,
+          "doc_type": "contract"
+        }
+      ]
+    },
+    "specification": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "2020.09.22 과업시행요청.pdf",
+          "path": "2020.09.22 과업시행요청.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\2020.09.22 과업시행요청.pdf",
+          "depth": 4,
+          "doc_type": "specification"
+        }
+      ]
+    },
+    "initiation": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "2020.09.07 착수연기답변공문.pdf",
+          "path": "2020.09.07 착수연기답변공문.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\2020.09.07 착수연기답변공문.pdf",
+          "depth": 4,
+          "doc_type": "initiation"
+        }
+      ]
+    },
+    "agreement": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "2021.01_공동수행협약서.pdf",
+          "path": "2021.01_공동수행협약서.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\0. 사전작업\\0.03 공동도급 사전협약\\2021.01_공동수행협약서.pdf",
+          "depth": 2,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "220222 Service Agreement (Armelle Le Bihan)_SSJV.pdf",
+          "path": "220222 Service Agreement (Armelle Le Bihan)_SSJV.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\220222 Service Agreement (Armelle Le Bihan)_SSJV.pdf",
+          "depth": 3,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "Azjargal Service Agreement (Solar PV).pdf",
+          "path": "Azjargal Service Agreement (Solar PV).pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\Azjargal Service Agreement (Solar PV).pdf",
+          "depth": 3,
+          "doc_type": "agreement"
+        }
+      ]
+    },
+    "budget": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "실행예산서(당초).pdf",
+          "path": "실행예산서(당초).pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.02 내역서\\실행예산서(당초).pdf",
+          "depth": 3,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "실행예산서(당초).pdf",
+          "path": "실행예산서(당초).pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.07 실행\\실행예산서(당초).pdf",
+          "depth": 2,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "Estimated Budget of workshop_ADB format.pdf",
+          "path": "Estimated Budget of workshop_ADB format.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\발송공문\\2020.10.30_PMO_Approval of workshop\\Estimated Budget of workshop_ADB format.pdf",
+          "depth": 5,
+          "doc_type": "budget"
+        }
+      ]
+    },
+    "deliverable1": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable2": {
+      "exists": false,
+      "details": []
+    },
+    "completion": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "SES 준공금 서면결재.pdf",
+          "path": "SES 준공금 서면결재.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\SES 준공금\\SES 준공금 서면결재.pdf",
+          "depth": 5,
+          "doc_type": "completion"
+        }
+      ]
+    },
+    "certificate": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Per-diem Certificate..pdf",
+          "path": "Per-diem Certificate..pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\TL 급여\\Per-diem\\Per-diem Certificate..pdf",
+          "depth": 6,
+          "doc_type": "certificate"
+        },
+        {
+          "type": "file",
+          "name": "per-diem certificate.docx",
+          "path": "per-diem certificate.docx",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\TL 급여\\Per-diem\\per-diem certificate.docx",
+          "depth": 6,
+          "doc_type": "certificate"
+        },
+        {
+          "type": "file",
+          "name": "Per-diem Certificate.pdf",
+          "path": "Per-diem Certificate.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\TL 급여\\Per-diem\\Per-diem Certificate.pdf",
+          "depth": 6,
+          "doc_type": "certificate"
+        }
+      ]
+    },
+    "evaluation": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113 (2).xlsx",
+          "path": "Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113 (2).xlsx",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\예비비항목\\DEAI\\Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113 (2).xlsx",
+          "depth": 5,
+          "doc_type": "evaluation"
+        },
+        {
+          "type": "file",
+          "name": "Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113.xlsx",
+          "path": "Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113.xlsx",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\예비비항목\\DEAI\\Evaluation of Environmental Assessment Special Licensed Company by ENV_Team 20220113.xlsx",
+          "depth": 5,
+          "doc_type": "evaluation"
+        },
+        {
+          "type": "file",
+          "name": "(2)FINAL Quatation Evaluation Report EFDP SES 20210726_GB SIGNED.pdf",
+          "path": "(2)FINAL Quatation Evaluation Report EFDP SES 20210726_GB SIGNED.pdf",
+          "full_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\예비비항목\\Socio Economic Survey\\QER\\(2)FINAL Quatation Evaluation Report EFDP SES 20210726_GB SIGNED.pdf",
+          "depth": 6,
+          "doc_type": "evaluation"
+        }
+      ]
+    }
+  },
+  "project_path": "Z:04010_도시계획\\2팀\\2020-182. 몽골 울란바토르 녹색주택지역 도시재개발사업",
+  "ai_analysis": "문서 분석 결과 (2025-03-08 14:00):\n## 프로젝트 C20200182 문서 분석 평가\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트는 주관사이며 진행 중입니다.  필요한 주요 문서(계약서, 과업지시서, 착수계, 공동도급협정, 실행예산)는 모두 확보되어 있습니다. 하지만 준공계, 실적증명, 용역수행평가 등의  추가 문서와  가장 중요한 **성과품(보고서) 및 (도면)**이 누락되어 있습니다. 주관사로서 모든 문서가 완비되어야 위험도를 0으로 낮출 수 있으므로, 현재 상태는  주관사 기준에 미흡합니다. 진행 단계의 위험도 기준(30~70/100)을 고려하더라도 성과품 누락으로 인해 중간 수준으로 평가합니다.\n\n**2. 가장 시급한 보완 필요 문서:** 성과품(보고서) 및 성과품(도면)\n\n**이유:** 성과품은 프로젝트의 실질적인 결과물을 보여주는 핵심 문서입니다.  이것이 누락되어 있으면 프로젝트의 진행 상황과 결과를 확인할 수 없어,  리스크 관리 및 최종 평가에 심각한 어려움을 초래합니다.  다른 문서들은 프로젝트 진행 과정을 보여주는 증빙자료이지만, 성과품은 그 결과를 입증하는 핵심 자료이기 때문에 가장 시급하게 보완해야 합니다.\n\n**3. 위험도 점수 조정 필요성:** 있음\n\n**구체적인 개선 방안:**\n\n* **성과품(보고서) 및 (도면) 즉시 확보:**  프로젝트 담당자에게 성과품 제출을 독려하고,  제출 시한을 명확히 설정해야 합니다.  만약 제출이 지연될 경우, 그 이유와 해결 방안을 명시하여  위험 관리 계획에 포함해야 합니다.\n* **위험도 점수 상향 조정:** 현재 위험도 100/100은 성과품 누락을 제대로 반영하지 못합니다. 성과품 누락의 심각성을 고려하여 위험도를 80~90/100 수준으로 상향 조정하는 것을 고려해야 합니다.  성과품이 제출된 후에야 위험도를 재평가하여  적절한 수준으로 조정해야 합니다.\n* **문서 관리 시스템 개선:**  향후 유사한 문제 발생을 방지하기 위해 문서 관리 체계를 개선해야 합니다.  문서 제출 기한,  책임자,  제출 형식 등을 명확히 규정하고,  정기적인 문서 점검 시스템을 구축해야 합니다.  전자문서 관리 시스템 도입을 통해 문서 관리 효율성을 높이는 방안도 고려할 수 있습니다.\n\n\n위와 같은 개선 조치를 통해 프로젝트의 위험을 최소화하고 성공적인 완료를 도모해야 합니다.\n\n\n요약:\n- 확인된 문서: 8개 유형\n- 누락된 문서: 2개 유형\n- 기본 위험도: 100/100\n",
+  "timestamp": "2025-03-08 14:00:32",
+  "performance": {
+    "total_time": 0,
+    "search_time": 1.6572763919830322,
+    "ai_time": 5.261459589004517,
+    "save_time": 0
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "project_id": "20230124",
+  "department_code": "07010",
+  "department_name": "상하수도",
+  "project_name": "Y20230124 새다리 중계펌프장 주변 침수원인 조사용역",
+  "project_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역",
+  "documents": {
+    "specification": [
+      {
+        "type": "file",
+        "name": "01. 과업지시서 - 새다리 중계펌프장 주변 침수원인 조사.hwp",
+        "path": "01. 과업지시서 - 새다리 중계펌프장 주변 침수원인 조사.hwp",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\01. 과업수행계획\\01. 과업지시서\\01. 과업지시서 - 새다리 중계펌프장 주변 침수원인 조사.hwp",
+        "depth": 3,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "과업중지공문.pdf",
+        "path": "과업중지공문.pdf",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\04. 관련문서\\01. 발송공문\\과업중지공문.pdf",
+        "depth": 3,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "2. 과업지시서(변경).hwp",
+        "path": "2. 과업지시서(변경).hwp",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\05. 기술지원(외주)\\02. 과업지시서(외주)\\2. 과업지시서(변경).hwp",
+        "depth": 3,
+        "doc_type": "specification"
+      }
+    ],
+    "initiation": [
+      {
+        "type": "file",
+        "name": "새다리 중계펌프장 주변 침수원인 조사용역 착수신고서 제출본_23.06.15.pdf",
+        "path": "새다리 중계펌프장 주변 침수원인 조사용역 착수신고서 제출본_23.06.15.pdf",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\02. 계약서류\\03. 착수계 및 준공계\\새다리 중계펌프장 주변 침수원인 조사용역 착수신고서 제출본_23.06.15.pdf",
+        "depth": 3,
+        "doc_type": "initiation"
+      }
+    ],
+    "deliverable1": [
+      {
+        "type": "file",
+        "name": "보고서 표지.hwp",
+        "path": "보고서 표지.hwp",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\03. 성과품\\01. 설계성과품\\01. 보고서 및 부록\\보고서(hwp)\\보고서 표지.hwp",
+        "depth": 4,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "제1장 총설.hwp",
+        "path": "제1장 총설.hwp",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\03. 성과품\\01. 설계성과품\\01. 보고서 및 부록\\보고서(hwp)\\제1장 총설.hwp",
+        "depth": 4,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "보고서 표지.hwp",
+        "path": "보고서 표지.hwp",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\03. 성과품\\01. 설계성과품\\01. 보고서 및 부록\\보고서(PDF)\\보고서 표지.hwp",
+        "depth": 4,
+        "doc_type": "deliverable1"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "새다리 준공계.pdf",
+        "path": "새다리 준공계.pdf",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\02. 계약서류\\03. 착수계 및 준공계\\새다리 준공계.pdf",
+        "depth": 3,
+        "doc_type": "completion"
+      },
+      {
+        "type": "file",
+        "name": "청구서 및 준공검사원.pdf",
+        "path": "청구서 및 준공검사원.pdf",
+        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\05. 기술지원(외주)\\03. 선금 및 기성\\청구서 및 준공검사원.pdf",
+        "depth": 3,
+        "doc_type": "completion"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:48:05",
+  "performance": {
+    "total_time": 0.8216457366943359,
+    "search_time": 0.7726459503173828,
+    "document_counts": {
+      "specification": 3,
+      "initiation": 1,
+      "deliverable1": 3,
+      "completion": 2
+    }
+  }
+}

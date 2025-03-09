@@ -1,0 +1,143 @@
+{
+  "project_id": "20190189",
+  "department_code": "03010",
+  "department_name": "철도",
+  "project_name": "2019189 필리핀 LRT-2 서측연장사업 컨설팅용역",
+  "project_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "필리핀LRT2EEI동부Interface계약금액-1.xlsx",
+        "path": "필리핀LRT2EEI동부Interface계약금액-1.xlsx",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\필리핀LRT2EEI동부Interface계약금액-1.xlsx",
+        "depth": 2,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "필리핀LRT2EEI동부Interface계약금액.pdf",
+        "path": "필리핀LRT2EEI동부Interface계약금액.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\필리핀LRT2EEI동부Interface계약금액.pdf",
+        "depth": 2,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "필리핀서측계약금액확인(2).xlsx",
+        "path": "필리핀서측계약금액확인(2).xlsx",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\필리핀서측계약금액확인(2).xlsx",
+        "depth": 2,
+        "doc_type": "contract"
+      }
+    ],
+    "specification": [
+      {
+        "type": "file",
+        "name": "Part (rev)2-2 - General Specifications.doc",
+        "path": "Part (rev)2-2 - General Specifications.doc",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\0. 사전작업\\0.05 제안서\\Bid Document(submission)\\Part (rev)2-2 - General Specifications.doc",
+        "depth": 3,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "Part (rev)2-2 - General Specifications.pdf",
+        "path": "Part (rev)2-2 - General Specifications.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\0. 사전작업\\0.05 제안서\\Bid Document(submission)\\Part (rev)2-2 - General Specifications.pdf",
+        "depth": 3,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "Part (rev)2-2 - General Specifications.doc",
+        "path": "Part (rev)2-2 - General Specifications.doc",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\20191220_필리핀 서측 1차성과품\\Bid Document(submission)\\Part (rev)2-2 - General Specifications.doc",
+        "depth": 3,
+        "doc_type": "specification"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "Joint Venture Agreement.pdf",
+        "path": "Joint Venture Agreement.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\LRT2 서측 계약 부속서류\\Joint Venture Agreement.pdf",
+        "depth": 4,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "Joint Venture Agreement.pdf",
+        "path": "Joint Venture Agreement.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\1. 과업 계약 및 착수\\1.01 계약\\26.300 JV Agreement\\Joint Venture Agreement.pdf",
+        "depth": 3,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "용역사업공동수행협약서(필리핀LRT2서측연장선관련)_최종분.pdf",
+        "path": "용역사업공동수행협약서(필리핀LRT2서측연장선관련)_최종분.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\1. 과업 계약 및 착수\\1.01 계약\\26.300 JV Agreement\\용역공동수행-수성_공단\\용역사업공동수행협약서(필리핀LRT2서측연장선관련)_최종분.pdf",
+        "depth": 4,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "2020021_실행예산_LRT2EEI동부Interface_Final.xlsx",
+        "path": "2020021_실행예산_LRT2EEI동부Interface_Final.xlsx",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\2020021_실행예산_LRT2EEI동부Interface_Final.xlsx",
+        "depth": 2,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "2020021_실행예산_LRT2EEI동부Interface_이윤2.82%(서명수정).xlsx",
+        "path": "2020021_실행예산_LRT2EEI동부Interface_이윤2.82%(서명수정).xlsx",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\2020021_실행예산_LRT2EEI동부Interface_이윤2.82%(서명수정).xlsx",
+        "depth": 2,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "2020021_실행예산_LRT2EEI동부Interface_이윤2.82%.xlsx",
+        "path": "2020021_실행예산_LRT2EEI동부Interface_이윤2.82%.xlsx",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\03사업수행\\실행\\2020021_실행예산_LRT2EEI동부Interface_이윤2.82%.xlsx",
+        "depth": 2,
+        "doc_type": "budget"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "기술지원비 청구 필수서류(기성,준공 검사원) 양식-동산.hwp",
+        "path": "기술지원비 청구 필수서류(기성,준공 검사원) 양식-동산.hwp",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\1. 과업 계약 및 착수\\1.09 기술지원(외주)\\1.09.01 기술지원계약서\\외주계약\\기술지원비 청구 필수서류(기성,준공 검사원) 양식-동산.hwp",
+        "depth": 4,
+        "doc_type": "completion"
+      },
+      {
+        "type": "file",
+        "name": "필리핀 LRT-2 서측연장 컨설팅용역 준공금청구 관련서류.pdf",
+        "path": "필리핀 LRT-2 서측연장 컨설팅용역 준공금청구 관련서류.pdf",
+        "full_path": "Z:03010_철도\\2019189 필리핀 LRT-2 서측연장사업 컨설팅용역\\1. 과업 계약 및 착수\\1.09 기술지원(외주)\\1.09.01 기술지원계약서\\외주계약\\필리핀 LRT-2 서측연장 컨설팅용역 준공금청구 관련서류.pdf",
+        "depth": 4,
+        "doc_type": "completion"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 13:55:58",
+  "performance": {
+    "total_time": 3.4771504402160645,
+    "search_time": 3.4561989307403564,
+    "document_counts": {
+      "contract": 3,
+      "specification": 3,
+      "agreement": 3,
+      "budget": 3,
+      "completion": 2
+    }
+  }
+}

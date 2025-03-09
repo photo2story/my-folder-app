@@ -1,0 +1,89 @@
+{
+  "project_id": "20210237",
+  "department_code": "01030",
+  "department_name": "구조",
+  "project_name": "20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역",
+  "project_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "1 set of document for Mr. Puno's employment contract authentication.zip",
+        "path": "1 set of document for Mr. Puno's employment contract authentication.zip",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication.zip",
+        "depth": 0,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "2. Employment Contract.pdf",
+        "path": "2. Employment Contract.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\2. Employment Contract.pdf",
+        "depth": 1,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
+        "path": "Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\계약서\\Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
+        "depth": 1,
+        "doc_type": "contract"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
+        "path": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
+        "depth": 0,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
+        "path": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
+        "depth": 0,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "북부연결도로 공동수행 간이협약서_Final.pdf",
+        "path": "북부연결도로 공동수행 간이협약서_Final.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\계약서\\북부연결도로 공동수행 간이협약서_Final.pdf",
+        "depth": 1,
+        "doc_type": "agreement"
+      }
+    ],
+    "certificate": [
+      {
+        "type": "file",
+        "name": "1. Business Registration Certificate (아포스티유 예정).pdf",
+        "path": "1. Business Registration Certificate (아포스티유 예정).pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\1. Business Registration Certificate (아포스티유 예정).pdf",
+        "depth": 1,
+        "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
+        "path": "7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
+        "depth": 1,
+        "doc_type": "certificate"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:15:39",
+  "performance": {
+    "total_time": 0.7406857013702393,
+    "search_time": 0.7156896591186523,
+    "document_counts": {
+      "contract": 3,
+      "agreement": 3,
+      "certificate": 2
+    }
+  }
+}

@@ -1,57 +1,48 @@
 // /my_flutter_app/lib/services/file_explorer_service.dart
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:my_flutter_app/models/file_node.dart' as model;
 import 'api_service.dart';
 
-class FileExplorerService extends ChangeNotifier {
-  final ApiService _apiService;
-  List<model.FileNode>? _rootNodes;
-  bool _isLoading = false;
-  String? _error;
+class FileExplorerService with ChangeNotifier {
+  final ApiService apiService;
+  List<model.FileNode>? rootNodes;
+  String? error;
+  bool isLoading = false;
 
-  FileExplorerService({required ApiService apiService}) : _apiService = apiService;
-
-  List<model.FileNode>? get rootNodes => _rootNodes;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
+  FileExplorerService({required this.apiService});
 
   Future<void> loadRootDirectory() async {
+    isLoading = true;
+    notifyListeners();
+
     try {
-      _isLoading = true;
-      _error = null;
-      notifyListeners();
-
-      final projects = await _apiService.fetchProjects();
-      _rootNodes = projects.map((project) {
-        return model.FileNode(
-          name: project.projectName,
-          path: project.projectId,
-          isDirectory: true,
-        );
-      }).toList();
-
-      _isLoading = false;
-      notifyListeners();
+      rootNodes = await apiService.fetchDirectoryContents('');
+      error = null;
     } catch (e) {
-      _error = e.toString();
-      _isLoading = false;
-      notifyListeners();
-      rethrow;
+      error = e.toString();
+      rootNodes = [];
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<void> loadChildren(model.FileNode node) async {
-    if (!node.isDirectory) return;
+    if (node.children.isNotEmpty) return;
+
+    isLoading = true;
+    notifyListeners();
 
     try {
-      final children = await _apiService.fetchDirectoryContents(node.path);
-      node.children = children.cast<model.FileNode>();
-      notifyListeners();
+      final children = await apiService.fetchDirectoryContents(node.path);
+      node.children.addAll(children);
+      error = null;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
-      rethrow;
+      error = e.toString();
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 }

@@ -1,0 +1,142 @@
+{
+  "project_id": "C20180160",
+  "project_name": "탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역(Phase2)",
+  "department": "01010_도로부",
+  "status": "진행",
+  "contractor": "주관사",
+  "documents": {
+    "contract": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+          "path": "20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\01 계약서\\20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "변경계약 금액에 대한 도로부 검토의견.docx",
+          "path": "변경계약 금액에 대한 도로부 검토의견.docx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\01 계약서\\계약변경\\변경계약 금액에 대한 도로부 검토의견.docx",
+          "depth": 4,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "Volume 01-BRT1 Package A Works Contract.pdf",
+          "path": "Volume 01-BRT1 Package A Works Contract.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\02 시공사 계약서\\Volume 01-BRT1 Package A Works Contract.pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        }
+      ]
+    },
+    "specification": {
+      "exists": false,
+      "details": []
+    },
+    "initiation": {
+      "exists": false,
+      "details": []
+    },
+    "agreement": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+          "path": "JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+          "depth": 2,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "업무분담합의서 결재란.hwp",
+          "path": "업무분담합의서 결재란.hwp",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\업무분담합의서 결재란.hwp",
+          "depth": 2,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+          "path": "최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+          "depth": 2,
+          "doc_type": "agreement"
+        }
+      ]
+    },
+    "budget": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+          "path": "02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "02 20181113 실행검토서 - ver02_LEE.xlsx",
+          "path": "02 20181113 실행검토서 - ver02_LEE.xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver02_LEE.xlsx",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+          "path": "02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+          "depth": 4,
+          "doc_type": "budget"
+        }
+      ]
+    },
+    "deliverable1": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable2": {
+      "exists": false,
+      "details": []
+    },
+    "completion": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Phase1 준공금(3rd) 입금증.pdf",
+          "path": "Phase1 준공금(3rd) 입금증.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\1.05 선급금 및 기성\\02 기성\\Phase1 3차 final 35%\\03 20220119 입금증 $110,599.6\\Phase1 준공금(3rd) 입금증.pdf",
+          "depth": 5,
+          "doc_type": "completion"
+        }
+      ]
+    },
+    "certificate": {
+      "exists": false,
+      "details": []
+    },
+    "evaluation": {
+      "exists": false,
+      "details": []
+    }
+  },
+  "project_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)",
+  "ai_analysis": "문서 분석 결과 (2025-03-08 13:52):\n**1. 현재 문서화 상태:** 중\n\n**이유:**  프로젝트는 진행 중이며 주관사임에도 불구하고 과업지시서, 착수계, 성과품(보고서), 성과품(도면), 실적증명, 용역수행평가 등 중요 문서가 전부 누락되어 있습니다.  계약서, 공동도급협정, 실행예산, 준공계는 존재하지만, 프로젝트 진행 상황을 파악하고 관리하기에 필수적인 문서들이 부족하여 중간 수준으로 평가됩니다.  주관사로서 100% 완비되어야 할 문서들이 부족하기 때문에 '상'으로 평가할 수 없습니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:**  프로젝트의 범위, 목표, 기준, 일정 등을 명확히 하여 프로젝트 수행의 기준을 제시해야 합니다.  누락 시,  작업 방향의 불일치 및 분쟁 발생 가능성이 높습니다.\n* **착수계:** 프로젝트 시작을 공식적으로 알리고,  계획대로 진행될 수 있도록 초기 단계의 준비 상황을 확인하는 중요한 문서입니다.\n* **성과품(보고서 및 도면):**  프로젝트 진행 상황 및 결과를 검토하고,  최종 결과물의 완성도를 평가하기 위해 필수적입니다.  누락 시,  프로젝트 진행 상황 파악이 어렵고,  최종 결과물의 품질 관리에 어려움을 겪을 수 있습니다.\n\n\n**3. 위험도 점수 조정 필요성:** 있다.\n\n**구체적인 개선 방안:**\n\n현재 위험도 70/100은 누락된 문서의 중요성을 반영하지 못하고 있습니다.  위에서 언급한 과업지시서, 착수계, 성과품(보고서 및 도면) 등의 누락은 프로젝트의 성공적인 완료를 위협하는 심각한 문제입니다.  따라서 위험도를 상향 조정해야 합니다.\n\n* **위험도 조정:**  85/100으로 상향 조정을 제안합니다.  이는 주관사의 책임과 누락된 문서의 중요성을 고려한 수치입니다.\n\n* **개선 방안:**\n    * 즉시 과업지시서, 착수계를 작성하여 제출합니다.\n    * 정기적인 보고를 통해 성과품(보고서)를 작성하고,  프로젝트 진행에 따라 도면을 업데이트하여 제출합니다.\n    * 프로젝트 완료 후 실적증명 및 용역수행평가를 완료합니다.\n    * 문서 관리 체계를 개선하여 향후 유사한 문제 발생을 방지합니다. (예: 문서 관리 담당자 지정, 체크리스트 활용, 정기적인 문서 점검)\n\n위와 같은 조치를 통해 문서 관리를 개선하고 위험도를 낮출 수 있습니다.  특히,  과업지시서와 착수계는 즉각적인 조치가 필요합니다.\n\n\n요약:\n- 확인된 문서: 4개 유형\n- 누락된 문서: 6개 유형\n- 기본 위험도: 70/100\n",
+  "timestamp": "2025-03-08 13:52:48",
+  "performance": {
+    "total_time": 0,
+    "search_time": 1.0972895622253418,
+    "ai_time": 5.218774795532227,
+    "save_time": 0
+  }
+}

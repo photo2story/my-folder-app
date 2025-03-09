@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:math' as math;
 import 'services/api_service.dart';
 import 'services/file_explorer_service.dart';
-import 'widgets/tree_view.dart';
+import 'services/chat_service.dart';
+import 'screens/file_explorer_screen.dart';
+import 'screens/chat_screen.dart';
 import 'package:my_flutter_app/models/file_node.dart' as model;
 
 void main() async {
@@ -18,6 +21,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FileExplorerService(apiService: ApiService())),
+        ChangeNotifierProvider(create: (_) => ChatService()),
       ],
       child: const MyApp(),
     ),
@@ -73,21 +77,24 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> _loadInitialData() async {
     await _fileExplorerService.loadRootDirectory();
-    print('[DEBUG] Root directory loaded: ${_fileExplorerService.rootNodes?.length} projects');
+    print('[DEBUG] Root directory loaded: ${_fileExplorerService.rootNodes?.length} departments');
     if (_fileExplorerService.rootNodes != null && _fileExplorerService.rootNodes!.isNotEmpty) {
-      setState(() {
-        _selectedProjectId = _fileExplorerService.rootNodes!.first.path;
-      });
-      final apiService = ApiService();
-      final projectData = await apiService.fetchProjectAudit(_selectedProjectId!);
-      final aiAnalysis = projectData.aiAnalysis ?? 'AI 분석 보고서가 없습니다.';
-      final box = Hive.box('chatBox');
-      final messages = List<String>.from(box.get(_selectedProjectId!, defaultValue: <String>[]));
-      messages.add(aiAnalysis);
-      box.put(_selectedProjectId!, messages);
-
-      await _fileExplorerService.loadChildren(_fileExplorerService.rootNodes!.first);
-      print('[DEBUG] Initial children loaded for ${_selectedProjectId}: ${_fileExplorerService.rootNodes!.first.children.length} items');
+      final firstDepartment = _fileExplorerService.rootNodes!.first;
+      await _fileExplorerService.loadChildren(firstDepartment);
+      if (firstDepartment.children.isNotEmpty) {
+        setState(() {
+          _selectedProjectId = firstDepartment.children.first.path;
+        });
+        final chatService = Provider.of<ChatService>(context, listen: false);
+        chatService.setProjectId(_selectedProjectId!);
+        final apiService = ApiService();
+        final projectData = await apiService.fetchProjectAudit(_selectedProjectId!);
+        final aiAnalysis = projectData.aiAnalysis ?? 'AI 분석 보고서가 없습니다.';
+        print('[DEBUG] Initial aiAnalysis: $aiAnalysis');
+        chatService.clearMessages();
+        chatService.addMessage(aiAnalysis);
+        print('[DEBUG] Initial project selected: $_selectedProjectId');
+      }
     }
   }
 
@@ -115,157 +122,75 @@ class _MainScreenState extends State<MainScreen> {
       body: isMobile
           ? Column(
               children: [
-                Expanded(flex: 2, child: _buildProjectList()),
-                Expanded(flex: 4, child: _buildFileExplorer()),
-                Expanded(flex: 2, child: _buildChatPanel()),
+                Expanded(flex: 6, child: _buildFileExplorer()),
+                ChatScreen(selectedProjectId: _selectedProjectId),
               ],
             )
           : Row(
               children: [
-                Expanded(flex: 2, child: _buildProjectList()),
-                Expanded(flex: 4, child: _buildFileExplorer()),
-                Expanded(flex: 2, child: _buildChatPanel()),
+                Expanded(flex: 6, child: _buildFileExplorer()),
+                ChatScreen(selectedProjectId: _selectedProjectId),
               ],
             ),
-    );
-  }
-
-  Widget _buildProjectList() {
-    return Consumer<FileExplorerService>(
-      builder: (context, service, child) {
-        if (service.isLoading) return const Center(child: Text('프로젝트 목록 불러오는 중...'));
-        if (service.error != null) return Center(child: Text('Error: ${service.error}'));
-        final projects = service.rootNodes ?? [];
-        if (projects.isEmpty) return const Center(child: Text('프로젝트가 없습니다'));
-        return Container(
-          color: Colors.grey[200],
-          child: ListView.builder(
-            itemCount: projects.length,
-            itemBuilder: (context, index) {
-              final node = projects[index];
-              return ListTile(
-                selected: node.path == _selectedProjectId,
-                title: Text(node.name),
-                onTap: () async {
-                  setState(() {
-                    _selectedProjectId = node.path;
-                  });
-                  final apiService = ApiService();
-                  final projectData = await apiService.fetchProjectAudit(node.path);
-                  final aiAnalysis = projectData.aiAnalysis ?? 'AI 분석 보고서가 없습니다.';
-                  final box = Hive.box('chatBox');
-                  final messages = List<String>.from(box.get(_selectedProjectId!, defaultValue: <String>[]));
-                  messages.add(aiAnalysis);
-                  box.put(_selectedProjectId!, messages);
-
-                  service.loadChildren(node).then((_) {
-                    print('[DEBUG] Children loaded for ${node.path}: ${node.children.length} items');
-                  }).catchError((e) {
-                    print('[ERROR] Failed to load children: $e');
-                  });
-                },
-              );
-            },
-          ),
-        );
-      },
     );
   }
 
   Widget _buildFileExplorer() {
     return Consumer<FileExplorerService>(
       builder: (context, service, child) {
-        if (_selectedProjectId == null) {
-          return const Center(child: CircularProgressIndicator()); // 로드 중 표시
-        }
-        final node = service.rootNodes?.firstWhere(
-          (n) => n.path == _selectedProjectId,
-          orElse: () => model.FileNode(name: '', path: '', isDirectory: true, children: []),
-        );
-        if (node == null || service.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (node.children.isEmpty) {
-          return const Center(child: Text('No files available'));
-        }
-        return TreeView(
-          nodes: node.children,
-          onNodeTap: (node) {
-            if (node.path.isNotEmpty) _openFile(node.path);
-          },
-          onNodeExpand: (expandedNode) {
-            if (!expandedNode.children.isEmpty) return;
-            service.loadChildren(expandedNode).then((_) {
-              print('[DEBUG] Expanded node ${expandedNode.path} loaded');
-            }).catchError((e) {
-              print('[ERROR] Failed to expand node: $e');
+        if (service.isLoading) return const Center(child: Text('로딩 중...'));
+        if (service.error != null) return Center(child: Text('Error: ${service.error}'));
+
+        final rootNodes = service.rootNodes ?? [];
+        if (rootNodes.isEmpty) return const Center(child: Text('부서가 없습니다'));
+
+        return FileExplorerScreen(
+          projectId: _selectedProjectId ?? '',
+          onFileTap: _openFile,
+          onProjectTap: (projectId) async {
+            print('[DEBUG] onProjectTap called with projectId: $projectId');
+            setState(() {
+              _selectedProjectId = projectId;
+              print('[DEBUG] _selectedProjectId updated to: $_selectedProjectId');
             });
+            
+            try {
+              final chatService = Provider.of<ChatService>(context, listen: false);
+              chatService.setProjectId(projectId);
+              print('[DEBUG] ChatService projectId set to: ${chatService.currentProjectId}');
+              
+              final apiService = ApiService();
+              print('[DEBUG] Calling fetchProjectAudit for projectId: $projectId');
+              final projectData = await apiService.fetchProjectAudit(projectId);
+              print('[DEBUG] Project data received: ${projectData.projectId}');
+              
+              final aiAnalysis = projectData.aiAnalysis;
+              if (aiAnalysis != null && aiAnalysis.isNotEmpty) {
+                print('[DEBUG] AI Analysis: ${aiAnalysis.substring(0, math.min(50, aiAnalysis.length))}...');
+              } else {
+                print('[WARNING] AI Analysis is null or empty');
+              }
+              
+              if (aiAnalysis == null || aiAnalysis.isEmpty) {
+                print('[WARNING] AI Analysis is null or empty');
+                chatService.clearMessages();
+                chatService.addMessage('이 프로젝트의 AI 분석 보고서가 없습니다.');
+              } else {
+                chatService.clearMessages();
+                chatService.addMessage(aiAnalysis);
+                print('[DEBUG] Chat updated with AI analysis');
+              }
+            } catch (e, stackTrace) {
+              print('[ERROR] Error in onProjectTap: $e');
+              print('[ERROR] Stack trace: $stackTrace');
+              
+              final chatService = Provider.of<ChatService>(context, listen: false);
+              chatService.clearMessages();
+              chatService.addMessage('오류가 발생했습니다: $e');
+            }
           },
         );
       },
-    );
-  }
-
-  Widget _buildChatPanel() {
-    return Container(
-      color: Colors.grey[100],
-      child: Column(
-        children: [
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: Hive.box('chatBox').listenable(),
-              builder: (context, Box box, _) {
-                final messages = box.get(_selectedProjectId ?? '', defaultValue: <String>[]);
-                return ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        messages[index],
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      subtitle: Text(
-                        DateTime.now().toString().substring(0, 19),
-                        style: const TextStyle(fontSize: 10, color: Colors.grey),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _chatController,
-                    decoration: const InputDecoration(
-                      hintText: 'Add a note...',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: _selectedProjectId == null
-                      ? null
-                      : () {
-                          if (_chatController.text.isNotEmpty) {
-                            final box = Hive.box('chatBox');
-                            final messages = List<String>.from(box.get(_selectedProjectId!, defaultValue: <String>[]));
-                            messages.add(_chatController.text);
-                            box.put(_selectedProjectId!, messages);
-                            _chatController.clear();
-                          }
-                        },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 

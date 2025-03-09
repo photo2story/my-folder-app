@@ -1,0 +1,292 @@
+{
+  "project_id": "C20240135",
+  "project_name": "필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역",
+  "department": "03010_철도설계부",
+  "status": "준공",
+  "contractor": "주관사",
+  "documents": {
+    "contract": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "필리핀 마닐라 LRT 2 코게오 연장 타당성조사 용역조사계약서.pdf",
+          "path": "필리핀 마닐라 LRT 2 코게오 연장 타당성조사 용역조사계약서.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.01 계약★\\1.01.03 계약서\\필리핀 마닐라 LRT 2 코게오 연장 타당성조사 용역조사계약서.pdf",
+          "depth": 4,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "24.08.01 필리핀 마닐라 LRT2 코게오 FS 계약서.pdf",
+          "path": "24.08.01 필리핀 마닐라 LRT2 코게오 FS 계약서.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\교통조사, 경제성 및 재무성 분석\\24.08.01 필리핀 마닐라 LRT2 코게오 FS 계약서.pdf",
+          "depth": 5,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "C20240135-교통조사, 경제성 및 재무성 분석-TTPI INC.-발주의뢰서(계약서포함).pdf",
+          "path": "C20240135-교통조사, 경제성 및 재무성 분석-TTPI INC.-발주의뢰서(계약서포함).pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\교통조사, 경제성 및 재무성 분석\\C20240135-교통조사, 경제성 및 재무성 분석-TTPI INC.-발주의뢰서(계약서포함).pdf",
+          "depth": 5,
+          "doc_type": "contract"
+        }
+      ]
+    },
+    "specification": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "2.과업지시서.pdf",
+          "path": "2.과업지시서.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\R.O.W 및 드론촬영\\2.과업지시서.pdf",
+          "depth": 5,
+          "doc_type": "specification"
+        },
+        {
+          "type": "file",
+          "name": "교통조사, 경제성 및 제무성 분석-과업지시서.hwp",
+          "path": "교통조사, 경제성 및 제무성 분석-과업지시서.hwp",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\R.O.W 및 드론촬영\\교통조사, 경제성 및 제무성 분석-과업지시서.hwp",
+          "depth": 5,
+          "doc_type": "specification"
+        },
+        {
+          "type": "file",
+          "name": "드론촬영 및 R.O.W-과업지시서.hwp",
+          "path": "드론촬영 및 R.O.W-과업지시서.hwp",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\R.O.W 및 드론촬영\\드론촬영 및 R.O.W-과업지시서.hwp",
+          "depth": 5,
+          "doc_type": "specification"
+        }
+      ]
+    },
+    "initiation": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역 착수계.pdf",
+          "path": "필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역 착수계.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.02 착수계★\\1.02.03 착수계★\\필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역 착수계.pdf",
+          "depth": 4,
+          "doc_type": "initiation"
+        },
+        {
+          "type": "file",
+          "name": "착수보고 회의록.pdf",
+          "path": "착수보고 회의록.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\자료 모음\\##제출용\\부록\\back up\\PDF\\1.착수보고\\착수보고 회의록.pdf",
+          "depth": 6,
+          "doc_type": "initiation"
+        },
+        {
+          "type": "file",
+          "name": "필리핀 마닐라  LRT2 코게오 연장 타당성 조사 용역 착수보고회 결과 제출 공문.pdf",
+          "path": "필리핀 마닐라  LRT2 코게오 연장 타당성 조사 용역 착수보고회 결과 제출 공문.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\자료 모음\\##제출용\\부록\\back up\\PDF\\1.착수보고\\필리핀 마닐라  LRT2 코게오 연장 타당성 조사 용역 착수보고회 결과 제출 공문.pdf",
+          "depth": 6,
+          "doc_type": "initiation"
+        }
+      ]
+    },
+    "agreement": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Negotiation Contract Agreement_CHO signed-Park.pdf",
+          "path": "Negotiation Contract Agreement_CHO signed-Park.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\1. 과업 계약 및 착수★\\1.09 기술지원(외주)★\\1.09.01 기술지원계약서★\\R.O.W 및 드론촬영\\본사 계약용\\Negotiation Contract Agreement_CHO signed-Park.pdf",
+          "depth": 6,
+          "doc_type": "agreement"
+        }
+      ]
+    },
+    "budget": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "6장 사업실행계획.PDF",
+          "path": "6장 사업실행계획.PDF",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@최종 준공품_보고서 국문\\PDF\\6장 사업실행계획.PDF",
+          "depth": 3,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "4.7 용지확보 및 재정착 실행계획.docx",
+          "path": "4.7 용지확보 및 재정착 실행계획.docx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@최종 준공품_보고서 국문\\WORD\\Chapter 4\\4.7 용지확보 및 재정착 실행계획.docx",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "2024년 「K-철도 해외개발사업」 사전사업실행예산서 2024.01.05.xlsx",
+          "path": "2024년 「K-철도 해외개발사업」 사전사업실행예산서 2024.01.05.xlsx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\0. 사전작업★\\0.04 사전사업 등록(비용투입사업)★\\2024년 「K-철도 해외개발사업」 사전사업실행예산서 2024.01.05.xlsx",
+          "depth": 3,
+          "doc_type": "budget"
+        }
+      ]
+    },
+    "deliverable1": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "24.12.17 보고서 보완.zip",
+          "path": "24.12.17 보고서 보완.zip",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\24.12.17 보고서 보완.zip",
+          "depth": 1,
+          "doc_type": "deliverable1"
+        },
+        {
+          "type": "file",
+          "name": "교통보고서_수요경제재무_자문_영문_241202.docx",
+          "path": "교통보고서_수요경제재무_자문_영문_241202.docx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\교통보고서_수요경제재무_자문_영문_241202.docx",
+          "depth": 1,
+          "doc_type": "deliverable1"
+        },
+        {
+          "type": "file",
+          "name": "@국문보고서.pdf",
+          "path": "@국문보고서.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\24.12.17 보고서 보완자료\\국문\\@국문보고서.pdf",
+          "depth": 3,
+          "doc_type": "deliverable1"
+        }
+      ]
+    },
+    "deliverable2": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "국문 도면.pdf",
+          "path": "국문 도면.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\3. 성과품 작성★\\3.01 설계도면★\\3.01.02 구조물 설계도★\\도면 PDF\\국문 도면.pdf",
+          "depth": 5,
+          "doc_type": "deliverable2"
+        },
+        {
+          "type": "file",
+          "name": "영문도면.pdf",
+          "path": "영문도면.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\3. 성과품 작성★\\3.01 설계도면★\\3.01.02 구조물 설계도★\\도면 PDF\\영문도면.pdf",
+          "depth": 5,
+          "doc_type": "deliverable2"
+        },
+        {
+          "type": "file",
+          "name": "국문 도면.pdf",
+          "path": "국문 도면.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\자료 모음\\##제출용\\도면 PDF\\국문 도면.pdf",
+          "depth": 3,
+          "doc_type": "deliverable2"
+        }
+      ]
+    },
+    "completion": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "@최종 준공품_보고서 영문_초안_12.10.zip",
+          "path": "@최종 준공품_보고서 영문_초안_12.10.zip",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@최종 준공품_보고서 영문\\Back-up\\@최종 준공품_보고서 영문_초안_12.10.zip",
+          "depth": 3,
+          "doc_type": "completion"
+        },
+        {
+          "type": "file",
+          "name": "@최종 준공품_보고서 영문_초안_24.12.08.zip",
+          "path": "@최종 준공품_보고서 영문_초안_24.12.08.zip",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@최종 준공품_보고서 영문\\Back-up\\@최종 준공품_보고서 영문_초안_24.12.08.zip",
+          "depth": 3,
+          "doc_type": "completion"
+        },
+        {
+          "type": "file",
+          "name": "필리핀 LRT2호선 코게오 연장 타당성조사 준공조서-수정1.hwp",
+          "path": "필리핀 LRT2호선 코게오 연장 타당성조사 준공조서-수정1.hwp",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\자료 모음\\2024.12.27 공단송부\\필리핀 LRT2호선 코게오 연장 타당성조사 준공조서-수정1.hwp",
+          "depth": 2,
+          "doc_type": "completion"
+        }
+      ]
+    },
+    "certificate": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Annex A NAMRIA Certificate.docx",
+          "path": "Annex A NAMRIA Certificate.docx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@24.11.18  DOTr\\4.2 topo_241118\\2. Topographic Survey Report_Full Version\\E-File\\Annexes\\Separators\\Annex A NAMRIA Certificate.docx",
+          "depth": 7,
+          "doc_type": "certificate"
+        },
+        {
+          "type": "file",
+          "name": "Annex A NAMRIA Certificate.pdf",
+          "path": "Annex A NAMRIA Certificate.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@24.11.18  DOTr\\4.2 topo_241118\\2. Topographic Survey Report_Full Version\\PDF\\Annexes\\Annex A NAMRIA Certificate.pdf",
+          "depth": 6,
+          "doc_type": "certificate"
+        },
+        {
+          "type": "file",
+          "name": "Annex A NAMRIA Certificate.pdf",
+          "path": "Annex A NAMRIA Certificate.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\@24.11.18  DOTr\\4.2 topo_241118\\2. Topographic Survey Report_Full Version\\PDF\\Annexes\\Separators\\Annex A NAMRIA Certificate.pdf",
+          "depth": 7,
+          "doc_type": "certificate"
+        }
+      ]
+    },
+    "evaluation": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.pdf",
+          "path": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.pdf",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\24.12.17 보고서 보완자료\\영문\\PDF\\Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.pdf",
+          "depth": 4,
+          "doc_type": "evaluation"
+        },
+        {
+          "type": "file",
+          "name": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.docx",
+          "path": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.docx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\24.12.17 보고서 보완자료\\영문\\WORD\\Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION.docx",
+          "depth": 4,
+          "doc_type": "evaluation"
+        },
+        {
+          "type": "file",
+          "name": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION_241217.docx",
+          "path": "Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION_241217.docx",
+          "full_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역\\@@보고서 번역\\24.12.17 재무경제성평가 보완자료\\Chapter 11 ECONOMIC ANALYSIS AND FINANCIAL EVALUATION_241217.docx",
+          "depth": 2,
+          "doc_type": "evaluation"
+        }
+      ]
+    }
+  },
+  "project_path": "Z:03010_철도\\C20240135 필리핀 마닐라 LRT 2호선 코게오 연장 타당성조사 용역",
+  "ai_analysis": "문서 분석 결과 (2025-03-08 15:22):\n## 프로젝트 C20240135 문서 분석 평가 결과\n\n**1. 현재 문서화 상태:** 상\n\n**이유:** 주관사이며, 모든 문서 유형이 100% 완비되어 있습니다.  준공 프로젝트의 기준을 완벽하게 충족합니다.  위험도 0/100 달성.\n\n**2. 가장 시급한 보완 필요 문서:** 없음\n\n**이유:** 모든 필요한 문서가 완비되어 있으므로 보완이 필요한 문서는 없습니다.\n\n**3. 위험도 점수 조정 필요성:** 없음\n\n**이유:** 현재 위험도 100/100은 프로젝트 시작 시점의 예상 위험도를 나타내는 것으로 보이며, 준공 시점의 위험도는 0/100으로 조정되어야 합니다.  모든 문서가 완벽하게 관리되었으므로 위험도 점수 조정은 필요하지 않습니다.  기존 위험도 100/100은 프로젝트 시작 전 평가 점수로, 현재 상태와는 무관하게  **0/100으로 수정**하는 것이 타당합니다.  이는 프로젝트의 완료 및 성공적인 문서 관리를 명확히 보여줍니다.\n\n\n요약:\n- 확인된 문서: 10개 유형\n- 누락된 문서: 0개 유형\n- 기본 위험도: 100/100\n",
+  "timestamp": "2025-03-08 15:22:25",
+  "performance": {
+    "total_time": 0,
+    "search_time": 21.398550510406494,
+    "ai_time": 2.547283411026001,
+    "save_time": 0
+  }
+}

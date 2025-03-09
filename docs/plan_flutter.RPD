@@ -6,7 +6,7 @@
 
 ✅ 개발 환경
 Flutter (Desktop & Mobile): UI 및 데이터 디스플레이.
-Flask (Python API): 프로젝트 데이터 수집, 감사 실행, AI 분석.
+Flask (Python API): 프로젝트 데이터 수집, 감사 실행, AI 분석.(별도수행)
 GitHub 연동: 원격 데이터 저장 및 조회(서버 없이도 동작 가능).
 📍 1. 프로젝트 개요
 🎯 주요 기능
@@ -40,54 +40,46 @@ Flask:
 app.py에서 /audit_project/<project_id> 엔드포인트를 유지하며, GitHub에 결과 저장 로직 추가(이전 제안 참고).
 audit_service.py: save_to_github로 감사 결과를 GitHub에 업로드.
 GitHub:
-static/results/audit_<project_id>.json과 static/report/combined_report_<timestamp>.pdf를 GitHub에 저장.
+static/results/audit_<project_id>.json과 
+static/report/combined_report.csv를 GitHub에 저장.
+
+
 예시 데이터:
 GitHub에서 audit_20240178.json 로드:
 
-json
-
-Collapse
-
-Wrap
-
-Copy
-{
-  "project_id": "20240178",
-  "project_name": "월곶~판교 복선전철 건설사업(제2~5, 7, 9~10공구) 사후환경영향조사용역",
-  "department": "06010_환경사업부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {"exists": true, "details": [...]},
-    "specification": {"exists": true, "details": [...]},
-    // ... (다른 문서 유형)
+static/results/06010_환경사업부/audit_20240178.json
+[
+  {
+    "project_id": "C20240178",
+    "project_name": "월곶~판교 복선전철 건설사업(제2~5, 7, 9~10공구) 사후환경영향조사용역",
+    "department": "06010_환경사업부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+      "contract": {
+        "exists": true,
+        "details": [
+          {
+            "type": "file",
+            "name": "_월곶_판교 복선전철 건설사업(제2_5 7 9_10공구) 사후환경영향조사용역_ 낙찰자 결정 알림 및 계약체결 요청.hwp",
+            "path": "_월곶_판교 복선전철 건설사업(제2_5 7 9_10공구) 사후환경영향조사용역_ 낙찰자 결정 알림 및 계약체결 요청.hwp",
+            "full_path": "Z:06010_환경\\2팀\\02.사후환경영향조사\\20240178ㅣ월곶_판교 복선전철 건설사업(제2_5, 7, 9_10공구) 사후환경영향조사용역\\01. 행정\\01. 계약\\_월곶_판교 복선전철 건설사업(제2_5 7 9_10공구) 사후환경영향조사용역_ 낙찰자 결정 알림 및 계약체결 요청.hwp",
+            "depth": 2,
+            "doc_type": "contract"
+          },
   },
-  "ai_analysis": "문서 분석 결과 ...",
+  "ai_analysis": "문서 분석 결과 ...",  --> 이걸 플러터 웹앱의 오른쪽 패널에 표시
   "timestamp": "2025-03-05 21:31:29"
 }
-트리뷰 UI:
 
-text
 
-Collapse
+static/report/combined_report.csv 예시
+ProjectID,ProjectName,Depart,Status,Contractor,ProjectID_numeric,Depart_ProjectID,search_folder,contract_exists,specification_exists,initiation_exists,agreement_exists,budget_exists,deliverable1_exists,deliverable2_exists,completion_exists,certificate_exists,evaluation_exists,contract_count,specification_count,initiation_count,agreement_count,budget_count,deliverable1_count,deliverable2_count,completion_count,certificate_count,evaluation_count
+C20240178,"월곶~판교 복선전철 건설사업(제2~5, 7, 9~10공구) 사후환경영향조사용역",환경사업부,진행,주관사,20240178,06010_C20240178,"06010_환경\2팀\02.사후환경영향조사\20240178ㅣ월곶_판교 복선전철 건설사업(제2_5, 7, 9_10공구) 사후환경영향조사용역",1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,1
 
-Wrap
 
-Copy
-Project: 20240178 - 월곶~판교 복선전철 건설사업
-  ├─ Department: 06010_환경사업부
-  ├─ Status: 진행
-  ├─ Contractor: 주관사
-  └─ Documents
-      ├─ contract (3 files)
-      │   ├─ _월곶_판교 복선전철 건설사업(제2_5 7 9_10공구) 사후환경영향조사용역_ 낙찰자 결정 알림 및 계약체결 요청.hwp
-      │   ├─ 3. 용역계약일반조건 등.zip
-      │   └─ [공문] 제2차 계약체결 요청.pdf
-      ├─ specification (3 files)
-      │   ├─ 과업지시서(전체 및 제1차).hwp
-      │   ├─ 과업지시서(제2차).hwp
-      │   └─ (붙임 2) 과업수행계획서(제1차).hwp
-      // ... (나머지 문서 유형)
+
+
 🚀 2단계: Flask 연동 (웹 & GitHub 데이터 관리)
 ✅ 목표:
 Flask 서버에서 네트워크 드라이브 데이터를 수집하고, GitHub에 저장된 데이터를 Flutter 앱에서 조회.
@@ -112,125 +104,44 @@ Flask 서버에서 모든 프로젝트 감사를 수행하고, Flutter 앱은 �
 AI 분석 결과를 GitHub에 저장하고, Flutter에서 표시.
 ✅ 구현 내용:
 Flask:
-audit_service.py: audit_project와 audit_multiple_projects로 대량 프로젝트 감사 실행, Gemini AI 분석 포함.
+audit_service.py:  대량 프로젝트 감사 실행, Gemini AI 분석 포함.
 app.py: /audit_project/<project_id>와 /audit_all 엔드포인트 추가(선택적).
 GitHub에 결과 저장 및 Discord 알림 전송.
 Flutter:
-audit_report_screen.dart: Flask 또는 GitHub에서 감사 결과를 가져와 AI 분석 결과 표시.
+GitHub에서 감사 결과를 가져와 AI 분석 결과 표시.
 audit_service.dart: Flask API 또는 GitHub API 호출로 데이터 로드.
 테스트: "20240178" 프로젝트를 Flask에서 감사 실행하고, Flutter 앱에서 AI 분석 결과를 표시.
 🚀 4단계: 대시보드 & 파일 탐색기 모드 구현
 ✅ 목표:
-Flutter에서 대시보드 UI(부서별 감사 결과)와 파일 탐색기 모드(프로젝트별 문서 구조) 구현.
+Flutter에서 
+왼쪽패널은 파일 탐색기 모드(프로젝트별 문서 구조) 구현.
+오른쪽패널은 왼쪽 패널에서 프로젝트를 클릭하면 -->감사 보고서 출력
 서버 없이 GitHub 데이터를 활용해 오프라인 조회 가능.
-✅ 구현 내용:
-Flutter:
-dashboard_screen.dart: 부서별 감사 결과 대시보드(예: "06010_환경사업부", 진행 상태, 위험도 표시).
-file_explorer_screen.dart: 트리뷰 기반 파일 탐색기(프로젝트별 문서 구조 표시).
-offline_mode_screen.dart: GitHub에서 저장된 데이터를 로드해 오프라인 조회.
-테스트: 부서별 감사 결과와 "20240178" 프로젝트 문서를 확인.
-GitHub:
-최신 감사 데이터를 저장하고, Flutter 앱에서 다운로드.
-📍 3. UI 구성
-📌 1️⃣ 모바일 (세로 모드)
-text
 
-Collapse
 
-Wrap
 
-Copy
-┌───────────────────────────┐
-│ 부서별 감사 결과 카드 (대시보드) │  ← 부서별 상태 한눈에 보기
-├───────────────────────────┤
-│ 프로젝트 보고서 (Gemini AI 분석 포함) │  ← 클릭 시 AI 분석 결과
-├───────────────────────────┤
-│ 파일 탐색기 (트리 구조) │  ← 문서 파일 리스트
-└───────────────────────────┘
-📌 2️⃣ 데스크탑 (가로 모드)
-text
-
-Collapse
-
-Wrap
-
-Copy
-┌───────────────┬──────────────────┐
-│  부서 목록 (트리)  │   프로젝트 보고서 & 파일 리스트 │
-│  (왼쪽 메뉴)    │   (탐색기 스타일)         │
-└───────────────┴──────────────────┘
-✅ 트리뷰 & 파일 탐색기 방식으로 직관적 UI:
-flutter_treeview로 트리 구조 구현, 네트워크 드라이브 및 GitHub 데이터 표시.
-📍 4. 기술 스택
-✅ Flutter (Dart):
-flutter_treeview: 프로젝트 폴더 및 문서 트리뷰 UI.
-flutter_bloc: 상태 관리.
-http: Flask 및 GitHub API 호출.
-✅ Flask (Python):
-Flask + Pandas: 감사 데이터 관리.
-Gemini AI API: 문서 분석.
-GitHub API: 데이터 저장 및 조회.
-✅ GitHub 연동:
-감사 결과 자동 저장 및 Flutter에서 불러오기.
-📍 5. 고려해야 할 점
-✅ 💡 서버 없이도 앱을 활용할 수 있도록 GitHub 연동 필수:
-Flutter 앱은 Flask 서버에 의존하지 않고, GitHub에서 저장된 데이터를 오프라인 조회 가능.
-✅ 💡 네트워크 드라이브가 없는 환경에서도 기존 감사 결과를 조회할 수 있어야 함:
-GitHub 데이터로 오프라인 모드 지원.
-✅ 💡 데스크탑 & 모바일 모두 대응하도록 UI 최적화 필요:
-MediaQuery와 OrientationBuilder로 UI를 조정.
-📍 6. 결론
-🚀 1단계씩 눈으로 직접 확인하며 개발:
-각 단계에서 Flutter 앱과 Flask 서버를 테스트하며 데이터 표시 확인.
-💡 GitHub 연동으로 서버 없이도 감사 내역 활용 가능:
-오프라인 모드와 실시간 모드 지원.
-🔥 Flutter 앱에서 디스플레이 역할로 프로젝트 감사 결과 관리:
-Flask 서버에서 모든 감사를 수행하고, Flutter는 조회 및 표시로 제한.
-📍 7. 폴더 구조 (수정됨)
-plaintext
-
-Collapse
-
-Wrap
-
-Copy
 my_folder_app/
 └── my_flutter_app/  # Flutter 앱 루트
     ├── lib/  # 주요 Flutter 코드
     │   ├── main.dart  # 앱 실행 진입점
     │   │
     │   ├── screens/  # 화면 UI
-    │   │   ├── dashboard_screen.dart  # 부서별 감사 결과 대시보드
+    │   │   ├── chat_screen.dart  # 감사보고서를 오른쪽 패널의 채팅창에 보냄
     │   │   ├── file_explorer_screen.dart  # 트리뷰 기반 파일 탐색기
-    │   │   ├── audit_report_screen.dart  # 프로젝트 감사 보고서 (Gemini 분석 포함)
-    │   │   ├── settings_screen.dart  # 설정 화면 (서버 URL, GitHub 토큰 등)
-    │   │   ├── offline_mode_screen.dart  # GitHub 데이터로 오프라인 조회
-    │   │   ├── network_error_screen.dart  # 네트워크 오류 시 화면
     │   │
     │   ├── services/  # 데이터 처리 & 네트워크 통신
-    │   │   ├── api_service.dart  # Flask 서버 API 통신 (감사 데이터)
-    │   │   ├── github_service.dart  # GitHub에서 데이터 가져오기
-    │   │   ├── audit_service.dart  # Flask API 호출로 감사 데이터 로드
+    │   │   ├── api_service.dart  # GitHub에서 데이터 가져오기
+    │   │   ├── chat_service.dart  # GitHub에서 데이터 가져오기
+    │   │   ├── file_explorer_service.dart  # 프로젝트 데이터 로드(부서-프로젝트-성과)
     │   │
     │   ├── widgets/  # 재사용 가능한 UI 위젯
-    │   │   ├── department_card.dart  # 대시보드 부서별 카드
+    │   │   ├── chat_widget.dart  # 챗 위젯
     │   │   ├── tree_view.dart  # 트리뷰 UI (파일 & 폴더)
-    │   │   ├── file_item.dart  # 개별 파일 위젯
-    │   │   ├── report_card.dart  # 감사 보고서 카드
-    │   │   ├── loading_indicator.dart  # 로딩 인디케이터
     │   │
     │   ├── models/  # 데이터 모델
     │   │   ├── project_model.dart  # 프로젝트 정보
-    │   │   ├── file_model.dart  # 파일 & 폴더 정보
+    │   │   ├── file_node.dart  # 파일 & 폴더 정보
     │   │   ├── audit_report_model.dart  # 감사 보고서
-    │   │
-    │   ├── utils/  # 헬퍼 함수
-    │   │   ├── format_utils.dart  # 데이터 포맷팅
-    │   │   ├── constants.dart  # 상수값
-    │   │
-    │   ├── config/  # 설정
-    │   │   ├── app_config.dart  # 서버 URL, GitHub 토큰 등
-    │   │   ├── env.dart  # 환경 변수
     │   │
     │   ├── main.dart  # 앱 실행 엔트리 포인트
     │
@@ -239,162 +150,160 @@ my_folder_app/
     │   ├── fonts/
     │   ├── images/
     │
-    ├── test/  # 테스트 코드
-    │   ├── api_service_test.dart
-    │   ├── github_service_test.dart
-    │   ├── file_explorer_test.dart
     │
     ├── pubspec.yaml  # 패키지 설정
-    ├── analysis_options.yaml  # 코드 분석 설정
     ├── README.md  # 프로젝트 설명
+
+
+# my-folder-app
+|   .env
+|   .gitignore
+|   app.py
+|   bot.py
+|   folder.txt
+|   README.md
+|   requirements.txt
+|   tree.txt
+|   
++---.idx
++---.venv : python 3.12
+|           
++---my-flask-app
+|   |   audit_service.py # 감사를 하기 위한 마스터 파이썬 모듈
+|   |   audit_target_generator.py  # 감사를 위한 타겟 프로젝트을 추출해서 리스트를 만듬
+|   |   config.py  # 설정 모듈
+
+        # Google API 설정
+        GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
+
+        # 프로젝트 루트 경로
+        PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+        STATIC_PATH = os.path.join(PROJECT_ROOT, 'static')
+        STATIC_DATA_PATH = os.path.join(PROJECT_ROOT, 'static', 'data')
+        STATIC_IMAGES_PATH = os.path.join(PROJECT_ROOT, 'static', 'images')
+        PROJECT_LIST_CSV = os.path.join(STATIC_DATA_PATH, 'project_list.csv')
+        DEPART_LIST_PATH = os.path.join(STATIC_DATA_PATH, 'depart_list.csv')
+        AUDIT_TARGETS_CSV = os.path.join(STATIC_DATA_PATH, 'audit_targets.csv')  # 감사 대상 CSV 경로 추가
+        CONTRACT_STATUS_CSV = os.path.join(STATIC_DATA_PATH, 'contract_status.csv')
+        RESULTS_DIR = os.path.join(STATIC_PATH, 'results')
+
+				# 기본값 설정
+				_NETWORK_DRIVE_CACHE = 'Z:'
+				
+
+        # Discord 설정
+        DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+        DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', '0'))
+        DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+        GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+
+|   |   config_assets.py # 프로젝트의 분류를 하기 위한 설정
+
+        # 검색 대상 문서 유형
+        DOCUMENT_TYPES = {
+            'contract': {'name': '계약서', 'keywords': ['계약서', '변경계약서', '계약', 'contract']},
+            'specification': {'name': '과업지시서', 'keywords': ['과업지시', '과업', '내용서', 'specification']},
+            'initiation': {'name': '착수계', 'keywords': ['착수', '착수계', 'initiation']},
+            'agreement': {'name': '공동도급협정', 'keywords': ['분담', '협정', '협약', 'agreement']},    
+            'budget': {'name': '실행예산', 'keywords': ['실행', '실행예산', 'budget']},
+            'deliverable1': {'name': '성과품(보고서)', 'keywords': ['성과품', '성과', '보고서', '1장', 'deliverable1']},
+            'deliverable2': {'name': '성과품(도면)', 'keywords': ['성과품', '성과', '도면', '일반도', '평면도', 'deliverable2']},
+            'completion': {'name': '준공계', 'keywords': ['준공', '준공계', 'completion']},
+            'certificate': {'name': '실적증명', 'keywords': ['실적증명', '증명', 'certificate']},
+            'evaluation': {'name': '용역수행평가', 'keywords': ['용역수행평가', '용역수행', 'evaluation']}
+        }
+
+        # 부서 매핑 (PM부서 → department_code)
+        DEPARTMENT_MAPPING = {
+            '도로부': '01010',
+            '공항및인프라사업부': '01020',
+            '구조부': '01030',
+            '지반부': '01040',
+            '교통부': '01050',
+            '안전진단부': '01060',
+            '도시철도부': '02010',
+            '철도설계부': '03010',
+            '철도건설관리부': '03020',
+            '도시계획부': '04010',
+            '도시설계부': '04020',
+            '조경부': '04030',
+            '수자원부': '05010',
+            '환경사업부': '06010',
+            '상하수도부': '07010',
+            '항만부': '07020',  # 항만부 코드 변경
+            '건설사업관리부': '08010',
+            '해외영업부': '09010',  
+            '플랫폼사업실': '10010',
+            '기술지원실': '11010',
+            '수성엔지니어링': '99999'  # 예비 부서
+        }
+
+        # 감사 대상 필터링 설정
+        AUDIT_FILTERS = {
+            'status': ['준공', '진행'],  # 진행 상태 필터 (다중 값 가능: '준공', '진행', '중지', '탈락')
+                                        # - '준공': 성과품 완벽히 포함해야 함 (주관사 100%, 비주관사 최소 필요)
+                                        # - '진행': 성과품 미완성 가능
+                                        # - '중지': 진행보다 미흡한 상태, 성과품 누락 가능
+                                        # - '탈락': 입찰 탈락, 감사 제외 가능
+            'is_main_contractor': ['주관사', '비주관사'],  # 
+                                                        # 주관사 여부
+                                                        # - '주관사': 모든 자료 완비 (100% 문서 필요)
+                                                        # - '비주관사': 최소 필요 자료만 있음
+            'year': [2024],  # 준공 연도 필터 (다중 값 가능, 최근 준공 프로젝트 감사)
+            'department': None  # 기본값 없음, AUDIT_FILTERS_depart 참조
+        }
+
+        # 부서 필터링 (한글 부서명으로 설정, 기본값으로 모든 부서 포함)
+        AUDIT_FILTERS_depart = [
+            '도로부',
+            '공항및인프라사업부',
+            '구조부',
+            '지반부',
+            '교통부',
+            '안전진단부',
+            '도시철도부',
+            '철도설계부',
+            '철도건설관리부',
+            '도시계획부',
+            '도시설계부',
+            '조경부',
+            '수자원부',
+            '환경사업부',
+            '상하수도부',
+            '항만부',
+            # '건설사업관리부',
+            '해외영업부',
+            '플랫폼사업실',
+]
+
+|   |   gemini.py  # 감사 결과를 AI로 분석
+|   |   get_data.py # 감사 전 네트워크 드라이브에서 감사를 하기 위한 프로젝트 폴더를 추출하는 모듈
+|   |   get_project.py # 프로젝트의 정보를 알아보기(디스코드 명령 "project 20240178")
+|   |   git_operations.py # 파일 자동 푸시, 업로드
+|   |   search_project_data.py # 네트워크 드라이브에 있는 프로젝트 폴더에서 문서를 검색(컨피그에 있는 문서와 매치되는 문서가 있는 지 검색)
+|   |   
+
+
+
 📍 8. 구현 세부사항
 🚀 1단계: 기본 구조 개발
 Flutter:
 file_explorer_screen.dart에서 GitHub(github_service.dart)에서 audit_20240178.json을 로드해 트리뷰로 표시.
 
-tree_view.dart에서 flutter_treeview로 폴더 및 파일 구조 생성:
-
-dart
-
-Collapse
-
-Wrap
-
-Copy
-// /my_flutter_app/lib/screens/file_explorer_screen.dart
-import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:my_flutter_app/services/github_service.dart';
-
-class FileExplorerScreen extends StatefulWidget {
-  const FileExplorerScreen({super.key});
-
-  @override
-  State<FileExplorerScreen> createState() => _FileExplorerScreenState();
-}
-
-class _FileExplorerScreenState extends State<FileExplorerScreen> {
-  final GitHubService _githubService = GitHubService();
-  List<Node> _treeNodes = [];
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadProjectData('20240178');
-  }
-
-  Future<void> _loadProjectData(String projectId) async {
-    setState(() => _loading = true);
-    try {
-      final jsonData = await _githubService.fetchAudit(projectId);
-      final project = ProjectModel.fromJson(jsonData);
-      _treeNodes = _buildTreeNodes(project);
-    } catch (e) {
-      print('Error loading project data: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading data: $e')),
-      );
-    }
-    setState(() => _loading = false);
-  }
-
-  List<Node> _buildTreeNodes(ProjectModel project) {
-    final nodes = [
-      Node(
-        label: 'Project: ${project.projectId} - ${project.projectName}',
-        children: [
-          Node(label: 'Department: ${project.department}'),
-          Node(label: 'Status: ${project.status}'),
-          Node(label: 'Contractor: ${project.contractor}'),
-          Node(
-            label: 'Documents',
-            children: project.documents.entries.map((entry) {
-              final docType = entry.key;
-              final docs = entry.value['details'] as List<dynamic>;
-              return Node(
-                label: '$docType (${docs.length} files)',
-                children: docs.map((doc) {
-                  final file = FileModel.fromJson(doc);
-                  return Node(
-                    label: file.name,
-                    data: file,
-                  );
-                }).toList(),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    ];
-    return nodes;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Project Audit')),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : TreeView(
-              controller: TreeViewController(children: _treeNodes),
-              allowParentSelect: true,
-              supportParentDoubleTap: true,
-            ),
-    );
-  }
-}
-github_service.dart에서 GitHub API 호출:
-
-dart
-
-Collapse
-
-Wrap
-
-Copy
-// /my_flutter_app/lib/services/github_service.dart
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:my_flutter_app/models/project_model.dart';
-
-class GitHubService {
-  static const String baseUrl = 'https://api.github.com/repos/photo2story/my-flutter-app/contents/static/results';
-  static const String token = 'your_github_token'; // .env에서 로드
-
-  Future<Map<String, dynamic>> fetchAudit(String projectId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/audit_$projectId.json'),
-      headers: {
-        'Authorization': 'token $token',
-        'Accept': 'application/vnd.github.v3.raw',
-      },
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as Map<String, dynamic>;
-    } else {
-      throw Exception('Failed to load audit from GitHub: ${response.statusCode}');
-    }
-  }
-}
 테스트: GitHub에서 audit_20240178.json을 로드해 트리뷰에 표시. 폴더 및 파일 클릭 시 펼침 확인.
 
-🚀 2단계: Flask 연동
+🚀 2단계: Flask 연동(현재는 플라스크에서 감사 실행)
 Flask:
 app.py에서 /audit_project/<project_id>로 감사 실행, GitHub에 결과 저장.
-audit_service.py에서 네트워크 드라이브 검색 및 AI 분석.
-Flutter:
-api_service.dart에서 /audit_project/<project_id> 호출로 실시간 데이터 가져오기.
-offline_mode_screen.dart에서 GitHub 데이터 로드.
+
 🚀 3단계: 감사 기능 구현 (Flutter는 결과 표시만)
-Flask:
-audit_service.py에서 대량 프로젝트 감사, Gemini AI 분석, GitHub 저장.
 Flutter:
 audit_report_screen.dart에서 AI 분석 결과 표시.
 🚀 4단계: 대시보드 & 파일 탐색기 모드
 Flutter:
-dashboard_screen.dart: 부서별 감사 결과 대시보드.
 file_explorer_screen.dart: 트리뷰 기반 파일 탐색기.
+
 📍 9. 결론
 Flutter 앱은 디스플레이 역할로 제한되며, Flask 서버에서 모든 프로젝트 감사를 수행하고, 
 GitHub에 결과를 저장합니다. Flutter는 Flask API 또는 GitHub에서 데이터를 가져와 표시하며, 
-오프라인 모드도 지원합니다. 1단계부터 단계별로 테스트하며 진행하세요.
+오프라인 모드도 지원합니다. 

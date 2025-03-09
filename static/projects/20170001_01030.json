@@ -1,0 +1,254 @@
+{
+  "project_id": "20170001",
+  "department_code": "01030",
+  "department_name": "구조",
+  "project_name": "2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리",
+  "project_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "(Draft) Engineer's decision on the Contractor's 2nd Claim.pdf",
+        "path": "(Draft) Engineer's decision on the Contractor's 2nd Claim.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.01 대내문서\\0.01.01 협조전\\발신\\22-20-협조-00 시공사 2차 클레임 검토 보고서 송부\\(Draft) Engineer's decision on the Contractor's 2nd Claim.pdf",
+        "depth": 5,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "211020_SSJV-KMFB-CrM-009 Review of Contractor's 2nd Claim Report.pdf",
+        "path": "211020_SSJV-KMFB-CrM-009 Review of Contractor's 2nd Claim Report.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.01 대내문서\\0.01.01 협조전\\발신\\22-20-협조-00 시공사 2차 클레임 검토 보고서 송부\\Reference\\211020_SSJV-KMFB-CrM-009 Review of Contractor's 2nd Claim Report.pdf",
+        "depth": 6,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "GS-FDB-EXT-2020-012_PY2 Bored Pile 재배열 및 안정성 검토 용역 계약기간 변경.pdf",
+        "path": "GS-FDB-EXT-2020-012_PY2 Bored Pile 재배열 및 안정성 검토 용역 계약기간 변경.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.02 대외문서\\0.02.01 접수문서\\시공사\\GS-FDB-EXT-2020-012_PY2 Bored Pile 재배열 및 안정성 검토 용역 계약기간 변경.pdf",
+        "depth": 4,
+        "doc_type": "contract"
+      }
+    ],
+    "specification": [
+      {
+        "type": "file",
+        "name": "과업내용.docx",
+        "path": "과업내용.docx",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\08 교육관련\\04 도로공사 위탁교육\\과업내용.docx",
+        "depth": 2,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "01_과업내용서(항만설계).hwp",
+        "path": "01_과업내용서(항만설계).hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\03 항만분야 설계 - SNK\\01_과업내용서\\01_과업내용서(항만설계).hwp",
+        "depth": 6,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "01_과업내용서(전기설계).hwp",
+        "path": "01_과업내용서(전기설계).hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\05 전기설계 - 누리플랜\\01_과업내용서\\01_과업내용서(전기설계).hwp",
+        "depth": 6,
+        "doc_type": "specification"
+      }
+    ],
+    "initiation": [
+      {
+        "type": "file",
+        "name": "210611_용역비(착수금) 지급 신청서.pdf",
+        "path": "210611_용역비(착수금) 지급 신청서.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\CPLUS_계약관리 자문\\0 선급금\\210611_용역비(착수금) 지급 신청서.pdf",
+        "depth": 6,
+        "doc_type": "initiation"
+      },
+      {
+        "type": "file",
+        "name": "착수금 청구서-일론킴-190122.pdf",
+        "path": "착수금 청구서-일론킴-190122.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\일론킴-동영상제작\\착수금 청구서-일론킴-190122.pdf",
+        "depth": 5,
+        "doc_type": "initiation"
+      },
+      {
+        "type": "file",
+        "name": "동영상제작 착수금(1차)-도화 송금확인증.pdf",
+        "path": "동영상제작 착수금(1차)-도화 송금확인증.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\일론킴-동영상제작\\추가계약\\1차 기성(착수금)\\동영상제작 착수금(1차)-도화 송금확인증.pdf",
+        "depth": 7,
+        "doc_type": "initiation"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
+        "path": "미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\01 3D 동영상제작 - 레이웍스\\미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
+        "depth": 5,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "미얀마 우정의 다리 동영상제작비용 분담합의서.hwp",
+        "path": "미얀마 우정의 다리 동영상제작비용 분담합의서.hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\01 3D 동영상제작 - 레이웍스\\미얀마 우정의 다리 동영상제작비용 분담합의서.hwp",
+        "depth": 5,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "00_비용분담확인서_항만.hwp",
+        "path": "00_비용분담확인서_항만.hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\03 항만분야 설계 - SNK\\03_비용분담확인서\\00_비용분담확인서_항만.hwp",
+        "depth": 6,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "주탑PY2 말뚝 검토 실행예산서.pdf",
+        "path": "주탑PY2 말뚝 검토 실행예산서.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.04 주간공정보고\\주탑PY2 말뚝 검토 실행예산서.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
+        "path": "Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\05 설계변경 보고서\\20210521 2nd Design Change Report\\Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
+        "depth": 4,
+        "doc_type": "budget"
+      }
+    ],
+    "deliverable1": [
+      {
+        "type": "file",
+        "name": "수성 제2020-4056호 PY2 파일기초 검토 최종보고서 제출.pdf",
+        "path": "수성 제2020-4056호 PY2 파일기초 검토 최종보고서 제출.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.02 대외문서\\0.02.02 발신문서\\시공사\\수성 제2020-4056호 PY2 파일기초 검토 최종보고서 제출.pdf",
+        "depth": 4,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "미얀마 우정의 다리 FS보고서.zip",
+        "path": "미얀마 우정의 다리 FS보고서.zip",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\1. 사전작업\\1.02 관련 자료\\미얀마 우정의 다리 FS보고서.zip",
+        "depth": 2,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "03. (국문)본보고서.zip",
+        "path": "03. (국문)본보고서.zip",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\1. 사전작업\\1.02 관련 자료\\960 Feasibility Study Report_KOR\\01. 국문\\HWP\\03. (국문)본보고서.zip",
+        "depth": 5,
+        "doc_type": "deliverable1"
+      }
+    ],
+    "deliverable2": [
+      {
+        "type": "file",
+        "name": "역T형옹벽 도면 일람표.hwp",
+        "path": "역T형옹벽 도면 일람표.hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\08 교육관련\\07 한국 직업교육\\04 교육자료\\01 역T형 옹벽\\03_역T형 옹벽\\역T형옹벽 도면 일람표.hwp",
+        "depth": 5,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "제 2 장 관련자료 검토(A3) 2012 FS종평면도.hwp",
+        "path": "제 2 장 관련자료 검토(A3) 2012 FS종평면도.hwp",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\1. 사전작업\\1.02 관련 자료\\960 Feasibility Study Report_KOR\\01. 국문\\HWP\\03. (국문)본보고서\\제 2 장 관련자료 검토(A3) 2012 FS종평면도.hwp",
+        "depth": 6,
+        "doc_type": "deliverable2"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "Addm+No.4+Rev.3+2025.3.31+준공+Ver.1.xlsx",
+        "path": "Addm+No.4+Rev.3+2025.3.31+준공+Ver.1.xlsx",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\01 컨설턴트 계약서\\Addendum No.4 Draft\\Addm+No.4+Rev.3+2025.3.31+준공+Ver.1.xlsx",
+        "depth": 4,
+        "doc_type": "completion"
+      },
+      {
+        "type": "file",
+        "name": "Addm+No.4+Rev.3+2025.5.31+준공+Ver.4.2.xlsx",
+        "path": "Addm+No.4+Rev.3+2025.5.31+준공+Ver.4.2.xlsx",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\01 컨설턴트 계약서\\Addendum No.4 Draft\\Addm+No.4+Rev.3+2025.5.31+준공+Ver.4.2.xlsx",
+        "depth": 4,
+        "doc_type": "completion"
+      },
+      {
+        "type": "file",
+        "name": "Addm+No.4+Rev.3+2025.4.30+준공+Ver.4.1.xlsx",
+        "path": "Addm+No.4+Rev.3+2025.4.30+준공+Ver.4.1.xlsx",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\01 컨설턴트 계약서\\Addendum No.4 Draft\\2023.12.04 Add.No.4 Draft Ver4.1\\Addm+No.4+Rev.3+2025.4.30+준공+Ver.4.1.xlsx",
+        "depth": 5,
+        "doc_type": "completion"
+      }
+    ],
+    "certificate": [
+      {
+        "type": "file",
+        "name": "KMFB-SDJ-GS-706 Certificate of Advance Payment Amortization (Partial).pdf",
+        "path": "KMFB-SDJ-GS-706 Certificate of Advance Payment Amortization (Partial).pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.02 대외문서\\0.02.02 발신문서\\시공사\\KMFB-SDJ-GS-706 Certificate of Advance Payment Amortization (Partial).pdf",
+        "depth": 4,
+        "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "KMFB-SDJ-GS-708 Certificate of Inspection Works of Outside Normal Working Hours for the Month of August 2020.pdf",
+        "path": "KMFB-SDJ-GS-708 Certificate of Inspection Works of Outside Normal Working Hours for the Month of August 2020.pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.02 대외문서\\0.02.02 발신문서\\시공사\\KMFB-SDJ-GS-708 Certificate of Inspection Works of Outside Normal Working Hours for the Month of August 2020.pdf",
+        "depth": 4,
+        "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "미얀마 여행자보험 납입증명서(보험영수증).pdf",
+        "path": "미얀마 여행자보험 납입증명서(보험영수증).pdf",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\08 교육관련\\01 풍동실험계획\\02 상해보험\\미얀마 여행자보험 납입증명서(보험영수증).pdf",
+        "depth": 3,
+        "doc_type": "certificate"
+      }
+    ],
+    "evaluation": [
+      {
+        "type": "file",
+        "name": "PM Self evaluation.xlsx",
+        "path": "PM Self evaluation.xlsx",
+        "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.02 대외문서\\0.02.02 발신문서\\발주처\\00 본사\\PM Self evaluation.xlsx",
+        "depth": 5,
+        "doc_type": "evaluation"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 13:46:17",
+  "performance": {
+    "total_time": 7.116621971130371,
+    "search_time": 7.089627742767334,
+    "document_counts": {
+      "contract": 3,
+      "specification": 3,
+      "initiation": 3,
+      "agreement": 3,
+      "budget": 2,
+      "deliverable1": 3,
+      "deliverable2": 2,
+      "completion": 3,
+      "certificate": 3,
+      "evaluation": 1
+    }
+  }
+}

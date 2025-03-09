@@ -1,0 +1,82 @@
+{
+  "project_id": "20230218",
+  "department_code": "04010",
+  "department_name": "도시계획",
+  "project_name": "2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역",
+  "project_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역",
+  "documents": {
+    "specification": [
+      {
+        "type": "file",
+        "name": "20230740675-00_1690813581070_과업지시서.hwp",
+        "path": "20230740675-00_1690813581070_과업지시서.hwp",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.01 과업지시서\\20230740675-00_1690813581070_과업지시서.hwp",
+        "depth": 3,
+        "doc_type": "specification"
+      }
+    ],
+    "initiation": [
+      {
+        "type": "file",
+        "name": "착수계 SCAN.pdf",
+        "path": "착수계 SCAN.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\1. 과업 계약 및 착수\\1.02 착수계\\1.02.03 착수계\\착수계 SCAN.pdf",
+        "depth": 3,
+        "doc_type": "initiation"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "고성군 성장관리계획구역_업무분담협약서.pdf",
+        "path": "고성군 성장관리계획구역_업무분담협약서.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\1. 과업 계약 및 착수\\1.06 업무분담\\고성군 성장관리계획구역_업무분담협약서.pdf",
+        "depth": 2,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "고성군_실행예산.pdf",
+        "path": "고성군_실행예산.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\1. 과업 계약 및 착수\\1.07 실행\\고성군_실행예산.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      }
+    ],
+    "deliverable1": [
+      {
+        "type": "file",
+        "name": "★고성군 성장관리계획 보고서★.pdf",
+        "path": "★고성군 성장관리계획 보고서★.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\3. 성과품 작성\\3.01 보고서\\3.01.01 종합보고서\\★고성군 성장관리계획 보고서★.pdf",
+        "depth": 3,
+        "doc_type": "deliverable1"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "고성성장관리계획 준공계.pdf",
+        "path": "고성성장관리계획 준공계.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-218. 고성군 성장관리계획구역 지정 및 관리계획 수립 용역\\4. 과업준공\\4.01 준공계\\4.01.04 준공계\\고성성장관리계획 준공계.pdf",
+        "depth": 3,
+        "doc_type": "completion"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 15:02:26",
+  "performance": {
+    "total_time": 1.0787317752838135,
+    "search_time": 1.049180030822754,
+    "document_counts": {
+      "specification": 1,
+      "initiation": 1,
+      "agreement": 1,
+      "budget": 1,
+      "deliverable1": 1,
+      "completion": 1
+    }
+  }
+}

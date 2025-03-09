@@ -15,6 +15,66 @@ class ApiService {
   static const String resultsPath = 'static/results';
   static const String githubBaseUrl = 'https://raw.githubusercontent.com/photo2story/my-folder-app/main';
 
+  // 부서 매핑 추가 (config_assets.py에서 가져온 매핑)
+  static final Map<String, String> DEPARTMENT_MAPPING = {
+    '도로부': '01010',
+    '공항및인프라사업부': '01020',
+    '구조부': '01030',
+    '지반부': '01040',
+    '교통부': '01050',
+    '안전진단부': '01060',
+    '도시철도부': '02010',
+    '철도설계부': '03010',
+    '철도건설관리부': '03020',
+    '도시계획부': '04010',
+    '도시설계부': '04020',
+    '조경부': '04030',
+    '수자원부': '05010',
+    '환경사업부': '06010',
+    '상하수도부': '07010',
+    '항만부': '07020',
+    '건설사업관리부': '08010',
+    '해외영업부': '09010',
+    '플랫폼사업실': '10010',
+    '기술지원실': '11010',
+    '수성엔지니어링': '99999'
+  };
+
+  // 부서 코드 → 부서명 매핑 (역방향 매핑)
+  static final Map<String, String> DEPARTMENT_NAMES = {
+    '01010': '도로부',
+    '01020': '공항및인프라사업부',
+    '01030': '구조부',
+    '01040': '지반부',
+    '01050': '교통부',
+    '01060': '안전진단부',
+    '02010': '도시철도부',
+    '03010': '철도설계부',
+    '03020': '철도건설관리부',
+    '04010': '도시계획부',
+    '04020': '도시설계부',
+    '04030': '조경부',
+    '05010': '수자원부',
+    '06010': '환경사업부',
+    '07010': '상하수도부',
+    '07020': '항만부',
+    '08010': '건설사업관리부',
+    '09010': '해외영업부',
+    '10010': '플랫폼사업실',
+    '11010': '기술지원실',
+    '99999': '수성엔지니어링'
+  };
+
+  // 부서명에서 부서 코드 가져오기
+  String getDepartmentCode(String departmentName) {
+    return DEPARTMENT_MAPPING[departmentName] ?? '99999';
+  }
+
+  // 부서 코드에서 부서명 가져오기
+  String getDepartmentName(String departmentCode) {
+    return DEPARTMENT_NAMES[departmentCode] ?? '미정의 부서';
+  }
+
   Future<List<ProjectModel>> fetchProjects() async {
     print("\n=== FETCH PROJECTS DEBUG ===");
     print("[DEBUG] Starting fetchProjects in ApiService");
@@ -50,26 +110,43 @@ class ApiService {
         for (var row in csvData.skip(1)) {
           print("[DEBUG] Processing row: $row");
           if (row.length >= 7) {
-            final departProjectId = row[6].toString();
-            final department = row[2].toString();
-            final codePrefix = departProjectId.length >= 5 ? departProjectId.substring(0, 5) : '00000';
-            final subFolder = '${codePrefix}_${department}'.replaceAll('\\', '/');
+            // 부서 정보 추출
+            final departProjectId = row[6].toString(); // Depart_ProjectID (예: 10010_A20230001)
+            final departmentName = row[2].toString(); // Depart (예: 플랫폼사업실)
+            
+            // 부서 코드 추출 (Depart_ProjectID에서 첫 부분)
+            String departmentCode = '';
+            if (departProjectId.contains('_')) {
+              departmentCode = departProjectId.split('_')[0];
+              print("[DEBUG] Extracted department code from Depart_ProjectID: $departmentCode");
+            } else {
+              // 부서 코드가 없는 경우 매핑에서 찾기
+              departmentCode = getDepartmentCode(departmentName);
+              print("[DEBUG] Mapped department code from name: $departmentCode");
+            }
+            
+            // 부서 정보 저장 형식: "코드_이름" (예: 10010_플랫폼사업실)
+            final department = "${departmentCode}_$departmentName";
+            print("[DEBUG] Formatted department: $department");
+            
+            // 문서 정보 구성
             final documents = {
-              "contract": {"exists": int.parse(row[8].toString()), "details": [], "subFolder": subFolder},
-              "specification": {"exists": int.parse(row[9].toString()), "details": [], "subFolder": subFolder},
-              "initiation": {"exists": int.parse(row[10].toString()), "details": [], "subFolder": subFolder},
-              "agreement": {"exists": int.parse(row[11].toString()), "details": [], "subFolder": subFolder},
-              "budget": {"exists": int.parse(row[12].toString()), "details": [], "subFolder": subFolder},
-              "deliverable1": {"exists": int.parse(row[13].toString()), "details": [], "subFolder": subFolder},
-              "deliverable2": {"exists": int.parse(row[14].toString()), "details": [], "subFolder": subFolder},
-              "completion": {"exists": int.parse(row[15].toString()), "details": [], "subFolder": subFolder},
-              "certificate": {"exists": int.parse(row[16].toString()), "details": [], "subFolder": subFolder},
-              "evaluation": {"exists": int.parse(row[17].toString()), "details": [], "subFolder": subFolder},
+              "contract": {"exists": int.parse(row[8].toString()), "details": []},
+              "specification": {"exists": int.parse(row[9].toString()), "details": []},
+              "initiation": {"exists": int.parse(row[10].toString()), "details": []},
+              "agreement": {"exists": int.parse(row[11].toString()), "details": []},
+              "budget": {"exists": int.parse(row[12].toString()), "details": []},
+              "deliverable1": {"exists": int.parse(row[13].toString()), "details": []},
+              "deliverable2": {"exists": int.parse(row[14].toString()), "details": []},
+              "completion": {"exists": int.parse(row[15].toString()), "details": []},
+              "certificate": {"exists": int.parse(row[16].toString()), "details": []},
+              "evaluation": {"exists": int.parse(row[17].toString()), "details": []}
             };
+            
             projects.add(ProjectModel(
               projectId: row[0].toString(),
               projectName: row[1].toString(),
-              department: row[2].toString(),
+              department: department,
               status: row[3].toString(),
               contractor: row[4].toString(),
               documents: documents,
@@ -100,14 +177,47 @@ class ApiService {
       final List<List<dynamic>> csvData = const CsvToListConverter().convert(csvString);
       final List<ProjectModel> projects = [];
       for (var row in csvData.skip(1)) {
-        if (row.length >= 5) {
+        if (row.length >= 7) {
+          // 부서 정보 추출
+          final departProjectId = row[6].toString(); // Depart_ProjectID (예: 10010_A20230001)
+          final departmentName = row[2].toString(); // Depart (예: 플랫폼사업실)
+          
+          // 부서 코드 추출 (Depart_ProjectID에서 첫 부분)
+          String departmentCode = '';
+          if (departProjectId.contains('_')) {
+            departmentCode = departProjectId.split('_')[0];
+            print("[DEBUG] Extracted department code from Depart_ProjectID: $departmentCode");
+          } else {
+            // 부서 코드가 없는 경우 매핑에서 찾기
+            departmentCode = getDepartmentCode(departmentName);
+            print("[DEBUG] Mapped department code from name: $departmentCode");
+          }
+          
+          // 부서 정보 저장 형식: "코드_이름" (예: 10010_플랫폼사업실)
+          final department = "${departmentCode}_$departmentName";
+          print("[DEBUG] Formatted department: $department");
+          
+          // 문서 정보 구성
+          final documents = {
+            "contract": {"exists": int.parse(row[8].toString()), "details": []},
+            "specification": {"exists": int.parse(row[9].toString()), "details": []},
+            "initiation": {"exists": int.parse(row[10].toString()), "details": []},
+            "agreement": {"exists": int.parse(row[11].toString()), "details": []},
+            "budget": {"exists": int.parse(row[12].toString()), "details": []},
+            "deliverable1": {"exists": int.parse(row[13].toString()), "details": []},
+            "deliverable2": {"exists": int.parse(row[14].toString()), "details": []},
+            "completion": {"exists": int.parse(row[15].toString()), "details": []},
+            "certificate": {"exists": int.parse(row[16].toString()), "details": []},
+            "evaluation": {"exists": int.parse(row[17].toString()), "details": []}
+          };
+          
           projects.add(ProjectModel(
             projectId: row[0].toString(),
             projectName: row[1].toString(),
-            department: row[2].toString(),
+            department: department,
             status: row[3].toString(),
             contractor: row[4].toString(),
-            documents: {},
+            documents: documents,
             timestamp: DateTime.now().toIso8601String(),
           ));
         }
@@ -133,72 +243,128 @@ class ApiService {
     print("\n=== FETCH PROJECT AUDIT DEBUG ===");
     print("[DEBUG] Fetching audit for project: $projectId");
     try {
+      // 프로젝트 ID에서 접두사 처리 (C20240178 -> 20240178)
+      final numericProjectId = projectId.replaceAll(RegExp(r'[A-Za-z]'), '');
+      print("[DEBUG] Numeric project ID: $numericProjectId");
+      
+      // 프로젝트 기본 정보 가져오기
       final projects = await fetchProjects();
-      final project = projects.firstWhere((p) => p.projectId == projectId, orElse: () => _getTestProjectData());
-      final subFolder = project.documents["contract"]?["subFolder"] ?? '';
-
-      final jsonPath = subFolder.isNotEmpty
-          ? '$githubBaseUrl/$resultsPath/$subFolder/audit_$projectId.json'
-          : '$githubBaseUrl/$resultsPath/audit_$projectId.json';
+      final project = projects.firstWhere(
+        (p) => p.projectId == projectId || p.projectId == numericProjectId, 
+        orElse: () => _getTestProjectData()
+      );
+      
+      // 부서 정보 추출 - config_assets.py 매핑 사용
+      String departmentCode = '';
+      String departmentName = '';
+      
+      if (project.department.contains('_')) {
+        // 이미 "코드_이름" 형식인 경우
+        final parts = project.department.split('_');
+        departmentCode = parts[0];
+        departmentName = parts.length > 1 ? parts[1] : getDepartmentName(departmentCode);
+      } else {
+        // 부서명만 있는 경우
+        departmentName = project.department;
+        departmentCode = getDepartmentCode(departmentName);
+        
+        // 부서명이 매핑에 없는 경우, 부서명이 코드일 수도 있음
+        if (departmentCode == '99999' && DEPARTMENT_NAMES.containsKey(departmentName)) {
+          departmentCode = departmentName;
+          departmentName = getDepartmentName(departmentCode);
+        }
+      }
+      
+      print("[DEBUG] Department code: $departmentCode");
+      print("[DEBUG] Department name: $departmentName");
+      
+      // JSON 파일 경로 구성 - 부서코드_부서명 형식으로 변경
+      final folderPath = "${departmentCode}_$departmentName";
+      final jsonPath = kIsWeb
+          ? '$githubBaseUrl/$resultsPath/$folderPath/audit_$projectId.json'
+          : '$basePath/$resultsPath/$folderPath/audit_$projectId.json';
+      
       print("[DEBUG] Attempting to fetch JSON from: $jsonPath");
-
+      
+      // 웹 환경에서의 처리
       if (kIsWeb) {
         final response = await http.get(Uri.parse(jsonPath));
         print("[DEBUG] JSON Response status: ${response.statusCode}");
+        
+        // 첫 번째 경로로 실패하면 다른 형식의 경로 시도
         if (response.statusCode != 200) {
-          print('[ERROR] Failed to fetch JSON from GitHub: ${response.statusCode} - ${response.body}');
-          return _getTestProjectData();
-        }
-
-        final jsonString = response.body;
-        final dynamic jsonData = json.decode(jsonString);
-        print("[DEBUG] JSON data: $jsonData");
-
-        if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-          print("[DEBUG] JSON data is a list, using first element");
-          return ProjectModel.fromJson(jsonData[0]);
-        } else if (jsonData is Map<String, dynamic>) {
-          print("[DEBUG] JSON data is a map, using directly");
-          // 웹 환경: full_path를 GitHub URL로 변환
-          final updatedData = jsonData;
-          if (updatedData['documents'] != null) {
-            for (var docType in updatedData['documents'].keys) {
-              final docDetails = updatedData['documents'][docType]['details'] as List<dynamic>? ?? [];
-              for (var detail in docDetails) {
-                final fileName = detail['name']?.toString() ?? '';
-                if (fileName.isNotEmpty) {
-                  final githubFilePath = Uri.encodeFull('$githubBaseUrl/$resultsPath/$subFolder/$fileName');
-                  detail['full_path'] = githubFilePath;
-                  print("[DEBUG] Updated full_path for $fileName: $githubFilePath");
-                }
+          print("[DEBUG] First path failed, trying alternative paths");
+          
+          // 여러 대체 경로 시도
+          final alternativePaths = [
+            '$githubBaseUrl/$resultsPath/audit_$projectId.json',
+            '$githubBaseUrl/$resultsPath/$departmentCode/audit_$projectId.json',
+            '$githubBaseUrl/$resultsPath/$departmentName/audit_$projectId.json',
+            '$githubBaseUrl/$resultsPath/${departmentCode}_${departmentName.replaceAll(' ', '')}/audit_$projectId.json'
+          ];
+          
+          for (final altPath in alternativePaths) {
+            print("[DEBUG] Trying alternative path: $altPath");
+            final altResponse = await http.get(Uri.parse(altPath));
+            if (altResponse.statusCode == 200) {
+              print("[DEBUG] Found JSON at: $altPath");
+              final jsonString = altResponse.body;
+              final dynamic jsonData = json.decode(jsonString);
+              
+              if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
+                return ProjectModel.fromJson(jsonData[0]);
+              } else if (jsonData is Map<String, dynamic>) {
+                return ProjectModel.fromJson(jsonData);
               }
             }
           }
-          return ProjectModel.fromJson(updatedData);
-        } else {
-          throw Exception('Invalid JSON format for project $projectId');
-        }
-      } else {
-        // 로컬 환경: 네트워크 드라이브 경로 사용
-        final filePath = '$basePath/$resultsPath/audit_$projectId.json';
-        final file = File(filePath);
-        if (!await file.exists()) {
-          print('[ERROR] JSON file not found: $filePath');
+          
+          print('[ERROR] Failed to fetch JSON from GitHub in any path');
           return _getTestProjectData();
         }
-
-        final jsonString = await file.readAsString();
+        
+        // 원래 경로에서 성공한 경우
+        final jsonString = response.body;
         final dynamic jsonData = json.decode(jsonString);
-
+        print("[DEBUG] JSON data: $jsonData");
+        
         if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
           return ProjectModel.fromJson(jsonData[0]);
         } else if (jsonData is Map<String, dynamic>) {
-          print("[DEBUG] Using network drive path for full_path in local environment");
           return ProjectModel.fromJson(jsonData);
-        } else {
-          throw Exception('Invalid JSON format for project $projectId');
         }
+      } else {
+        // 로컬 환경에서의 처리
+        // 여러 가능한 경로 시도
+        final possiblePaths = [
+          '$basePath/$resultsPath/$folderPath/audit_$projectId.json',
+          '$basePath/$resultsPath/audit_$projectId.json',
+          '$basePath/$resultsPath/$departmentCode/audit_$projectId.json',
+          '$basePath/$resultsPath/$departmentName/audit_$projectId.json',
+          '$basePath/$resultsPath/${departmentCode}_${departmentName.replaceAll(' ', '')}/audit_$projectId.json'
+        ];
+        
+        for (final path in possiblePaths) {
+          print("[DEBUG] Trying path: $path");
+          final file = File(path);
+          if (await file.exists()) {
+            print("[DEBUG] Found file at: $path");
+            final jsonString = await file.readAsString();
+            final dynamic jsonData = json.decode(jsonString);
+            
+            if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
+              return ProjectModel.fromJson(jsonData[0]);
+            } else if (jsonData is Map<String, dynamic>) {
+              return ProjectModel.fromJson(jsonData);
+            }
+          }
+        }
+        
+        print('[ERROR] JSON file not found in any of the possible paths');
       }
+      
+      // 모든 시도 실패 시 테스트 데이터 반환
+      return _getTestProjectData();
     } catch (e, stackTrace) {
       print("[ERROR] Error in fetchProjectAudit:");
       print(e);

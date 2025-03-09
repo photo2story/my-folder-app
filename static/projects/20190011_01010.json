@@ -1,0 +1,127 @@
+{
+  "project_id": "20190011",
+  "department_code": "01010",
+  "department_name": "도로",
+  "project_name": "C20190011 Bangladash SASEC",
+  "project_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "# Main Contract_SASEC-II.pdf",
+        "path": "# Main Contract_SASEC-II.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\# Main Contract_SASEC-II.pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "# Main Contract_SASEC-II.pdf",
+        "path": "# Main Contract_SASEC-II.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+        "depth": 4,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "# Main Contract_SASEC-II.pdf",
+        "path": "# Main Contract_SASEC-II.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+        "depth": 4,
+        "doc_type": "contract"
+      }
+    ],
+    "specification": [
+      {
+        "type": "file",
+        "name": "20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+        "path": "20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\5. 업무협의자료\\01  공문\\20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+        "depth": 2,
+        "doc_type": "specification"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+        "path": "# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+        "depth": 3,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "~$SEC-II_JV Agreement_Soosung rev 0.docx",
+        "path": "~$SEC-II_JV Agreement_Soosung rev 0.docx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\~$SEC-II_JV Agreement_Soosung rev 0.docx",
+        "depth": 3,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "SASEC-II_JV Agreement_Soosung rev 0.docx",
+        "path": "SASEC-II_JV Agreement_Soosung rev 0.docx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\02  JV Agreement\\SASEC-II_JV Agreement_Soosung rev 0.docx",
+        "depth": 4,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "20190215 실행검토서.xlsx",
+        "path": "20190215 실행검토서.xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\01 실행검토서\\20190215 실행검토서.xlsx",
+        "depth": 4,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "20190222 실행예산서 SASEC.pdf",
+        "path": "20190222 실행예산서 SASEC.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\03 실행예산서\\20190222 실행예산서 SASEC.pdf",
+        "depth": 4,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+        "path": "2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\03 실행예산서\\2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+        "depth": 4,
+        "doc_type": "budget"
+      }
+    ],
+    "certificate": [
+      {
+        "type": "file",
+        "name": "1. Tax certificate 2018-2022 issued by RHD.pdf",
+        "path": "1. Tax certificate 2018-2022 issued by RHD.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\2. 기성관련\\11  TAX관련\\01  세금납부확인서\\10  Sample\\1. Tax certificate 2018-2022 issued by RHD.pdf",
+        "depth": 4,
+        "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "3. LEA tax certificate (IPC-31-38).xlsx",
+        "path": "3. LEA tax certificate (IPC-31-38).xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\2. 기성관련\\11  TAX관련\\01  세금납부확인서\\10  Sample\\3. LEA tax certificate (IPC-31-38).xlsx",
+        "depth": 4,
+        "doc_type": "certificate"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 13:53:28",
+  "performance": {
+    "total_time": 2.19451904296875,
+    "search_time": 2.1705234050750732,
+    "document_counts": {
+      "contract": 3,
+      "specification": 1,
+      "agreement": 3,
+      "budget": 3,
+      "certificate": 2
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "project_id": "20180160",
+  "department_code": "01010",
+  "department_name": "도로",
+  "project_name": "C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)",
+  "project_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+        "path": "20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\01 계약서\\20181019 AFTZ036 - CONTRACT FOR AFTZ036 PHASE II (TIME-BASED).pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "변경계약 금액에 대한 도로부 검토의견.docx",
+        "path": "변경계약 금액에 대한 도로부 검토의견.docx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\01 계약서\\계약변경\\변경계약 금액에 대한 도로부 검토의견.docx",
+        "depth": 4,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Volume 01-BRT1 Package A Works Contract.pdf",
+        "path": "Volume 01-BRT1 Package A Works Contract.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\02 계약관련\\02 시공사 계약서\\Volume 01-BRT1 Package A Works Contract.pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+        "path": "JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\JV 및 공동수행에 관한 협약서(탄자니아 다르에스살람 BRT 외 접속도로 설계검토, 실시설계 및 시공감리 용역).pdf",
+        "depth": 2,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "업무분담합의서 결재란.hwp",
+        "path": "업무분담합의서 결재란.hwp",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\업무분담합의서 결재란.hwp",
+        "depth": 2,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+        "path": "최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\03 업무분담\\최종_탄자니아 DUPT 설계 및 감리용역 협약서.hwp",
+        "depth": 2,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+        "path": "02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver02_JEON(달러분만 작성).xlsx",
+        "depth": 4,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "02 20181113 실행검토서 - ver02_LEE.xlsx",
+        "path": "02 20181113 실행검토서 - ver02_LEE.xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver02_LEE.xlsx",
+        "depth": 4,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+        "path": "02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\04 실행작성\\01 실행검토서\\Phase 1\\02 20181113 실행검토서 - ver03_LEE(달러분만 작성).xlsx",
+        "depth": 4,
+        "doc_type": "budget"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "Phase1 준공금(3rd) 입금증.pdf",
+        "path": "Phase1 준공금(3rd) 입금증.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018160 탄자니아 BRT_Review_Detail_Supervision(감리)\\01 행정자료\\1.05 선급금 및 기성\\02 기성\\Phase1 3차 final 35%\\03 20220119 입금증 $110,599.6\\Phase1 준공금(3rd) 입금증.pdf",
+        "depth": 5,
+        "doc_type": "completion"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 13:52:48",
+  "performance": {
+    "total_time": 0.552236795425415,
+    "search_time": 0.5311801433563232,
+    "document_counts": {
+      "contract": 3,
+      "agreement": 3,
+      "budget": 3,
+      "completion": 1
+    }
+  }
+}

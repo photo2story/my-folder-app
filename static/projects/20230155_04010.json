@@ -1,0 +1,49 @@
+{
+  "project_id": "20230155",
+  "department_code": "04010",
+  "department_name": "도시계획",
+  "project_name": "2023-155. 2030년 양산시 도시공업지역 기본계획 수립 용역",
+  "project_path": "Z:04010_도시계획\\창원팀\\2023-155. 2030년 양산시 도시공업지역 기본계획 수립 용역",
+  "documents": {
+    "specification": [
+      {
+        "type": "file",
+        "name": "과업지시서.hwp",
+        "path": "과업지시서.hwp",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-155. 2030년 양산시 도시공업지역 기본계획 수립 용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.01 과업지시서\\과업지시서.hwp",
+        "depth": 3,
+        "doc_type": "specification"
+      }
+    ],
+    "initiation": [
+      {
+        "type": "file",
+        "name": "2030년 양산시 도시공업지역 기본계획 수립용역_착수계.hwp",
+        "path": "2030년 양산시 도시공업지역 기본계획 수립용역_착수계.hwp",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-155. 2030년 양산시 도시공업지역 기본계획 수립 용역\\1. 과업 계약 및 착수\\1.02 착수계\\1.02.03 착수계\\2030년 양산시 도시공업지역 기본계획 수립용역_착수계.hwp",
+        "depth": 3,
+        "doc_type": "initiation"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "실행결재1차.pdf",
+        "path": "실행결재1차.pdf",
+        "full_path": "Z:04010_도시계획\\창원팀\\2023-155. 2030년 양산시 도시공업지역 기본계획 수립 용역\\1. 과업 계약 및 착수\\1.07 실행\\실행결재1차.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:52:33",
+  "performance": {
+    "total_time": 1.1447689533233643,
+    "search_time": 1.1207304000854492,
+    "document_counts": {
+      "specification": 1,
+      "initiation": 1,
+      "budget": 1
+    }
+  }
+}

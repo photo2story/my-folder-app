@@ -1,0 +1,97 @@
+{
+  "project_id": "20200273",
+  "department_code": "01030",
+  "department_name": "구조",
+  "project_name": "20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역",
+  "project_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역",
+  "documents": {
+    "specification": [
+      {
+        "type": "file",
+        "name": "ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "path": "ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\20230728 방글라데시 앵커변경 회의자료\\ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "depth": 1,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "path": "ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\20230904 방글라데시 앵커변경 추가\\ASTM F1554 Specification - Boltport Fasteners.pdf",
+        "depth": 1,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "과업지시서(구조계산)_우성.hwp",
+        "path": "과업지시서(구조계산)_우성.hwp",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\기술지원발주의뢰서 작성시 첨부파일\\구조검토\\과업지시서(구조계산)_우성.hwp",
+        "depth": 2,
+        "doc_type": "specification"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "방글라데시 ITS_실행예산 결재본_4차_20220125.pdf",
+        "path": "방글라데시 ITS_실행예산 결재본_4차_20220125.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\교통부 수신자료\\01 실행예산서(20220125)\\방글라데시 ITS_실행예산 결재본_4차_20220125.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "4) 실행예산서.pdf",
+        "path": "4) 실행예산서.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\기술지원발주의뢰서 작성시 첨부파일\\구조검토\\4) 실행예산서.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "4) 실행예산서.pdf",
+        "path": "4) 실행예산서.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\기술지원발주의뢰서 작성시 첨부파일\\도면\\4) 실행예산서.pdf",
+        "depth": 2,
+        "doc_type": "budget"
+      }
+    ],
+    "deliverable2": [
+      {
+        "type": "file",
+        "name": "방글라데시 ITS 구조물 도면작성 (금룡 2022).pdf",
+        "path": "방글라데시 ITS 구조물 도면작성 (금룡 2022).pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\업체수신자료\\01 업체 견적 수신\\01 도면 견적 사업자 등록증\\금용 견적 및 사업자등록\\방글라데시 ITS 구조물 도면작성 (금룡 2022).pdf",
+        "depth": 4,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "대로 도면 견적서.pdf",
+        "path": "대로 도면 견적서.pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\업체수신자료\\01 업체 견적 수신\\01 도면 견적 사업자 등록증\\대로 사업자등록\\대로 도면 견적서.pdf",
+        "depth": 4,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "구조검토용 도면(0303).pdf",
+        "path": "구조검토용 도면(0303).pdf",
+        "full_path": "Z:01030_구조\\20200273 방글라데시 지능형교통체계(ITS) 활용 국가 간선도로망 강화사업 PMC용역\\업체수신자료\\03 도면\\구조검토용 도면(0303).pdf",
+        "depth": 2,
+        "doc_type": "deliverable2"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:04:06",
+  "performance": {
+    "total_time": 0.3549923896789551,
+    "search_time": 0.3319718837738037,
+    "document_counts": {
+      "specification": 3,
+      "budget": 3,
+      "deliverable2": 3
+    }
+  }
+}

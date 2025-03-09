@@ -1,0 +1,133 @@
+{
+  "project_id": "C20230239",
+  "project_name": "필리핀 PGN교량 건설사업 실시설계 및 입찰지원",
+  "department": "01030_구조부",
+  "status": "진행",
+  "contractor": "비주관사",
+  "documents": {
+    "contract": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+          "path": "6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+          "path": "Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "계약체결 20231220.pdf",
+          "path": "계약체결 20231220.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\20231220 계약체결 통보\\계약체결 20231220.pdf",
+          "depth": 5,
+          "doc_type": "contract"
+        }
+      ]
+    },
+    "specification": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+          "path": "Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\발송공문\\Yooshin-2024-005_Reqeust for specification of purchase equipment\\Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+          "depth": 5,
+          "doc_type": "specification"
+        },
+        {
+          "type": "file",
+          "name": "020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+          "path": "020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+          "depth": 4,
+          "doc_type": "specification"
+        },
+        {
+          "type": "file",
+          "name": "Technical Specifications from Bureau of Design.pdf",
+          "path": "Technical Specifications from Bureau of Design.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\Technical Specifications from Bureau of Design.pdf",
+          "depth": 4,
+          "doc_type": "specification"
+        }
+      ]
+    },
+    "initiation": {
+      "exists": false,
+      "details": []
+    },
+    "agreement": {
+      "exists": false,
+      "details": []
+    },
+    "budget": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "20240215_필리핀 PGN (가)실행예산서.pdf",
+          "path": "20240215_필리핀 PGN (가)실행예산서.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\20240215_필리핀 PGN (가)실행예산서.pdf",
+          "depth": 3,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+          "path": "20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\01 실행율 90.3%\\20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+          "path": "20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+          "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\01 실행율 90.3%\\20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+          "depth": 4,
+          "doc_type": "budget"
+        }
+      ]
+    },
+    "deliverable1": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable2": {
+      "exists": false,
+      "details": []
+    },
+    "completion": {
+      "exists": false,
+      "details": []
+    },
+    "certificate": {
+      "exists": false,
+      "details": []
+    },
+    "evaluation": {
+      "exists": false,
+      "details": []
+    }
+  },
+  "project_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원",
+  "ai_analysis": "문서 분석 결과 (2025-03-08 15:05):\n## 프로젝트 C20230239 문서 분석 결과\n\n**1. 현재 문서화 상태:** **하**\n\n**이유:** 비주관사임에도 불구하고 필수 문서인 착수계, 공동도급협정, 성과품(보고서/도면), 준공계, 실적증명, 용역수행평가가 모두 누락되어 있습니다.  계약서와 과업지시서, 실행예산만 존재하는 것은 프로젝트 진행 상황을 파악하고 관리하는 데 매우 부족한 수준입니다. 진행 단계임을 고려하더라도 위험도 90/100은 매우 높은 수치이며, 문서 부족으로 인해 발생할 수 있는 위험이 현실적으로 크다고 판단됩니다.  특히 성과품이 전무하다는 것은 사업 진행 상황을 전혀 확인할 수 없다는 것을 의미합니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **착수계:** 프로젝트 시작을 공식적으로 알리고, 계약 내용에 대한 이해 및 수행 계획을 명시하는 중요한 문서입니다.  누락 시 계약 위반으로 이어질 수 있습니다.\n* **공동도급협정 (해당 시):**  본 사업이 공동도급인 경우,  각 참여사의 역할과 책임을 명확히 하고 분쟁을 방지하기 위해 필수적입니다.\n* **성과품(보고서/도면):**  프로젝트 진행 상황과 결과를 확인하고, 향후 문제 발생 시 증빙자료로 활용됩니다.  누락 시 사업 진행 및 성과 검증이 불가능합니다.\n\n**3. 위험도 점수 조정 필요성:** **있음**\n\n**현재 위험도 90/100 → 조정 후 위험도 70/100 (추천)**\n\n**개선 방안:**\n\n* 즉시 착수계를 작성하고 제출해야 합니다.\n* 공동도급 여부를 확인하고, 해당될 경우 공동도급협정을 체결해야 합니다.\n* 최소한 현재까지 진행된 작업에 대한 성과품(보고서 및 도면)을 즉시 작성하여 제출해야 합니다.  향후 정기적인 보고 및 도면 제출 계획을 수립하고 준수해야 합니다.\n* 프로젝트 매니저는 정기적인 문서 검토 시스템을 구축하여, 누락된 문서 및 부족한 정보를 최소화해야 합니다.\n* 위험 관리 계획을 수립하여, 각 위험 요소에 대한 대응 방안을 마련해야 합니다.  문서 누락으로 인한 위험을 명시하고, 그에 따른 예방 및 대응책을 포함해야 합니다.\n* 준공계 및 실적증명, 용역수행평가는 프로젝트 완료 시점에 준비하되,  현재 시점에서의 누락은 위험도를 높이는 요인이지만,  진행 단계이므로,  위험도를 70으로 조정합니다.\n\n\n위 개선 방안을 통해  문서 관리 체계를 강화하고,  프로젝트 진행에 대한 투명성을 확보하여 위험을 최소화해야 합니다.  위험도 70/100은 여전히 높은 수치이므로,  지속적인 문서 관리 및 모니터링이 필수적입니다.\n\n\n요약:\n- 확인된 문서: 3개 유형\n- 누락된 문서: 7개 유형\n- 기본 위험도: 90/100\n",
+  "timestamp": "2025-03-08 15:05:31",
+  "performance": {
+    "total_time": 0,
+    "search_time": 2.4338459968566895,
+    "ai_time": 5.815467119216919,
+    "save_time": 0
+  }
+}

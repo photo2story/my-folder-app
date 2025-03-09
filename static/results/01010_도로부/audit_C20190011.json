@@ -1,0 +1,159 @@
+{
+  "project_id": "C20190011",
+  "project_name": "Project Implementation Consultants for SASEC Road Connectivity Project-II(방글라데시)",
+  "department": "01010_도로부",
+  "status": "진행",
+  "contractor": "비주관사",
+  "documents": {
+    "contract": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "# Main Contract_SASEC-II.pdf",
+          "path": "# Main Contract_SASEC-II.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\# Main Contract_SASEC-II.pdf",
+          "depth": 3,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "# Main Contract_SASEC-II.pdf",
+          "path": "# Main Contract_SASEC-II.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+          "depth": 4,
+          "doc_type": "contract"
+        },
+        {
+          "type": "file",
+          "name": "# Main Contract_SASEC-II.pdf",
+          "path": "# Main Contract_SASEC-II.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\01 계약서\\# Main Contract_SASEC-II.pdf",
+          "depth": 4,
+          "doc_type": "contract"
+        }
+      ]
+    },
+    "specification": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+          "path": "20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\5. 업무협의자료\\01  공문\\20190117  NTP_Notice to Proceed 과업착수 SASEC-II (Client).pdf",
+          "depth": 2,
+          "doc_type": "specification"
+        }
+      ]
+    },
+    "initiation": {
+      "exists": false,
+      "details": []
+    },
+    "agreement": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+          "path": "# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\# 방글라데시 SASEC2 공동사업수행협약서.pdf",
+          "depth": 3,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "~$SEC-II_JV Agreement_Soosung rev 0.docx",
+          "path": "~$SEC-II_JV Agreement_Soosung rev 0.docx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\~$SEC-II_JV Agreement_Soosung rev 0.docx",
+          "depth": 3,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
+          "name": "SASEC-II_JV Agreement_Soosung rev 0.docx",
+          "path": "SASEC-II_JV Agreement_Soosung rev 0.docx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.01 계약\\1.02 공동사업수행협약서\\02  JV Agreement\\SASEC-II_JV Agreement_Soosung rev 0.docx",
+          "depth": 4,
+          "doc_type": "agreement"
+        }
+      ]
+    },
+    "budget": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "20190215 실행검토서.xlsx",
+          "path": "20190215 실행검토서.xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\01 실행검토서\\20190215 실행검토서.xlsx",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "20190222 실행예산서 SASEC.pdf",
+          "path": "20190222 실행예산서 SASEC.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\03 실행예산서\\20190222 실행예산서 SASEC.pdf",
+          "depth": 4,
+          "doc_type": "budget"
+        },
+        {
+          "type": "file",
+          "name": "2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+          "path": "2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\1. 과업 계약 및 착수\\1.07 실행\\06 실행작성\\03 실행예산서\\2022-05-09 실행예산서_사섹_변경2차#단순히 도로부to공항및인프라사업부.xls",
+          "depth": 4,
+          "doc_type": "budget"
+        }
+      ]
+    },
+    "deliverable1": {
+      "exists": false,
+      "details": []
+    },
+    "deliverable2": {
+      "exists": false,
+      "details": []
+    },
+    "completion": {
+      "exists": false,
+      "details": []
+    },
+    "certificate": {
+      "exists": true,
+      "details": [
+        {
+          "type": "file",
+          "name": "1. Tax certificate 2018-2022 issued by RHD.pdf",
+          "path": "1. Tax certificate 2018-2022 issued by RHD.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\2. 기성관련\\11  TAX관련\\01  세금납부확인서\\10  Sample\\1. Tax certificate 2018-2022 issued by RHD.pdf",
+          "depth": 4,
+          "doc_type": "certificate"
+        },
+        {
+          "type": "file",
+          "name": "3. LEA tax certificate (IPC-31-38).xlsx",
+          "path": "3. LEA tax certificate (IPC-31-38).xlsx",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC\\2. 기성관련\\11  TAX관련\\01  세금납부확인서\\10  Sample\\3. LEA tax certificate (IPC-31-38).xlsx",
+          "depth": 4,
+          "doc_type": "certificate"
+        }
+      ]
+    },
+    "evaluation": {
+      "exists": false,
+      "details": []
+    }
+  },
+  "project_path": "Z:01010_도로\\0004 해외사업\\C20190011 Bangladash SASEC",
+  "ai_analysis": "문서 분석 결과 (2025-03-08 13:53):\n## 프로젝트 C20190011 문서 분석 평가\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 본 프로젝트는 비주관사, 진행 중인 상태이며,  계약서, 과업지시서, 공동도급협정, 실행예산은 확보되었으나,  착수계, 성과품(보고서/도면), 준공계, 용역수행평가가 누락되었습니다. 비주관사 기준으로 필수 문서인 계약서와 공동도급협정은 확보되었으나,  핵심 성과물인 성과품(보고서/도면)이 누락되어 중간 수준의 평가를 받았습니다.  진행 상황을 고려하면 착수계의 부재는 위험 요소입니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **성과품(보고서/도면):**  프로젝트 진행 상황을 증명하고, 실제 수행 내용을 확인하는 데 필수적입니다.  누락 시 프로젝트의 성과 검증 및 향후 문제 발생 시 책임 소재 규명이 어려워집니다.\n* **착수계:** 프로젝트 착수를 공식적으로 알리고, 계약 내용 및 과업 범위에 대한 이해도를 확인하는 중요한 문서입니다.  부재 시 프로젝트의 공식적인 시작 시점 및 책임 소재가 불분명해질 수 있습니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**있음.** 현재 위험도 95/100은 성과품 누락과 착수계 미비를 반영하지 못하고 있습니다.  성과품 누락은 진행 단계에서 심각한 위험 요소이며, 착수계 미비 또한 프로젝트 관리의 허점을 드러냅니다.\n\n**개선 방안:**\n\n* **성과품(보고서/도면) 즉시 확보:**  프로젝트 진행 상황에 맞춰 보고서 및 도면을 작성하고 제출해야 합니다.  만약 기존에 생성된 것이 있다면,  즉시 제출하여 문서화해야 합니다.  향후 정기적인 보고서 제출 체계를 확립해야 합니다.\n* **착수계 즉시 제출:**  프로젝트 착수 시점을 명확히 하고,  향후 발생 가능한 분쟁을 예방하기 위해 즉시 착수계를 제출해야 합니다.\n* **위험도 점수 조정:** 성과품 누락과 착수계 미비를 고려하여 위험도를 70~80/100 수준으로 조정하는 것을 제안합니다.  성과품이 확보되고 착수계가 제출되면 위험도는 50~60/100 수준으로 낮출 수 있습니다.  향후 용역수행평가 및 준공계까지 확보하여 위험도를 최소화해야 합니다.\n\n위와 같이 문서 보완 및 위험도 재평가를 통해 프로젝트의 투명성과 관리 효율성을 높일 수 있습니다.\n\n\n요약:\n- 확인된 문서: 5개 유형\n- 누락된 문서: 5개 유형\n- 기본 위험도: 95/100\n",
+  "timestamp": "2025-03-08 13:53:28",
+  "performance": {
+    "total_time": 0,
+    "search_time": 2.6345150470733643,
+    "ai_time": 5.440948963165283,
+    "save_time": 0
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "project_id": "20220002",
+  "department_code": "01010",
+  "department_name": "도로",
+  "project_name": "202202 인도네시아 바탐-빈탄 교량",
+  "project_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "본계약서.pdf",
+        "path": "본계약서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\본계약서.pdf",
+        "depth": 0,
+        "doc_type": "contract"
+      }
+    ],
+    "initiation": [
+      {
+        "type": "file",
+        "name": "1.5.1 착수보고.pdf",
+        "path": "1.5.1 착수보고.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\02.Appendix\\부록\\1.5.1 착수보고.pdf",
+        "depth": 5,
+        "doc_type": "initiation"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "제10장-사업실행계획.hwp",
+        "path": "제10장-사업실행계획.hwp",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\01.Main Report\\02.Editable\\제10장-사업실행계획.hwp",
+        "depth": 5,
+        "doc_type": "budget"
+      }
+    ],
+    "deliverable1": [
+      {
+        "type": "file",
+        "name": "제11장-결론.hwp",
+        "path": "제11장-결론.hwp",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\01.Main Report\\02.Editable\\제11장-결론.hwp",
+        "depth": 5,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "제1장-서론-1.hwp",
+        "path": "제1장-서론-1.hwp",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\01.Main Report\\02.Editable\\제1장-서론-1.hwp",
+        "depth": 5,
+        "doc_type": "deliverable1"
+      },
+      {
+        "type": "file",
+        "name": "1.1 1차현장조사 및 업무협의(출장보고서, 회의록).pdf",
+        "path": "1.1 1차현장조사 및 업무협의(출장보고서, 회의록).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\02.Appendix\\부록\\1.1 1차현장조사 및 업무협의(출장보고서, 회의록).pdf",
+        "depth": 5,
+        "doc_type": "deliverable1"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:17:37",
+  "performance": {
+    "total_time": 0.4678199291229248,
+    "search_time": 0.43682289123535156,
+    "document_counts": {
+      "contract": 1,
+      "initiation": 1,
+      "budget": 1,
+      "deliverable1": 3
+    }
+  }
+}

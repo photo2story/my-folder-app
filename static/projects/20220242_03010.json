@@ -1,0 +1,84 @@
+{
+  "project_id": "20220242",
+  "department_code": "03010",
+  "department_name": "철도",
+  "project_name": "C20220242 필리핀 MRT 7호선 Independent Consultant 사업",
+  "project_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "@필리핀 MRT 7호선 IC사업 최종계약서 요약.pdf",
+        "path": "@필리핀 MRT 7호선 IC사업 최종계약서 요약.pdf",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\@필리핀 MRT 7호선 IC사업 최종계약서 요약.pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      }
+    ],
+    "agreement": [
+      {
+        "type": "file",
+        "name": "붙임1. Service Agreement_Constantin G. GABRIEL.pdf",
+        "path": "붙임1. Service Agreement_Constantin G. GABRIEL.pdf",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.09 기술지원(외주)\\1.09.01 기술지원계약서\\1. 기술지원계약서\\외국인 PM 인력 채용\\22년 12월\\MRT 7 외국인 PM 항공료 및 체제비 지급\\붙임1. Service Agreement_Constantin G. GABRIEL.pdf",
+        "depth": 7,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "# 20221210_Service Agreement_Constantin G. GABRIEL_V12_FINAL.pdf",
+        "path": "# 20221210_Service Agreement_Constantin G. GABRIEL_V12_FINAL.pdf",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.09 기술지원(외주)\\1.09.01 기술지원계약서\\1. 기술지원계약서\\외국인 PM 인력 채용\\가브리엘 계약서\\# 20221210_Service Agreement_Constantin G. GABRIEL_V12_FINAL.pdf",
+        "depth": 6,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "22.11.23_실행예산_MRT 7 IC_조재환_최종.xlsx",
+        "path": "22.11.23_실행예산_MRT 7 IC_조재환_최종.xlsx",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.05 선금\\@@MRT 7호선 IC 실행예산\\22.11.23_실행예산_MRT 7 IC_조재환_최종.xlsx",
+        "depth": 3,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "MRT 7 IC 실행.pdf",
+        "path": "MRT 7 IC 실행.pdf",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.05 선금\\@MRT 7호선 IC 가실행예산\\MRT 7 IC 실행.pdf",
+        "depth": 3,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "MRT-7 실행.xlsx",
+        "path": "MRT-7 실행.xlsx",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.05 선금\\@MRT 7호선 IC 가실행예산\\MRT-7 실행.xlsx",
+        "depth": 3,
+        "doc_type": "budget"
+      }
+    ],
+    "completion": [
+      {
+        "type": "file",
+        "name": "외주비 청구 필수서류(기성,준공 검사원) 양식(2015).hwp",
+        "path": "외주비 청구 필수서류(기성,준공 검사원) 양식(2015).hwp",
+        "full_path": "Z:03010_철도\\C20220242 필리핀 MRT 7호선 Independent Consultant 사업\\1. 과업 계약 및 착수\\1.09 기술지원(외주)\\1.09.01 기술지원계약서\\1. 기술지원계약서\\외국인 PM 인력 채용\\22년 12월\\22년 12월 급여지불\\외주비 청구 필수서류(기성,준공 검사원) 양식(2015).hwp",
+        "depth": 7,
+        "doc_type": "completion"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 14:32:18",
+  "performance": {
+    "total_time": 1.5638494491577148,
+    "search_time": 1.5208461284637451,
+    "document_counts": {
+      "contract": 1,
+      "agreement": 2,
+      "budget": 3,
+      "completion": 1
+    }
+  }
+}

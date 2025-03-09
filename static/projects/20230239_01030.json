@@ -1,0 +1,97 @@
+{
+  "project_id": "20230239",
+  "department_code": "01030",
+  "department_name": "구조",
+  "project_name": "20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원",
+  "project_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원",
+  "documents": {
+    "contract": [
+      {
+        "type": "file",
+        "name": "6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+        "path": "6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\6-MOM-Minutes-of-Contract-Negotiation-23CSZ007-PGN.pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+        "path": "Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\Contract_for_the_Consulting_Services_for_PGN_Island_Bridges_Project.pdf",
+        "depth": 3,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "계약체결 20231220.pdf",
+        "path": "계약체결 20231220.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.03 기안_협조\\기안문\\20231220 계약체결 통보\\계약체결 20231220.pdf",
+        "depth": 5,
+        "doc_type": "contract"
+      }
+    ],
+    "specification": [
+      {
+        "type": "file",
+        "name": "Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+        "path": "Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\발송공문\\Yooshin-2024-005_Reqeust for specification of purchase equipment\\Yooshin JV-2024-005_Reqeust for specification of purchase equipment.pdf",
+        "depth": 5,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+        "path": "020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\020824 Letter to Yooshin JV (Request for Technical Specifications of Equipment).pdf",
+        "depth": 4,
+        "doc_type": "specification"
+      },
+      {
+        "type": "file",
+        "name": "Technical Specifications from Bureau of Design.pdf",
+        "path": "Technical Specifications from Bureau of Design.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\2. 설계\\2.01 공문 알림 주고받기\\2.01.01 발송 수신 공문\\수신공문\\Technical Specifications from Bureau of Design.pdf",
+        "depth": 4,
+        "doc_type": "specification"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "20240215_필리핀 PGN (가)실행예산서.pdf",
+        "path": "20240215_필리핀 PGN (가)실행예산서.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\20240215_필리핀 PGN (가)실행예산서.pdf",
+        "depth": 3,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+        "path": "20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\01 실행율 90.3%\\20240205 필리핀 PGN_(가)실행예산서_최종.pdf",
+        "depth": 4,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+        "path": "20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+        "full_path": "Z:01030_구조\\20230239 필리핀 PGN교량 건설사업 실시설계 및 입찰지원\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\01 실행율 90.3%\\20240205 필리핀 PGN_(가)실행예산서_최종.xlsx",
+        "depth": 4,
+        "doc_type": "budget"
+      }
+    ]
+  },
+  "timestamp": "2025-03-08 15:05:31",
+  "performance": {
+    "total_time": 1.6202638149261475,
+    "search_time": 1.5882630348205566,
+    "document_counts": {
+      "contract": 3,
+      "specification": 3,
+      "budget": 3
+    }
+  }
+}
