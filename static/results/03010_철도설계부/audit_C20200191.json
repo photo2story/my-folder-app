@@ -6,46 +6,12 @@
   "contractor": "주관사",
   "documents": {
     "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "20200117_Contract Requirements Consolidated  from LRTA.docx",
-          "path": "20200117_Contract Requirements Consolidated  from LRTA.docx",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\20200117_Contract Requirements Consolidated  from LRTA.docx",
-          "depth": 1,
-          "doc_type": "contract"
-        },
-        {
-          "type": "file",
-          "name": "20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-          "path": "20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-          "depth": 1,
-          "doc_type": "contract"
-        },
-        {
-          "type": "file",
-          "name": "20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-          "path": "20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\91 Discuseed tor cost\\20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-          "depth": 2,
-          "doc_type": "contract"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "specification": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-          "path": "VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.07 실행\\Fw_ References to Bid Documents and TOR\\VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-          "depth": 3,
-          "doc_type": "specification"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "initiation": {
       "exists": false,
@@ -56,87 +22,29 @@
       "details": [
         {
           "type": "file",
+          "name": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+          "path": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\@ Payment_Billing\\@ Billing 01\\[Requirement]\\WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+          "depth": 3,
+          "doc_type": "agreement"
+        },
+        {
+          "type": "file",
           "name": "20150107 협약서(필리핀LRT-2 동부연장 토목 컨설팅용역).pdf",
           "path": "20150107 협약서(필리핀LRT-2 동부연장 토목 컨설팅용역).pdf",
           "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\0. 사전작업\\0.03 공동도급사전협약\\20150107 협약서(필리핀LRT-2 동부연장 토목 컨설팅용역).pdf",
           "depth": 2,
           "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "20200221JOINT VENTURE AGREEMENT.pdf",
-          "path": "20200221JOINT VENTURE AGREEMENT.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\화재복구( 부속서률 일부분)\\20200221JOINT VENTURE AGREEMENT.pdf",
-          "depth": 4,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-          "path": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.08 합사운영계획\\1.08.03 합사정산\\WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
         }
       ]
     },
     "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-          "path": "201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.05 선금\\합사비 신청 정산\\필리핀, LRT2 화재복구 사업 2020, 10~11월 비용집행분 정산 보고\\201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-          "depth": 4,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-          "path": "첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Fw_ [해외기안문] 필리핀 LRT-2 화재복구사업 수행비용 청구 품의 (4차)\\첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-          "depth": 5,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-          "path": "첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Fw_ [해외기안문] 필리핀 LRT-2 화재복구사업 수행비용 청구 품의 (4차)\\첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-          "depth": 5,
-          "doc_type": "budget"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "deliverable1": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "LRT2 화재복구 보고서.pdf",
-          "path": "LRT2 화재복구 보고서.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Re_ 필리핀, LRT2 화재복구 사업 2021, 02월 비용집행분 정산 보고\\LRT2 화재복구 보고서.pdf",
-          "depth": 5,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-          "path": "LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\필리핀, LRT2 화재복구 사업 2020, 12월 비용집행분 정산 보고\\LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-          "depth": 5,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-          "path": "LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\필리핀, LRT2 화재복구 사업 2021, 01월 비용집행분 정산 보고\\LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-          "depth": 5,
-          "doc_type": "deliverable1"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "deliverable2": {
       "exists": false,
@@ -147,33 +55,8 @@
       "details": []
     },
     "certificate": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-          "path": "2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-          "depth": 6,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-          "path": "2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-          "depth": 6,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "4. Employment Certificate (Yoo, Hyun Kil).pdf",
-          "path": "4. Employment Certificate (Yoo, Hyun Kil).pdf",
-          "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\4. Employment Certificate (Yoo, Hyun Kil).pdf",
-          "depth": 6,
-          "doc_type": "certificate"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "evaluation": {
       "exists": false,
@@ -181,12 +64,12 @@
     }
   },
   "project_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역",
-  "ai_analysis": "문서 분석 결과 (2025-03-08 14:01):\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트는 진행 중이며 주관사이므로 모든 문서 유형이 완비되어야 위험도 0/100을 달성합니다.  현재 착수계, 성과품(도면), 준공계, 용역수행평가가 누락되어 있습니다.  계약, 과업지시서, 공동도급협정, 실행예산, 성과품(보고서), 실적증명은 확보되었지만,  필수 문서 누락으로 인해  주관사 기준을 충족하지 못하고 있습니다.  진행 단계의 기준(위험도 30~70/100)을 고려하면 중간 수준으로 평가됩니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **착수계:** 프로젝트 시작을 공식적으로 알리고, 계약 내용에 대한 이해 및 이행 의지를 명확히 하는 중요한 문서입니다.  누락 시 계약 위반으로 이어질 가능성이 있으며, 프로젝트의 법적, 행정적 문제 발생 위험이 높습니다.\n* **성과품(도면):**  철도 시스템 복원 사업의 특성상 도면은 필수적인 성과물입니다.  도면이 없으면 사업 진행 및 검수가 불가능하며,  완료 시점에 문제가 발생할 가능성이 높습니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n위험도 점수 95/100은 너무 높습니다.  현재 문서 현황과 진행 단계를 고려하여 위험도를 재조정해야 합니다.  착수계와 성과품(도면)을 확보하면 위험도는 상당히 감소할 것입니다.\n\n**개선 방안:**\n\n* **즉시 착수계를 제출하고 관련 부서의 승인을 받습니다.**\n* **성과품(도면) 제작 및 관리 계획을 수립하고,  진행 상황을 주기적으로 보고합니다.**\n* **준공계 및 용역수행평가는 프로젝트 종료 시점에 준비하되,  미리 체크리스트를 만들어 누락을 방지합니다.**\n* **위험도 점수를 70/100으로 조정합니다.** (착수계와 성과품(도면)의 미비를 고려하여 진행 단계의 상한선에 가깝게 설정)  착수계와 성과품(도면)이 확보되면  50/100 이하로 재조정을 고려할 수 있습니다.\n* **문서 관리 시스템을 개선하여 모든 문서의 버전 관리 및 접근성을 강화합니다.**\n\n\n위와 같은 조치를 통해 문서 관리 체계를 강화하고,  프로젝트 위험을 효과적으로 관리할 수 있습니다.\n\n\n요약:\n- 확인된 문서: 6개 유형\n- 누락된 문서: 4개 유형\n- 기본 위험도: 95/100\n",
-  "timestamp": "2025-03-08 14:00:58",
+  "ai_analysis": "문서 분석 결과 (2025-03-10 02:11):\n## 프로젝트 C20200191 문서 분석 평가\n\n**1. 현재 문서화 상태:** **하**\n\n**이유:** 주관사임에도 불구하고 필수 문서 대부분이 누락되어 있습니다.  계약서, 과업지시서, 착수계, 실행예산, 성과품(보고서 및 도면), 준공계, 실적증명, 용역수행평가 등이 전혀 없으며, 공동도급협정 2개만 존재하는 것은 매우 부족한 수준입니다.  진행 중인 프로젝트의 특성상,  필수 문서 누락으로 인한 사업 관리의 어려움과 위험이 매우 높습니다.\n\n**2. 가장 시급한 보완 필요 문서 및 이유:**\n\n* **계약서:**  프로젝트의 법적 근거이며, 계약 내용에 대한 명확한 이해와 분쟁 발생 시 증거 자료로 활용됩니다.  가장 시급히 확보해야 할 문서입니다.\n* **과업지시서:**  프로젝트 범위, 목표, 수행 기준 등을 명확히 규정하여 효율적인 사업 수행을 위한 필수 문서입니다. 계약서와 함께 프로젝트의 기본 틀을 구성합니다.\n* **착수계:**  프로젝트의 공식적인 시작을 알리고, 사업 수행 계획을 제시하는 문서입니다.  프로젝트 시작 시점과 예상 기간을 명확히 합니다.\n* **실행예산:**  프로젝트 예산 계획 및 집행 내역을 관리하는 데 필수적입니다. 예산 초과 및 부족을 방지하고, 재정적 위험을 관리하는 데 중요합니다.\n\n위 4가지 문서는 프로젝트의 기본적인 틀과 진행 상황을 파악하는 데 절대적으로 필요하며, 즉시 보완되어야 합니다.\n\n\n**3. 위험도 점수 조정 필요성:** **있음**\n\n**현재 위험도:** 20/100 (부적절하게 낮음)\n\n**조정된 위험도:** 80/100 (최소)\n\n**개선 방안:**\n\n* **즉시 누락된 필수 문서(계약서, 과업지시서, 착수계, 실행예산)를 확보합니다.**  관련 부서와 협의하여 문서를 발급받거나 재작성해야 합니다.\n* **성과품(보고서, 도면) 관리 체계를 구축합니다.**  프로젝트 진행 상황에 따라 보고서와 도면을 정기적으로 작성하고, 체계적으로 관리하는 시스템을 마련해야 합니다.\n* **준공계 및 실적증명을 위한 준비를 시작합니다.**  프로젝트 완료 시점을 고려하여 필요한 자료를 미리 준비하여 준공 절차를 원활하게 진행할 수 있도록 합니다.\n* **용역수행평가를 위한 지표를 설정하고, 평가 계획을 수립합니다.**  프로젝트 완료 후 평가를 통해 향후 사업에 대한 개선점을 도출할 수 있도록 합니다.\n* **문서 관리 시스템을 개선합니다.**  문서의 생성, 관리, 보관 및 접근 제어 등을 위한 체계적인 시스템을 구축하여 문서 누락 및 분실을 방지합니다.\n\n\n위와 같이 문서 관리 체계를 전반적으로 개선하고, 누락된 문서들을 확보해야만 프로젝트의 위험도를 현실적으로 반영하고, 효율적인 프로젝트 관리가 가능해집니다.  80/100의 위험도는 최소한의 조정이며, 실제 문서 확보 상황에 따라 더 높아질 수 있습니다.\n\n\n요약:\n- 확인된 문서: 1개 유형\n- 누락된 문서: 9개 유형\n- 기본 위험도: 20/100\n",
+  "timestamp": "2025-03-10 02:11:33",
   "performance": {
     "total_time": 0,
-    "search_time": 2.4018633365631104,
-    "ai_time": 4.888350963592529,
+    "search_time": 2.3324875831604004,
+    "ai_time": 6.135838747024536,
     "save_time": 0
   }
 }
