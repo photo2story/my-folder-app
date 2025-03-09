@@ -15,16 +15,6 @@
         "doc_type": "contract"
       }
     ],
-    "specification": [
-      {
-        "type": "file",
-        "name": "과업수행계획서최종(청양 정산2 농공단지 조성사업)-2013.02.15.hwp",
-        "path": "과업수행계획서최종(청양 정산2 농공단지 조성사업)-2013.02.15.hwp",
-        "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\1. 과업 계약 및 착수\\1.03 과업수행계획서\\1.03.01 과업수행계획서\\과업수행계획서최종(청양 정산2 농공단지 조성사업)-2013.02.15.hwp",
-        "depth": 3,
-        "doc_type": "specification"
-      }
-    ],
     "budget": [
       {
         "type": "file",
@@ -42,38 +32,15 @@
         "depth": 2,
         "doc_type": "budget"
       }
-    ],
-    "deliverable2": [
-      {
-        "type": "file",
-        "name": "청양군관리계획 지형도면고시자료.zip",
-        "path": "청양군관리계획 지형도면고시자료.zip",
-        "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\2. 설계\\2.02 자료조사 및 검토\\2.02.03 현황, 기타 자료\\기초자료\\청양군관리계획재정비 지형도면고시\\청양군관리계획 지형도면고시자료.zip",
-        "depth": 5,
-        "doc_type": "deliverable2"
-      }
-    ],
-    "completion": [
-      {
-        "type": "file",
-        "name": "181221 준공계-조사설계.hwp",
-        "path": "181221 준공계-조사설계.hwp",
-        "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\4. 과업준공\\4.01 준공계\\4.01.04 준공계\\181221 준공계-조사설계.hwp",
-        "depth": 3,
-        "doc_type": "completion"
-      }
     ]
   },
-  "timestamp": "2025-03-08 13:40:28",
+  "timestamp": "2025-03-10 01:30:52",
   "performance": {
-    "total_time": 1.063997745513916,
-    "search_time": 1.0359983444213867,
+    "total_time": 4.1096272468566895,
+    "search_time": 4.084661960601807,
     "document_counts": {
       "contract": 1,
-      "specification": 1,
-      "budget": 2,
-      "deliverable2": 1,
-      "completion": 1
+      "budget": 2
     }
   }
 }

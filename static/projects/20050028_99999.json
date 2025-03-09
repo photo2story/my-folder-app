@@ -31,16 +31,6 @@
         "doc_type": "contract"
       }
     ],
-    "specification": [
-      {
-        "type": "file",
-        "name": "수인선-과업수행계획 및 작업기법.hwp",
-        "path": "수인선-과업수행계획 및 작업기법.hwp",
-        "full_path": "Z:99999_준공\\08. 철도건설관리부\\2005028_수인선 수원~인천간 복선전철 노반신설공사 (1,2공구)전면책임감리용역\\[C03]작업계획및기법\\[C0302]작업계획및기법\\01.작업계획및기법\\수인선-과업수행계획 및 작업기법.hwp",
-        "depth": 3,
-        "doc_type": "specification"
-      }
-    ],
     "initiation": [
       {
         "type": "file",
@@ -103,6 +93,32 @@
         "doc_type": "deliverable1"
       }
     ],
+    "deliverable2": [
+      {
+        "type": "file",
+        "name": "C6202034-007-터널종평면도.dwg",
+        "path": "C6202034-007-터널종평면도.dwg",
+        "full_path": "Z:99999_준공\\08. 철도건설관리부\\2005028_수인선 수원~인천간 복선전철 노반신설공사 (1,2공구)전면책임감리용역\\[C01]행정자료\\[C0109]감리현장\\02.기술검토\\본선BOX 터널\\C6202034-007-터널종평면도.dwg",
+        "depth": 4,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "본선BOX터널변경평면도.dwg",
+        "path": "본선BOX터널변경평면도.dwg",
+        "full_path": "Z:99999_준공\\08. 철도건설관리부\\2005028_수인선 수원~인천간 복선전철 노반신설공사 (1,2공구)전면책임감리용역\\[C01]행정자료\\[C0109]감리현장\\02.기술검토\\본선BOX 터널\\본선BOX터널변경평면도.dwg",
+        "depth": 4,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "1공구-선로종평면도.dwg",
+        "path": "1공구-선로종평면도.dwg",
+        "full_path": "Z:99999_준공\\08. 철도건설관리부\\2005028_수인선 수원~인천간 복선전철 노반신설공사 (1,2공구)전면책임감리용역\\[C01]행정자료\\[C0109]감리현장\\02.기술검토\\종평면도\\1공구-선로종평면도.dwg",
+        "depth": 4,
+        "doc_type": "deliverable2"
+      }
+    ],
     "completion": [
       {
         "type": "file",
@@ -156,16 +172,16 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 13:35:18",
+  "timestamp": "2025-03-10 01:23:24",
   "performance": {
-    "total_time": 3.6582775115966797,
-    "search_time": 3.638366937637329,
+    "total_time": 9.432304382324219,
+    "search_time": 9.403304100036621,
     "document_counts": {
       "contract": 3,
-      "specification": 1,
       "initiation": 3,
       "agreement": 1,
       "deliverable1": 3,
+      "deliverable2": 3,
       "completion": 3,
       "certificate": 3
     }
