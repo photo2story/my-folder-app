@@ -43,6 +43,10 @@ class _TreeViewState extends State<TreeView> {
               if (widget.onNodeExpand != null) {
                 widget.onNodeExpand!(node);
               }
+              if (widget.onNodeTap != null) {
+                print('[DEBUG] Directory node tapped: ${node.path}');
+                widget.onNodeTap!(node);
+              }
             } else {
               if (widget.onNodeTap != null) {
                 widget.onNodeTap!(node);

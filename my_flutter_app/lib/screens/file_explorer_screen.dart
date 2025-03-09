@@ -31,18 +31,39 @@ class FileExplorerScreen extends StatelessWidget {
         return TreeView(
           nodes: rootNodes,
           onNodeTap: (node) async {
-            print('[DEBUG] onNodeTap triggered for node: ${node.path}, isDirectory: ${node.isDirectory}');
+            print('[DEBUG] onNodeTap triggered for node: ${node.path}, isDirectory: ${node.isDirectory}, name: ${node.name}');
             final parts = node.path.split('/');
             print('[DEBUG] Node path parts: $parts');
-            if (parts.length >= 2 && parts[1].isNotEmpty && node.isDirectory) {
-              print('[DEBUG] Identified as project node');
-              if (onProjectTap != null) {
-                final projectId = parts[parts.length - 1];
-                print('[DEBUG] Extracted projectId: $projectId');
-                onProjectTap!(projectId);
+            
+            // 프로젝트 노드 식별 로직 개선
+            if (node.isDirectory) {
+              // 프로젝트 ID 추출 시도
+              String? extractedProjectId;
+              
+              // 경로에서 추출 시도 (예: /10010_플랫폼사업실/A20230001)
+              if (parts.length >= 3 && parts[0].isEmpty && parts[1].isNotEmpty && parts[2].isNotEmpty) {
+                extractedProjectId = parts[2];
+                print('[DEBUG] Extracted projectId from path: $extractedProjectId');
+              }
+              
+              // 이름에서 추출 시도 (예: "A20230001 (프로젝트명 - 상태 - 계약자)")
+              if (extractedProjectId == null && node.name.isNotEmpty) {
+                final nameMatch = RegExp(r'^([A-Z]\d+)').firstMatch(node.name);
+                if (nameMatch != null) {
+                  extractedProjectId = nameMatch.group(1);
+                  print('[DEBUG] Extracted projectId from name: $extractedProjectId');
+                }
+              }
+              
+              // 프로젝트 ID가 추출되었으면 콜백 호출
+              if (extractedProjectId != null && onProjectTap != null) {
+                print('[DEBUG] Calling onProjectTap with projectId: $extractedProjectId');
+                onProjectTap!(extractedProjectId);
+              } else {
+                print('[DEBUG] Directory node but not a project or could not extract ID: ${node.path}');
               }
             } else if (!node.isDirectory && onFileTap != null) {
-              print('[DEBUG] Identified as file node');
+              print('[DEBUG] Identified as file node: ${node.path}');
               onFileTap!(node.path);
             }
           },

@@ -65,6 +65,42 @@ class ApiService {
     '99999': '수성엔지니어링'
   };
 
+  // 캐시 맵 추가
+  final Map<String, List<model.FileNode>> _directoryCache = {};
+  final Map<String, ProjectModel> _projectCache = {};
+  final Map<String, List<ProjectModel>> _projectsListCache = {};
+  
+  // 캐시 초기화 메서드
+  void clearCache() {
+    _directoryCache.clear();
+    _projectCache.clear();
+    _projectsListCache.clear();
+    print("[DEBUG] Cache cleared");
+  }
+  
+  // 특정 프로젝트의 캐시만 갱신
+  Future<void> refreshProjectCache(String projectId) async {
+    print("[DEBUG] Refreshing cache for project: $projectId");
+    _projectCache.remove(projectId);
+    
+    // 프로젝트 관련 디렉토리 캐시도 삭제
+    _directoryCache.removeWhere((key, value) => key.contains(projectId));
+    
+    // 프로젝트 데이터 다시 가져오기
+    await fetchProjectAudit(projectId);
+    print("[DEBUG] Cache refreshed for project: $projectId");
+  }
+  
+  // 전체 캐시 갱신
+  Future<void> refreshAllCache() async {
+    print("[DEBUG] Refreshing all cache");
+    clearCache();
+    
+    // 프로젝트 목록 다시 가져오기
+    await fetchProjects();
+    print("[DEBUG] All cache refreshed");
+  }
+
   // 부서명에서 부서 코드 가져오기
   String getDepartmentCode(String departmentName) {
     return DEPARTMENT_MAPPING[departmentName] ?? '99999';
@@ -78,6 +114,13 @@ class ApiService {
   Future<List<ProjectModel>> fetchProjects() async {
     print("\n=== FETCH PROJECTS DEBUG ===");
     print("[DEBUG] Starting fetchProjects in ApiService");
+    
+    // 캐시에 있는 경우 캐시된 데이터 반환
+    if (_projectsListCache.containsKey('all')) {
+      print("[DEBUG] Returning cached projects list (${_projectsListCache['all']!.length} items)");
+      return _projectsListCache['all']!;
+    }
+    
     try {
       print("[DEBUG] Fetching CSV from: $githubBaseUrl/$csvPath");
       if (kIsWeb) {
@@ -163,6 +206,7 @@ class ApiService {
         }
 
         print("[DEBUG] Fetched ${projects.length} projects from GitHub");
+        _projectsListCache['all'] = projects;
         return projects;
       }
 
@@ -229,6 +273,7 @@ class ApiService {
       }
 
       print("[DEBUG] Fetched ${projects.length} projects from local CSV");
+      _projectsListCache['all'] = projects;
       return projects;
     } catch (e, stackTrace) {
       print("[ERROR] Error in fetchProjects:");
@@ -242,6 +287,13 @@ class ApiService {
   Future<ProjectModel> fetchProjectAudit(String projectId) async {
     print("\n=== FETCH PROJECT AUDIT DEBUG ===");
     print("[DEBUG] Fetching audit for project: $projectId");
+    
+    // 캐시에 있는 경우 캐시된 데이터 반환
+    if (_projectCache.containsKey(projectId)) {
+      print("[DEBUG] Returning cached project data for: $projectId");
+      return _projectCache[projectId]!;
+    }
+    
     try {
       // 프로젝트 ID에서 접두사 처리 (C20240178 -> 20240178)
       final numericProjectId = projectId.replaceAll(RegExp(r'[A-Za-z]'), '');
@@ -312,9 +364,13 @@ class ApiService {
               final dynamic jsonData = json.decode(jsonString);
               
               if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-                return ProjectModel.fromJson(jsonData[0]);
+                final projectModel = ProjectModel.fromJson(jsonData[0]);
+                _projectCache[projectId] = projectModel;
+                return projectModel;
               } else if (jsonData is Map<String, dynamic>) {
-                return ProjectModel.fromJson(jsonData);
+                final projectModel = ProjectModel.fromJson(jsonData);
+                _projectCache[projectId] = projectModel;
+                return projectModel;
               }
             }
           }
@@ -329,9 +385,13 @@ class ApiService {
         print("[DEBUG] JSON data: $jsonData");
         
         if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-          return ProjectModel.fromJson(jsonData[0]);
+          final projectModel = ProjectModel.fromJson(jsonData[0]);
+          _projectCache[projectId] = projectModel;
+          return projectModel;
         } else if (jsonData is Map<String, dynamic>) {
-          return ProjectModel.fromJson(jsonData);
+          final projectModel = ProjectModel.fromJson(jsonData);
+          _projectCache[projectId] = projectModel;
+          return projectModel;
         }
       } else {
         // 로컬 환경에서의 처리
@@ -353,9 +413,13 @@ class ApiService {
             final dynamic jsonData = json.decode(jsonString);
             
             if (jsonData is List<dynamic> && jsonData.isNotEmpty) {
-              return ProjectModel.fromJson(jsonData[0]);
+              final projectModel = ProjectModel.fromJson(jsonData[0]);
+              _projectCache[projectId] = projectModel;
+              return projectModel;
             } else if (jsonData is Map<String, dynamic>) {
-              return ProjectModel.fromJson(jsonData);
+              final projectModel = ProjectModel.fromJson(jsonData);
+              _projectCache[projectId] = projectModel;
+              return projectModel;
             }
           }
         }
@@ -378,108 +442,135 @@ class ApiService {
     return fetchProjectAudit(projectId);
   }
 
-Future<List<model.FileNode>> fetchDirectoryContents(String dirPath) async {
-  print("\n=== FETCH DIRECTORY CONTENTS DEBUG ===");
-  print('[DEBUG] Fetching directory contents for path: $dirPath');
-  try {
-    final parts = dirPath.split('/');
+  Future<List<model.FileNode>> fetchDirectoryContents(String dirPath) async {
+    print("\n=== FETCH DIRECTORY CONTENTS DEBUG ===");
+    print('[DEBUG] Fetching directory contents for path: $dirPath');
+    
+    // 캐시에 있는 경우 캐시된 데이터 반환
+    if (_directoryCache.containsKey(dirPath)) {
+      print("[DEBUG] Returning cached directory contents for: $dirPath (${_directoryCache[dirPath]!.length} items)");
+      return _directoryCache[dirPath]!;
+    }
+    
+    try {
+      final parts = dirPath.split('/');
 
-    if (parts.length == 1) {
-      final projects = await fetchProjects();
-      final departments = <String>{};
-      for (var project in projects) {
-        departments.add(project.department);
+      if (parts.length == 1) {
+        final projects = await fetchProjects();
+        final departments = <String>{};
+        for (var project in projects) {
+          departments.add(project.department);
+        }
+
+        final result = departments.map((dept) => model.FileNode(
+          name: dept,
+          path: "$dirPath/$dept",
+          isDirectory: true,
+          children: [],
+        )).toList();
+        
+        // 결과를 캐시에 저장
+        _directoryCache[dirPath] = result;
+        return result;
       }
 
-      return departments.map((dept) => model.FileNode(
-        name: dept,
-        path: "$dirPath/$dept",
-        isDirectory: true,
-        children: [],
-      )).toList();
-    }
+      if (parts.length == 2) {
+        final department = parts[1];
+        final projects = await fetchProjects();
+        final deptProjects = projects.where((p) => p.department == department);
 
-    if (parts.length == 2) {
-      final department = parts[1];
-      final projects = await fetchProjects();
-      final deptProjects = projects.where((p) => p.department == department);
-
-      return deptProjects.map((project) => model.FileNode(
-        name: "${project.projectId} (${project.projectName} - ${project.status} - ${project.contractor})",
-        path: "$dirPath/${project.projectId}",
-        isDirectory: true,
-        children: [],
-      )).toList();
-    }
-
-    if (parts.length == 3) {
-      final projectId = parts[2];
-      final projectData = await fetchProjectAudit(projectId);
-
-      return [
-        model.FileNode(name: "계약서", path: "$dirPath/contract", isDirectory: true, children: []),
-        model.FileNode(name: "과업지시서", path: "$dirPath/specification", isDirectory: true, children: []),
-        model.FileNode(name: "착수계", path: "$dirPath/initiation", isDirectory: true, children: []),
-        model.FileNode(name: "업무협정", path: "$dirPath/agreement", isDirectory: true, children: []),
-        model.FileNode(name: "실행예산", path: "$dirPath/budget", isDirectory: true, children: []),
-        model.FileNode(name: "보고서", path: "$dirPath/deliverable1", isDirectory: true, children: []),
-        model.FileNode(name: "도면", path: "$dirPath/deliverable2", isDirectory: true, children: []),
-        model.FileNode(name: "준공계", path: "$dirPath/completion", isDirectory: true, children: []),
-        model.FileNode(name: "실적증명", path: "$dirPath/certificate", isDirectory: true, children: []),
-        model.FileNode(name: "평가", path: "$dirPath/evaluation", isDirectory: true, children: []),
-      ];
-    }
-
-    if (parts.length == 4) {
-      final projectId = parts[2];
-      final docType = parts[3];
-      final projectData = await fetchProjectAudit(projectId);
-      final docDetails = projectData.documents[docType]?['details'] as List<dynamic>? ?? [];
-      final projectBasePath = projectData.projectPath ?? ''; // 네트워크 드라이브 경로
-
-      if (docDetails.isEmpty && projectData.documents.containsKey(docType)) {
-        final exists = projectData.documents[docType]!['exists'] as int;
-        if (exists > 0) {
-          final fileName = "${docType.toLowerCase()}_${projectId}.pdf";
-          final fullPath = '$projectBasePath\\01. 행정\\01. 계약\\02.계약서\\2차(2025년)\\$fileName'; // 경로 조정
-          docDetails.add({
-            "name": fileName,
-            "full_path": fullPath,
-          });
-        }
+        final result = deptProjects.map((project) => model.FileNode(
+          name: "${project.projectId} (${project.projectName} - ${project.status} - ${project.contractor})",
+          path: "$dirPath/${project.projectId}",
+          isDirectory: true,
+          children: [],
+        )).toList();
+        
+        // 결과를 캐시에 저장
+        _directoryCache[dirPath] = result;
+        return result;
       }
 
-      return docDetails.map((detail) {
-        try {
-          final fileName = detail['name']?.toString() ?? '';
-          final filePath = detail['full_path']?.toString() ?? '';
-          return model.FileNode(
-            name: fileName,
-            path: filePath,
-            isDirectory: false,
-            children: [],
-          );
-        } catch (e) {
-          print('[ERROR] Error parsing file info: $e');
-          return model.FileNode(
-            name: detail['name']?.toString() ?? '알 수 없는 파일',
-            path: detail['full_path']?.toString() ?? '',
-            isDirectory: false,
-            children: [],
-          );
-        }
-      }).toList();
-    }
+      if (parts.length == 3) {
+        final projectId = parts[2];
+        final projectData = await fetchProjectAudit(projectId);
 
-    return [];
-  } catch (e, stackTrace) {
-    print("[ERROR] Error in fetchDirectoryContents:");
-    print(e);
-    print("Stack trace:");
-    print(stackTrace);
-    return [];
+        final result = [
+          model.FileNode(name: "계약서", path: "$dirPath/contract", isDirectory: true, children: []),
+          model.FileNode(name: "과업지시서", path: "$dirPath/specification", isDirectory: true, children: []),
+          model.FileNode(name: "착수계", path: "$dirPath/initiation", isDirectory: true, children: []),
+          model.FileNode(name: "업무협정", path: "$dirPath/agreement", isDirectory: true, children: []),
+          model.FileNode(name: "실행예산", path: "$dirPath/budget", isDirectory: true, children: []),
+          model.FileNode(name: "보고서", path: "$dirPath/deliverable1", isDirectory: true, children: []),
+          model.FileNode(name: "도면", path: "$dirPath/deliverable2", isDirectory: true, children: []),
+          model.FileNode(name: "준공계", path: "$dirPath/completion", isDirectory: true, children: []),
+          model.FileNode(name: "실적증명", path: "$dirPath/certificate", isDirectory: true, children: []),
+          model.FileNode(name: "평가", path: "$dirPath/evaluation", isDirectory: true, children: []),
+        ];
+        
+        // 결과를 캐시에 저장
+        _directoryCache[dirPath] = result;
+        return result;
+      }
+
+      if (parts.length == 4) {
+        final projectId = parts[2];
+        final docType = parts[3];
+        final projectData = await fetchProjectAudit(projectId);
+        final docDetails = projectData.documents[docType]?['details'] as List<dynamic>? ?? [];
+        final projectBasePath = projectData.projectPath ?? ''; // 네트워크 드라이브 경로
+
+        if (docDetails.isEmpty && projectData.documents.containsKey(docType)) {
+          final exists = projectData.documents[docType]!['exists'] as int;
+          if (exists > 0) {
+            final fileName = "${docType.toLowerCase()}_${projectId}.pdf";
+            final fullPath = '$projectBasePath\\01. 행정\\01. 계약\\02.계약서\\2차(2025년)\\$fileName'; // 경로 조정
+            docDetails.add({
+              "name": fileName,
+              "full_path": fullPath,
+            });
+          }
+        }
+
+        final result = docDetails.map((detail) {
+          try {
+            final fileName = detail['name']?.toString() ?? '';
+            final filePath = detail['full_path']?.toString() ?? '';
+            return model.FileNode(
+              name: fileName,
+              path: filePath,
+              isDirectory: false,
+              children: [],
+            );
+          } catch (e) {
+            print('[ERROR] Error parsing file info: $e');
+            return model.FileNode(
+              name: detail['name']?.toString() ?? '알 수 없는 파일',
+              path: detail['full_path']?.toString() ?? '',
+              isDirectory: false,
+              children: [],
+            );
+          }
+        }).toList();
+        
+        // 결과를 캐시에 저장
+        _directoryCache[dirPath] = result;
+        return result;
+      }
+
+      // 빈 결과를 캐시에 저장
+      final emptyResult = <model.FileNode>[];
+      _directoryCache[dirPath] = emptyResult;
+      return emptyResult;
+    } catch (e, stackTrace) {
+      print("[ERROR] Error in fetchDirectoryContents:");
+      print(e);
+      print("Stack trace:");
+      print(stackTrace);
+      return [];
+    }
   }
-}
+
   ProjectModel _getTestProjectData() {
     return ProjectModel(
       projectId: "20240178",
