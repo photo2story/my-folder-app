@@ -469,6 +469,9 @@ git commit -m "Reverted to  commit hard c108992 and continued work"
 
 git log --grep="
 
+git add *.json
+git commit -m "Add all audit results"
+
 
 nix-shell
 """

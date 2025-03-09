@@ -14,33 +14,14 @@
         "depth": 4,
         "doc_type": "specification"
       }
-    ],
-    "initiation": [
-      {
-        "type": "file",
-        "name": "행복도시6생활권_재착수계_수성-rev1.hwp",
-        "path": "행복도시6생활권_재착수계_수성-rev1.hwp",
-        "full_path": "Z:01050_교통\\2014197  행정중심복합도시 6-1,2,3,4 생활권 지구단위계획수립\\1. 과업 행정관련\\1.02 착수계\\행복도시6생활권_재착수계_수성-rev1.hwp",
-        "depth": 2,
-        "doc_type": "initiation"
-      },
-      {
-        "type": "file",
-        "name": "행복도시6생활권_착수계(최종)_20150105.hwp",
-        "path": "행복도시6생활권_착수계(최종)_20150105.hwp",
-        "full_path": "Z:01050_교통\\2014197  행정중심복합도시 6-1,2,3,4 생활권 지구단위계획수립\\1. 과업 행정관련\\1.02 착수계\\행복도시6생활권_착수계(최종)_20150105.hwp",
-        "depth": 2,
-        "doc_type": "initiation"
-      }
     ]
   },
-  "timestamp": "2025-03-08 13:42:35",
+  "timestamp": "2025-03-10 01:33:39",
   "performance": {
-    "total_time": 0.6299972534179688,
-    "search_time": 0.5799906253814697,
+    "total_time": 1.8455612659454346,
+    "search_time": 1.825551986694336,
     "document_counts": {
-      "specification": 1,
-      "initiation": 2
+      "specification": 1
     }
   }
 }
