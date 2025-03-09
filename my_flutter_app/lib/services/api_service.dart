@@ -457,12 +457,18 @@ class ApiService {
 
       if (parts.length == 1) {
         final projects = await fetchProjects();
+        // Set을 사용하여 중복 제거
         final departments = <String>{};
         for (var project in projects) {
-          departments.add(project.department);
+          if (project.department.isNotEmpty) {
+            departments.add(project.department);
+          }
         }
 
-        final result = departments.map((dept) => model.FileNode(
+        final result = departments.toList()
+          ..sort();  // 정렬 추가
+        
+        final nodes = result.map((dept) => model.FileNode(
           name: dept,
           path: "$dirPath/$dept",
           isDirectory: true,
@@ -470,21 +476,27 @@ class ApiService {
         )).toList();
         
         // 결과를 캐시에 저장
-        _directoryCache[dirPath] = result;
-        return result;
+        _directoryCache[dirPath] = nodes;
+        return nodes;
       }
 
       if (parts.length == 2) {
         final department = parts[1];
         final projects = await fetchProjects();
-        final deptProjects = projects.where((p) => p.department == department);
-
-        final result = deptProjects.map((project) => model.FileNode(
+        // Set을 사용하여 중복 제거
+        final projectMap = <String, ProjectModel>{};
+        
+        for (var project in projects.where((p) => p.department == department)) {
+          projectMap[project.projectId] = project;
+        }
+        
+        final result = projectMap.values.map((project) => model.FileNode(
           name: "${project.projectId} (${project.projectName} - ${project.status} - ${project.contractor})",
           path: "$dirPath/${project.projectId}",
           isDirectory: true,
           children: [],
-        )).toList();
+        )).toList()
+          ..sort((a, b) => a.name.compareTo(b.name));  // 정렬 추가
         
         // 결과를 캐시에 저장
         _directoryCache[dirPath] = result;
@@ -494,19 +506,27 @@ class ApiService {
       if (parts.length == 3) {
         final projectId = parts[2];
         final projectData = await fetchProjectAudit(projectId);
-
-        final result = [
-          model.FileNode(name: "계약서", path: "$dirPath/contract", isDirectory: true, children: []),
-          model.FileNode(name: "과업지시서", path: "$dirPath/specification", isDirectory: true, children: []),
-          model.FileNode(name: "착수계", path: "$dirPath/initiation", isDirectory: true, children: []),
-          model.FileNode(name: "업무협정", path: "$dirPath/agreement", isDirectory: true, children: []),
-          model.FileNode(name: "실행예산", path: "$dirPath/budget", isDirectory: true, children: []),
-          model.FileNode(name: "보고서", path: "$dirPath/deliverable1", isDirectory: true, children: []),
-          model.FileNode(name: "도면", path: "$dirPath/deliverable2", isDirectory: true, children: []),
-          model.FileNode(name: "준공계", path: "$dirPath/completion", isDirectory: true, children: []),
-          model.FileNode(name: "실적증명", path: "$dirPath/certificate", isDirectory: true, children: []),
-          model.FileNode(name: "평가", path: "$dirPath/evaluation", isDirectory: true, children: []),
+        
+        // 문서 타입 순서 정의
+        final orderedDocTypes = [
+          'contract',
+          'specification',
+          'initiation',
+          'agreement',
+          'budget',
+          'deliverable1',
+          'deliverable2',
+          'completion',
+          'certificate',
+          'evaluation'
         ];
+        
+        final result = orderedDocTypes.map((type) => model.FileNode(
+          name: _getDocumentTypeName(type),
+          path: "$dirPath/$type",
+          isDirectory: true,
+          children: [],
+        )).toList();
         
         // 결과를 캐시에 저장
         _directoryCache[dirPath] = result;
@@ -517,57 +537,71 @@ class ApiService {
         final projectId = parts[2];
         final docType = parts[3];
         final projectData = await fetchProjectAudit(projectId);
+        
+        // 중복 파일 제거를 위해 Map 사용 (파일명을 키로 사용)
+        final uniqueFiles = <String, model.FileNode>{};
+        
         final docDetails = projectData.documents[docType]?['details'] as List<dynamic>? ?? [];
-        final projectBasePath = projectData.projectPath ?? ''; // 네트워크 드라이브 경로
+        final projectBasePath = projectData.projectPath ?? '';
 
-        if (docDetails.isEmpty && projectData.documents.containsKey(docType)) {
-          final exists = projectData.documents[docType]!['exists'] as int;
-          if (exists > 0) {
-            final fileName = "${docType.toLowerCase()}_${projectId}.pdf";
-            final fullPath = '$projectBasePath\\01. 행정\\01. 계약\\02.계약서\\2차(2025년)\\$fileName'; // 경로 조정
-            docDetails.add({
-              "name": fileName,
-              "full_path": fullPath,
-            });
-          }
-        }
-
-        final result = docDetails.map((detail) {
-          try {
-            final fileName = detail['name']?.toString() ?? '';
-            final filePath = detail['full_path']?.toString() ?? '';
-            return model.FileNode(
+        for (var detail in docDetails) {
+          final fileName = detail['name']?.toString() ?? '';
+          final filePath = detail['full_path']?.toString() ?? '';
+          if (fileName.isNotEmpty && !uniqueFiles.containsKey(fileName)) {
+            uniqueFiles[fileName] = model.FileNode(
               name: fileName,
               path: filePath,
               isDirectory: false,
               children: [],
             );
-          } catch (e) {
-            print('[ERROR] Error parsing file info: $e');
-            return model.FileNode(
-              name: detail['name']?.toString() ?? '알 수 없는 파일',
-              path: detail['full_path']?.toString() ?? '',
+          }
+        }
+
+        // exists가 true이고 파일이 없는 경우 기본 파일 추가
+        if (uniqueFiles.isEmpty && projectData.documents[docType]?['exists'] == true) {
+          final fileName = "${docType.toLowerCase()}_${projectId}.pdf";
+          if (!uniqueFiles.containsKey(fileName)) {
+            final fullPath = '$projectBasePath\\01. 행정\\01. 계약\\02.계약서\\$fileName';
+            uniqueFiles[fileName] = model.FileNode(
+              name: fileName,
+              path: fullPath,
               isDirectory: false,
               children: [],
             );
           }
-        }).toList();
+        }
+        
+        final result = uniqueFiles.values.toList()
+          ..sort((a, b) => a.name.compareTo(b.name));  // 정렬 추가
         
         // 결과를 캐시에 저장
         _directoryCache[dirPath] = result;
         return result;
       }
 
-      // 빈 결과를 캐시에 저장
-      final emptyResult = <model.FileNode>[];
-      _directoryCache[dirPath] = emptyResult;
-      return emptyResult;
+      return [];
     } catch (e, stackTrace) {
       print("[ERROR] Error in fetchDirectoryContents:");
       print(e);
       print("Stack trace:");
       print(stackTrace);
       return [];
+    }
+  }
+
+  String _getDocumentTypeName(String type) {
+    switch (type) {
+      case 'contract': return '계약서';
+      case 'specification': return '과업지시서';
+      case 'initiation': return '착수계';
+      case 'agreement': return '업무협정';
+      case 'budget': return '실행예산';
+      case 'deliverable1': return '보고서';
+      case 'deliverable2': return '도면';
+      case 'completion': return '준공계';
+      case 'certificate': return '실적증명';
+      case 'evaluation': return '평가';
+      default: return type;
     }
   }
 
