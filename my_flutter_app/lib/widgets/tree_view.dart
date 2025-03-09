@@ -1,10 +1,12 @@
+// /my_flutter_app/lib/widgets/tree_view.dart 
+
 import 'package:flutter/material.dart';
-import '../models/file_node.dart';
+import '../models/file_node.dart' as model;
 
 class TreeView extends StatefulWidget {
-  final List<FileNode> nodes;
-  final Function(FileNode)? onNodeTap;
-  final Function(FileNode)? onNodeExpand;
+  final List<model.FileNode> nodes;
+  final Function(model.FileNode)? onNodeTap;
+  final Function(model.FileNode)? onNodeExpand;
 
   const TreeView({
     Key? key,
@@ -28,7 +30,7 @@ class _TreeViewState extends State<TreeView> {
     );
   }
 
-  Widget _buildNode(FileNode node, int level) {
+  Widget _buildNode(model.FileNode node, int level) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,9 +46,14 @@ class _TreeViewState extends State<TreeView> {
             } else {
               if (widget.onNodeTap != null) {
                 widget.onNodeTap!(node);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Opening ${node.name}...')),
+                );
               }
             }
           },
+          mouseCursor: SystemMouseCursors.click,
+          hoverColor: Colors.grey[200],
           child: Padding(
             padding: EdgeInsets.only(left: level * 20.0, top: 8.0, bottom: 8.0),
             child: Row(
@@ -62,7 +69,11 @@ class _TreeViewState extends State<TreeView> {
                 Expanded(
                   child: Text(
                     node.name,
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: node.isDirectory ? Colors.black87 : Colors.blue,
+                      fontWeight: node.isDirectory ? FontWeight.bold : FontWeight.normal,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

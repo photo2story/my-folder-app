@@ -4,10 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'screens/file_explorer_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'services/api_service.dart';
 import 'services/file_explorer_service.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'widgets/tree_view.dart';
 import 'package:my_flutter_app/models/file_node.dart' as model;
 
@@ -26,7 +25,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,12 @@ class MyApp extends StatelessWidget {
       title: 'Project Audit Explorer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontFamily: 'NotoSansKR'),
+          headlineSmall: TextStyle(fontFamily: 'NotoSansKR'),
+          titleMedium: TextStyle(fontFamily: 'NotoSansKR'),
+        ),
+        fontFamily: 'NotoSansKR',
       ),
       home: const MainScreen(),
     );
@@ -50,29 +54,53 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   String? _selectedProjectId;
-  final _chatController = TextEditingController(); // _chatController 정의
+  final _chatController = TextEditingController();
   late FileExplorerService _fileExplorerService;
 
   @override
   void initState() {
     super.initState();
     _fileExplorerService = Provider.of<FileExplorerService>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _fileExplorerService.loadRootDirectory().then((_) {
-        print('[DEBUG] Root directory loaded: ${_fileExplorerService.rootNodes?.length} projects');
-      }).catchError((e) {
-        print('[ERROR] Failed to load root directory: $e');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_selectedProjectId == null) {
+      _loadInitialData();
+    }
+  }
+
+  Future<void> _loadInitialData() async {
+    await _fileExplorerService.loadRootDirectory();
+    print('[DEBUG] Root directory loaded: ${_fileExplorerService.rootNodes?.length} projects');
+    if (_fileExplorerService.rootNodes != null && _fileExplorerService.rootNodes!.isNotEmpty) {
+      setState(() {
+        _selectedProjectId = _fileExplorerService.rootNodes!.first.path;
       });
-    });
+      final apiService = ApiService();
+      final projectData = await apiService.fetchProjectAudit(_selectedProjectId!);
+      final aiAnalysis = projectData.aiAnalysis ?? 'AI 분석 보고서가 없습니다.';
+      final box = Hive.box('chatBox');
+      final messages = List<String>.from(box.get(_selectedProjectId!, defaultValue: <String>[]));
+      messages.add(aiAnalysis);
+      box.put(_selectedProjectId!, messages);
+
+      await _fileExplorerService.loadChildren(_fileExplorerService.rootNodes!.first);
+      print('[DEBUG] Initial children loaded for ${_selectedProjectId}: ${_fileExplorerService.rootNodes!.first.children.length} items');
+    }
   }
 
   void _openFile(String filePath) async {
-    if (await canLaunch(filePath)) {
-      await launch(filePath);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not open $filePath')),
-      );
+    if (filePath.isNotEmpty) {
+      final uri = Uri.parse(filePath);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not open $filePath')),
+        );
+      }
     }
   }
 
@@ -118,10 +146,18 @@ class _MainScreenState extends State<MainScreen> {
               return ListTile(
                 selected: node.path == _selectedProjectId,
                 title: Text(node.name),
-                onTap: () {
+                onTap: () async {
                   setState(() {
                     _selectedProjectId = node.path;
                   });
+                  final apiService = ApiService();
+                  final projectData = await apiService.fetchProjectAudit(node.path);
+                  final aiAnalysis = projectData.aiAnalysis ?? 'AI 분석 보고서가 없습니다.';
+                  final box = Hive.box('chatBox');
+                  final messages = List<String>.from(box.get(_selectedProjectId!, defaultValue: <String>[]));
+                  messages.add(aiAnalysis);
+                  box.put(_selectedProjectId!, messages);
+
                   service.loadChildren(node).then((_) {
                     print('[DEBUG] Children loaded for ${node.path}: ${node.children.length} items');
                   }).catchError((e) {
@@ -140,7 +176,7 @@ class _MainScreenState extends State<MainScreen> {
     return Consumer<FileExplorerService>(
       builder: (context, service, child) {
         if (_selectedProjectId == null) {
-          return const Center(child: Text('Select a project to view files'));
+          return const Center(child: CircularProgressIndicator()); // 로드 중 표시
         }
         final node = service.rootNodes?.firstWhere(
           (n) => n.path == _selectedProjectId,
@@ -155,7 +191,7 @@ class _MainScreenState extends State<MainScreen> {
         return TreeView(
           nodes: node.children,
           onNodeTap: (node) {
-            if (node.path.isNotEmpty && _openFile != null) _openFile!(node.path);
+            if (node.path.isNotEmpty) _openFile(node.path);
           },
           onNodeExpand: (expandedNode) {
             if (!expandedNode.children.isEmpty) return;
@@ -184,7 +220,14 @@ class _MainScreenState extends State<MainScreen> {
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(messages[index]),
+                      title: Text(
+                        messages[index],
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      subtitle: Text(
+                        DateTime.now().toString().substring(0, 19),
+                        style: const TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
                     );
                   },
                 );
@@ -197,7 +240,7 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: _chatController, // _cha -> _chatController로 수정
+                    controller: _chatController,
                     decoration: const InputDecoration(
                       hintText: 'Add a note...',
                       border: OutlineInputBorder(),

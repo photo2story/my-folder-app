@@ -11,24 +11,20 @@ class FileNode {
   FileNode({
     required this.name,
     required this.path,
-    this.isDirectory = false,
+    required this.isDirectory,
     this.children = const [],
     this.isExpanded = false,
   });
 
-  FileNode copyWith({
-    String? name,
-    String? path,
-    bool? isDirectory,
-    List<FileNode>? children,
-    bool? isExpanded,
-  }) {
+  factory FileNode.fromJson(Map<String, dynamic> json) {
     return FileNode(
-      name: name ?? this.name,
-      path: path ?? this.path,
-      isDirectory: isDirectory ?? this.isDirectory,
-      children: children ?? this.children,
-      isExpanded: isExpanded ?? this.isExpanded,
+      name: json['name'] as String,
+      path: json['path'] as String,
+      isDirectory: json['isDirectory'] as bool,
+      children: (json['children'] as List<dynamic>?)
+          ?.map((child) => FileNode.fromJson(child))
+          .toList() ?? [],
+      isExpanded: json['isExpanded'] as bool? ?? false,
     );
   }
 
@@ -41,16 +37,4 @@ class FileNode {
       'isExpanded': isExpanded,
     };
   }
-
-  factory FileNode.fromJson(Map<String, dynamic> json) {
-    return FileNode(
-      name: json['name'] as String,
-      path: json['path'] as String,
-      isDirectory: json['isDirectory'] as bool,
-      children: (json['children'] as List<dynamic>)
-          .map((e) => FileNode.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      isExpanded: json['isExpanded'] as bool,
-    );
-  }
-} 
+}
