@@ -18,46 +18,38 @@
         },
         {
           "type": "file",
-          "name": "해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-          "path": "해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.07 실행\\해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-          "depth": 2,
+          "name": "딩케쌀라 회계사 고용 계약서.pdf",
+          "path": "딩케쌀라 회계사 고용 계약서.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\회계사 계약서\\딩케쌀라 회계사 고용 계약서.pdf",
+          "depth": 3,
           "doc_type": "contract"
         },
         {
           "type": "file",
-          "name": "고용계약서.docx",
-          "path": "고용계약서.docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\회계사 계약서\\고용계약서.docx",
-          "depth": 3,
+          "name": "20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+          "path": "20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.01 관련문서\\2.01.01 발송 수신 공문\\수신공문\\20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+          "depth": 4,
           "doc_type": "contract"
         }
       ]
     },
     "specification": {
+      "exists": false,
+      "details": []
+    },
+    "initiation": {
       "exists": true,
       "details": [
         {
           "type": "file",
-          "name": "01.과업수행계획서.hwp",
-          "path": "01.과업수행계획서.hwp",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\xx 투입전 안전 참고자료\\부록\\8. 사전조사자료 일체\\01.과업수행계획서.hwp",
+          "name": "03 과업착수비.pdf",
+          "path": "03 과업착수비.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.05 AP & Payment\\01 기성배분 검토\\20191231 1차(1-9) 통합 기성 배분(1901-1909)\\증빙서류\\03 과업착수비.pdf",
           "depth": 5,
-          "doc_type": "specification"
-        },
-        {
-          "type": "file",
-          "name": "01.과업수행계획서.hwp",
-          "path": "01.과업수행계획서.hwp",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\부록\\8. 사전조사자료 일체\\01.과업수행계획서.hwp",
-          "depth": 4,
-          "doc_type": "specification"
+          "doc_type": "initiation"
         }
       ]
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
     },
     "agreement": {
       "exists": true,
@@ -130,14 +122,6 @@
         },
         {
           "type": "file",
-          "name": "전차보고서.zip",
-          "path": "전차보고서.zip",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\xx 투입전 안전 참고자료\\부록\\8. 사전조사자료 일체\\전차보고서.zip",
-          "depth": 5,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
           "name": "02.사전검토보고서.hwp",
           "path": "02.사전검토보고서.hwp",
           "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\부록\\8. 사전조사자료 일체\\02.사전검토보고서.hwp",
@@ -151,33 +135,8 @@
       "details": []
     },
     "completion": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-          "path": "01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-          "depth": 3,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-          "path": "23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-          "depth": 3,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-          "path": "DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-          "depth": 3,
-          "doc_type": "completion"
-        }
-      ]
+      "exists": false,
+      "details": []
     },
     "certificate": {
       "exists": true,
@@ -192,17 +151,17 @@
         },
         {
           "type": "file",
-          "name": "경력증명서_이학현_도로(2020.05).pdf",
-          "path": "경력증명서_이학현_도로(2020.05).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\02 Road Safety and Safety Audit Specialist\\02 이학현 BJ\\20210106 CV\\경력증명서_이학현_도로(2020.05).pdf",
-          "depth": 5,
+          "name": "Certificate of Graduation-cho.pdf",
+          "path": "Certificate of Graduation-cho.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\09 다산 M_P E 교체건\\20200814 ME 교체자 CV\\Certificate of Graduation-cho.pdf",
+          "depth": 4,
           "doc_type": "certificate"
         },
         {
           "type": "file",
-          "name": "Certificate of Graduation-cho.pdf",
-          "path": "Certificate of Graduation-cho.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\09 다산 M_P E 교체건\\20200814 ME 교체자 CV\\Certificate of Graduation-cho.pdf",
+          "name": "Construction Engineer Career Certificate.pdf",
+          "path": "Construction Engineer Career Certificate.pdf",
+          "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\09 다산 M_P E 교체건\\20200814 ME 교체자 CV\\Construction Engineer Career Certificate.pdf",
           "depth": 4,
           "doc_type": "certificate"
         }
@@ -214,12 +173,12 @@
     }
   },
   "project_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project",
-  "ai_analysis": "문서 분석 결과 (2025-03-08 13:53):\n## 프로젝트 C20180168 문서 분석 결과\n\n**1. 현재 문서화 상태:** 중\n\n**이유:**  프로젝트는 주관사이며 진행 중입니다.  필요한 모든 문서 유형이 존재하지만,  `착수계`, `성과품(도면)`, `용역수행평가` 가 누락되어 있습니다.  주관사로서 모든 문서를 100% 완비해야 위험도를 0으로 낮출 수 있으므로,  현재 상태는 완벽하지 않고 \"중\"으로 평가됩니다.  진행 단계의 기준을 적용하더라도 누락된 문서들이 상당한 위험 요소가 되므로 \"하\"에 가까운 \"중\"으로 평가합니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **착수계:** 프로젝트 시작을 공식적으로 알리고 계약 내용을 재확인하는 중요한 문서입니다.  누락 시 계약 위반이나 지연에 대한 책임 소재가 불명확해질 수 있습니다.\n* **성과품(도면):**  도로 공사의 핵심 결과물입니다.  누락 시 공사의 완성도 및 검수에 문제가 발생할 수 있으며, 향후 유지보수에도 어려움이 있을 수 있습니다.\n* **용역수행평가:**  프로젝트의 진행 상황 및 성과를 평가하고 향후 개선 방향을 설정하는 데 필수적입니다.  누락 시 프로젝트 관리의 효율성이 저하될 수 있습니다.\n\n**3. 위험도 점수 조정 필요성:**  있음\n\n**구체적인 개선 방안:**\n\n현재 위험도 95/100은 누락된 문서들과  주관사로서의 책임을 고려하지 않은 점수입니다.  위에서 언급한 세 가지 문서(`착수계`, `성과품(도면)`, `용역수행평가`)를 즉시 보완해야 합니다.  \n\n문서 보완 후 위험도를 재평가하여야 합니다.  모든 문서를 완비한다면 위험도는 0/100이 됩니다.  하지만 완벽하게 모든 문서를 확보하기 어려운 상황이라면,  각 문서의 중요도를 고려하여 위험도를 조정해야 합니다.  예를 들어, 착수계와 성과품(도면)을 확보하면 위험도를 30~40/100 수준으로 낮출 수 있을 것입니다.  용역수행평가는 진행 중인 프로젝트에 대한 평가이므로,  다소 늦게 확보하더라도 위험도에 미치는 영향은 다른 두 문서보다 적을 것으로 예상됩니다.\n\n문서 보완과 함께, 각 문서의 보관 상태 및 접근성을 점검하고 개선하여 향후 문서 관리의 효율성을 높여야 합니다.  이는 프로젝트 위험을 관리하는 데 중요한 부분입니다.\n\n\n요약:\n- 확인된 문서: 7개 유형\n- 누락된 문서: 3개 유형\n- 기본 위험도: 95/100\n",
-  "timestamp": "2025-03-08 13:53:16",
+  "ai_analysis": "문서 분석 결과 (2025-03-10 01:55):\n## 프로젝트 C20180168 문서 분석 결과\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 본 프로젝트는 주관사이며 진행 중인 상태입니다.  주관사 기준 100% 완비를 요구하는 모든 문서 유형 중 과업지시서, 성과품(도면), 준공계, 용역수행평가가 누락되어 있습니다.  진행 단계의 허용 가능한 위험도 범위(30~70/100) 내에 있으나,  필수 문서 누락으로 인해 중간 수준으로 평가합니다.  특히 과업지시서의 부재는 프로젝트 목표 및 범위에 대한 명확성을 저해할 수 있습니다.\n\n\n**2. 가장 시급한 보완 필요 문서 및 이유:**\n\n* **과업지시서:** 프로젝트의 범위, 목표, 수행 기준 등을 명확히 하여 향후 발생 가능한 분쟁 및 이견을 예방하고, 효율적인 프로젝트 수행을 위한 필수 문서입니다.  누락으로 인해 프로젝트의 방향성이 모호해질 위험이 가장 큽니다.\n* **성과품(도면):**  도로 건설 프로젝트의 특성상, 성과품(도면)은 필수적입니다.  누락 시,  공정 관리 및 최종 결과물 검토에 어려움이 발생합니다.\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**위험도 점수 조정 필요:** 있음\n\n**현재 위험도:** 75/100\n\n**조정 후 위험도:** 85/100 (상향 조정)\n\n**이유:**  현재 위험도 75/100은 진행 단계의 허용 가능한 위험도 범위 내에 있으나,  가장 중요한 과업지시서와 도면이 누락된 점을 고려하여 위험도를 상향 조정합니다.  특히 주관사로서의 책임을 고려했을 때,  필수 문서 누락은 상당한 위험 요소로 작용합니다.\n\n**개선 방안:**\n\n* **과업지시서 즉시 작성 및 배포:**  프로젝트 목표, 범위,  세부 지침,  성과 측정 기준 등을 명확히 하여 모든 관련자에게 배포합니다.\n* **성과품(도면) 관리 체계 구축:**  도면 작성 및 관리 절차를 마련하고,  정기적인 검토를 통해 누락 및 오류 발생을 방지합니다.\n* **누락된 문서 작성 및 제출:**  준공계 및 용역 수행 평가를 프로젝트 일정에 맞춰 작성하고 제출합니다.\n* **문서 관리 시스템 개선:**  모든 프로젝트 문서를 체계적으로 관리하고,  누락 및 오류 발생을 예방하기 위한 시스템을 구축합니다.\n* **정기적인 문서 점검:**  프로젝트 진행 과정에서 정기적으로 문서 현황을 점검하여 누락 및 오류를 조기에 발견하고 수정합니다.\n\n\n상기 개선 방안을 통해 위험도를 낮추고 프로젝트 성공 가능성을 높일 수 있습니다.\n\n\n요약:\n- 확인된 문서: 6개 유형\n- 누락된 문서: 4개 유형\n- 기본 위험도: 75/100\n",
+  "timestamp": "2025-03-10 01:55:44",
   "performance": {
     "total_time": 0,
-    "search_time": 2.4898664951324463,
-    "ai_time": 5.3669421672821045,
+    "search_time": 6.541114807128906,
+    "ai_time": 5.824049234390259,
     "save_time": 0
   }
 }
