@@ -16,14 +16,6 @@
       },
       {
         "type": "file",
-        "name": "과업중지공문.pdf",
-        "path": "과업중지공문.pdf",
-        "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\04. 관련문서\\01. 발송공문\\과업중지공문.pdf",
-        "depth": 3,
-        "doc_type": "specification"
-      },
-      {
-        "type": "file",
         "name": "2. 과업지시서(변경).hwp",
         "path": "2. 과업지시서(변경).hwp",
         "full_path": "Z:07010_상하수도\\Y20230124 새다리 중계펌프장 주변 침수원인 조사용역\\01. 행정자료\\05. 기술지원(외주)\\02. 과업지시서(외주)\\2. 과업지시서(변경).hwp",
@@ -86,12 +78,12 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 14:48:05",
+  "timestamp": "2025-03-10 03:33:31",
   "performance": {
-    "total_time": 0.8216457366943359,
-    "search_time": 0.7726459503173828,
+    "total_time": 1.1433467864990234,
+    "search_time": 1.112354040145874,
     "document_counts": {
-      "specification": 3,
+      "specification": 2,
       "initiation": 1,
       "deliverable1": 3,
       "completion": 2

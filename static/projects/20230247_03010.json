@@ -13,25 +13,9 @@
         "full_path": "Z:03010_철도\\C20230247 경북선 김천~옥산간 외 1개소 궤도 정밀진단 및 성능평가 용역\\1. 과업 계약 및 착수☆\\1.02 착수계★\\김천-옥산 착수계.pdf",
         "depth": 2,
         "doc_type": "initiation"
-      },
-      {
-        "type": "file",
-        "name": "00. 착수보고서 ★ 수성eng.hwp",
-        "path": "00. 착수보고서 ★ 수성eng.hwp",
-        "full_path": "Z:03010_철도\\C20230247 경북선 김천~옥산간 외 1개소 궤도 정밀진단 및 성능평가 용역\\2. 설계☆\\2.03 착수보고★\\00. 착수보고서 ★ 수성eng.hwp",
-        "depth": 2,
-        "doc_type": "initiation"
       }
     ],
     "agreement": [
-      {
-        "type": "file",
-        "name": "공동수행협약서(중종-수성)_240226.hwp",
-        "path": "공동수행협약서(중종-수성)_240226.hwp",
-        "full_path": "Z:03010_철도\\C20230247 경북선 김천~옥산간 외 1개소 궤도 정밀진단 및 성능평가 용역\\0. 사전작업\\0.06 공동도급협정☆\\공동수행협약서(중종-수성)_240226.hwp",
-        "depth": 2,
-        "doc_type": "agreement"
-      },
       {
         "type": "file",
         "name": "업무분담 협약서 도장.pdf",
@@ -40,26 +24,15 @@
         "depth": 2,
         "doc_type": "agreement"
       }
-    ],
-    "completion": [
-      {
-        "type": "file",
-        "name": "준공계(김천~옥산).xls",
-        "path": "준공계(김천~옥산).xls",
-        "full_path": "Z:03010_철도\\C20230247 경북선 김천~옥산간 외 1개소 궤도 정밀진단 및 성능평가 용역\\4. 과업준공☆\\4.03 준공계★\\준공계(김천~옥산).xls",
-        "depth": 2,
-        "doc_type": "completion"
-      }
     ]
   },
-  "timestamp": "2025-03-08 15:06:35",
+  "timestamp": "2025-03-10 04:03:23",
   "performance": {
-    "total_time": 0.4932539463043213,
-    "search_time": 0.44625353813171387,
+    "total_time": 0.9279091358184814,
+    "search_time": 0.8989808559417725,
     "document_counts": {
-      "initiation": 2,
-      "agreement": 2,
-      "completion": 1
+      "initiation": 1,
+      "agreement": 1
     }
   }
 }

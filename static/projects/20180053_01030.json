@@ -8,38 +8,30 @@
     "contract": [
       {
         "type": "file",
-        "name": "NK3_Contract Specialist_GiorgiKakaladze.doc",
-        "path": "NK3_Contract Specialist_GiorgiKakaladze.doc",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\00. 제안서\\아르메니아 조지아 바그라타셴 제안서\\03 FINAL\\CV\\NK3_Contract Specialist_GiorgiKakaladze.doc",
-        "depth": 5,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
-        "name": "20180628 협조전(계약통보).hwp",
-        "path": "20180628 협조전(계약통보).hwp",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\20180628 협조전(계약통보).hwp",
-        "depth": 2,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
         "name": "Contract_CS-BB-001_Final.pdf",
         "path": "Contract_CS-BB-001_Final.pdf",
         "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Contract_CS-BB-001_Final.pdf",
         "depth": 2,
         "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
+        "path": "Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
+        "depth": 2,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Minutes of Contract Negotiation.pdf",
+        "path": "Minutes of Contract Negotiation.pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Minutes of Contract Negotiation.pdf",
+        "depth": 2,
+        "doc_type": "contract"
       }
     ],
     "agreement": [
-      {
-        "type": "file",
-        "name": "1.1.2.1. Joint Ventue Agreement (SOOSUNG-KCI JV).pdf",
-        "path": "1.1.2.1. Joint Ventue Agreement (SOOSUNG-KCI JV).pdf",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\00. 제안서\\아르메니아 조지아 바그라타셴 제안서\\03 FINAL\\1.1.2.1. Joint Ventue Agreement (SOOSUNG-KCI JV).pdf",
-        "depth": 4,
-        "doc_type": "agreement"
-      },
       {
         "type": "file",
         "name": "Sub-Contract Agreement (signed).pdf",
@@ -50,9 +42,17 @@
       },
       {
         "type": "file",
-        "name": "Sub-Contract Agreement_FINAL - April 2021 (1).docx",
-        "path": "Sub-Contract Agreement_FINAL - April 2021 (1).docx",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\02. Sub-Consultancy 계약서\\Sub-Contract Agreement_FINAL - April 2021 (1).docx",
+        "name": "공동수행협약서.pdf",
+        "path": "공동수행협약서.pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\04. 공통업무협약서\\공동수행협약서.pdf",
+        "depth": 2,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "바그라타쉔 공동수행협약서 개정.pdf",
+        "path": "바그라타쉔 공동수행협약서 개정.pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\04. 공통업무협약서\\바그라타쉔 공동수행협약서 개정.pdf",
         "depth": 2,
         "doc_type": "agreement"
       }
@@ -86,53 +86,27 @@
     "deliverable1": [
       {
         "type": "file",
-        "name": "해외사업단-정기업무보고서 - 2020 10월 1주차  아르메니아 조지아 감리현장.pdf",
-        "path": "해외사업단-정기업무보고서 - 2020 10월 1주차  아르메니아 조지아 감리현장.pdf",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단-정기업무보고서 - 2020 10월 1주차  아르메니아 조지아 감리현장.pdf",
+        "name": "해외사업단_정기업무보고서(19년 10월 4주차).pdf",
+        "path": "해외사업단_정기업무보고서(19년 10월 4주차).pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단_정기업무보고서(19년 10월 4주차).pdf",
         "depth": 2,
         "doc_type": "deliverable1"
       },
       {
         "type": "file",
-        "name": "해외사업단-정기업무보고서 - 2020 10월 2주차  아르메니아 조지아 감리현장.pdf",
-        "path": "해외사업단-정기업무보고서 - 2020 10월 2주차  아르메니아 조지아 감리현장.pdf",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단-정기업무보고서 - 2020 10월 2주차  아르메니아 조지아 감리현장.pdf",
+        "name": "해외사업단_정기업무보고서(19년 10월 5주차).pdf",
+        "path": "해외사업단_정기업무보고서(19년 10월 5주차).pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단_정기업무보고서(19년 10월 5주차).pdf",
         "depth": 2,
         "doc_type": "deliverable1"
       },
       {
         "type": "file",
-        "name": "해외사업단-정기업무보고서 - 2020 10월 3주차  아르메니아 조지아 감리현장.pdf",
-        "path": "해외사업단-정기업무보고서 - 2020 10월 3주차  아르메니아 조지아 감리현장.pdf",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단-정기업무보고서 - 2020 10월 3주차  아르메니아 조지아 감리현장.pdf",
+        "name": "해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
+        "path": "해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
+        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
         "depth": 2,
         "doc_type": "deliverable1"
-      }
-    ],
-    "completion": [
-      {
-        "type": "file",
-        "name": "~$ 아르메니아-조지아 바그라타쉔 준공 관련 업무 사항-1(0914085331).docx",
-        "path": "~$ 아르메니아-조지아 바그라타쉔 준공 관련 업무 사항-1(0914085331).docx",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\~$ 아르메니아-조지아 바그라타쉔 준공 관련 업무 사항-1(0914085331).docx",
-        "depth": 0,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "~$메니아-조지아 바그라타쉔 준공 관련 업무 사항.docx",
-        "path": "~$메니아-조지아 바그라타쉔 준공 관련 업무 사항.docx",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\~$메니아-조지아 바그라타쉔 준공 관련 업무 사항.docx",
-        "depth": 0,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "~$메니아-조지아 바그라타쉔 준공 관련 업무 사항_R3.docx",
-        "path": "~$메니아-조지아 바그라타쉔 준공 관련 업무 사항_R3.docx",
-        "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\~$메니아-조지아 바그라타쉔 준공 관련 업무 사항_R3.docx",
-        "depth": 0,
-        "doc_type": "completion"
       }
     ],
     "certificate": [
@@ -162,16 +136,15 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 13:49:23",
+  "timestamp": "2025-03-10 01:44:55",
   "performance": {
-    "total_time": 2.8749992847442627,
-    "search_time": 2.843998670578003,
+    "total_time": 8.122863292694092,
+    "search_time": 8.101503133773804,
     "document_counts": {
       "contract": 3,
       "agreement": 3,
       "budget": 3,
       "deliverable1": 3,
-      "completion": 3,
       "certificate": 3
     }
   }

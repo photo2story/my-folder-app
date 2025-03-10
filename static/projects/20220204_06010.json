@@ -4,24 +4,11 @@
   "department_name": "환경",
   "project_name": "20220204┃연천군 전곡읍 은대리 공공지원민간임대주택 공급촉진지구 조사설계용역(환경)",
   "project_path": "Z:06010_환경\\1팀\\03.전략환경영향평가\\20220204┃연천군 전곡읍 은대리 공공지원민간임대주택 공급촉진지구 조사설계용역(환경)",
-  "documents": {
-    "specification": [
-      {
-        "type": "file",
-        "name": "과업현황철.hwp",
-        "path": "과업현황철.hwp",
-        "full_path": "Z:06010_환경\\1팀\\03.전략환경영향평가\\20220204┃연천군 전곡읍 은대리 공공지원민간임대주택 공급촉진지구 조사설계용역(환경)\\과업현황철.hwp",
-        "depth": 0,
-        "doc_type": "specification"
-      }
-    ]
-  },
-  "timestamp": "2025-03-08 14:28:26",
+  "documents": {},
+  "timestamp": "2025-03-10 03:00:03",
   "performance": {
-    "total_time": 0.09554553031921387,
-    "search_time": 0.05354571342468262,
-    "document_counts": {
-      "specification": 1
-    }
+    "total_time": 0.1399993896484375,
+    "search_time": 0.10700035095214844,
+    "document_counts": {}
   }
 }

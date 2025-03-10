@@ -5,43 +5,15 @@
   "project_name": "2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역",
   "project_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역",
   "documents": {
-    "contract": [
-      {
-        "type": "file",
-        "name": "20200117_Contract Requirements Consolidated  from LRTA.docx",
-        "path": "20200117_Contract Requirements Consolidated  from LRTA.docx",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\20200117_Contract Requirements Consolidated  from LRTA.docx",
-        "depth": 1,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
-        "name": "20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-        "path": "20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\20200122_Revised Contract Requiremwnts Consolidated by CHO Kim.docx",
-        "depth": 1,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
-        "name": "20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-        "path": "20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\01 Invitation letter from LRTA\\91 Discuseed tor cost\\20191224_TOR for LRT2 Restoration E&M by Jun_3contractor.doc",
-        "depth": 2,
-        "doc_type": "contract"
-      }
-    ],
-    "specification": [
-      {
-        "type": "file",
-        "name": "VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-        "path": "VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.07 실행\\Fw_ References to Bid Documents and TOR\\VOL_2b-Particular_Design_and_Performance_Specifications.docx",
-        "depth": 3,
-        "doc_type": "specification"
-      }
-    ],
     "agreement": [
+      {
+        "type": "file",
+        "name": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+        "path": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\@ Payment_Billing\\@ Billing 01\\[Requirement]\\WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
+        "depth": 3,
+        "doc_type": "agreement"
+      },
       {
         "type": "file",
         "name": "20150107 협약서(필리핀LRT-2 동부연장 토목 컨설팅용역).pdf",
@@ -49,114 +21,15 @@
         "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\0. 사전작업\\0.03 공동도급사전협약\\20150107 협약서(필리핀LRT-2 동부연장 토목 컨설팅용역).pdf",
         "depth": 2,
         "doc_type": "agreement"
-      },
-      {
-        "type": "file",
-        "name": "20200221JOINT VENTURE AGREEMENT.pdf",
-        "path": "20200221JOINT VENTURE AGREEMENT.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\화재복구( 부속서률 일부분)\\20200221JOINT VENTURE AGREEMENT.pdf",
-        "depth": 4,
-        "doc_type": "agreement"
-      },
-      {
-        "type": "file",
-        "name": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-        "path": "WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.08 합사운영계획\\1.08.03 합사정산\\WJV-LRTA-2021-11-085 Joint Ventue Agreement Original Copy 11.5.21.pdf",
-        "depth": 3,
-        "doc_type": "agreement"
-      }
-    ],
-    "budget": [
-      {
-        "type": "file",
-        "name": "201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-        "path": "201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\1. 과업 계약 및 착수\\1.05 선금\\합사비 신청 정산\\필리핀, LRT2 화재복구 사업 2020, 10~11월 비용집행분 정산 보고\\201120 [비용] LRT2화재복구 실행대비 원가집행 내역(10~11월분).pdf",
-        "depth": 4,
-        "doc_type": "budget"
-      },
-      {
-        "type": "file",
-        "name": "첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-        "path": "첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Fw_ [해외기안문] 필리핀 LRT-2 화재복구사업 수행비용 청구 품의 (4차)\\첨부1 - 20201015 LRT2 Fire Damage 가실행분석 승인분 (set 20mth).pdf",
-        "depth": 5,
-        "doc_type": "budget"
-      },
-      {
-        "type": "file",
-        "name": "첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-        "path": "첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Fw_ [해외기안문] 필리핀 LRT-2 화재복구사업 수행비용 청구 품의 (4차)\\첨부1 - 실행예산서-2020191필리핀화재복구사업201019.pdf",
-        "depth": 5,
-        "doc_type": "budget"
-      }
-    ],
-    "deliverable1": [
-      {
-        "type": "file",
-        "name": "LRT2 화재복구 보고서.pdf",
-        "path": "LRT2 화재복구 보고서.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\Re_ 필리핀, LRT2 화재복구 사업 2021, 02월 비용집행분 정산 보고\\LRT2 화재복구 보고서.pdf",
-        "depth": 5,
-        "doc_type": "deliverable1"
-      },
-      {
-        "type": "file",
-        "name": "LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-        "path": "LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\필리핀, LRT2 화재복구 사업 2020, 12월 비용집행분 정산 보고\\LRT2 화재복구 2020년 12월 체제비 집행 보고서00.pdf",
-        "depth": 5,
-        "doc_type": "deliverable1"
-      },
-      {
-        "type": "file",
-        "name": "LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-        "path": "LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\2. 설계\\2.01 관련문서(공문 알림 주고 받기)\\2.01.03 기안_협조\\기안문\\필리핀, LRT2 화재복구 사업 2021, 01월 비용집행분 정산 보고\\LRT2 화재복구 2021년 01월 체제비 집행 보고서10.pdf",
-        "depth": 5,
-        "doc_type": "deliverable1"
-      }
-    ],
-    "certificate": [
-      {
-        "type": "file",
-        "name": "2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-        "path": "2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\2-1. Master Certificate (Yoo, Hyun Kil).pdf",
-        "depth": 6,
-        "doc_type": "certificate"
-      },
-      {
-        "type": "file",
-        "name": "2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-        "path": "2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\2-2. Bachelor Certificate (Yoo, Hyun Kil).pdf",
-        "depth": 6,
-        "doc_type": "certificate"
-      },
-      {
-        "type": "file",
-        "name": "4. Employment Certificate (Yoo, Hyun Kil).pdf",
-        "path": "4. Employment Certificate (Yoo, Hyun Kil).pdf",
-        "full_path": "Z:03010_철도\\2020191 필리핀 LRT-2 화재로 인한 시스템 및 장비손상 복원사업 컨설팅 용역\\02 Proposal\\20200113_Proposal of L2Fire_Draft from SOOSUNG to LRTA\\01 from 박\\2. formal quotation\\c. CV\\1. Interface engineer-Yoo, Hyun Kil\\4. Employment Certificate (Yoo, Hyun Kil).pdf",
-        "depth": 6,
-        "doc_type": "certificate"
       }
     ]
   },
-  "timestamp": "2025-03-08 14:00:58",
+  "timestamp": "2025-03-10 02:11:33",
   "performance": {
-    "total_time": 1.9373440742492676,
-    "search_time": 1.9173038005828857,
+    "total_time": 1.8068783283233643,
+    "search_time": 1.7808799743652344,
     "document_counts": {
-      "contract": 3,
-      "specification": 1,
-      "agreement": 3,
-      "budget": 3,
-      "deliverable1": 3,
-      "certificate": 3
+      "agreement": 2
     }
   }
 }

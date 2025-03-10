@@ -8,53 +8,79 @@
     "contract": [
       {
         "type": "file",
-        "name": "1 set of document for Mr. Puno's employment contract authentication.zip",
-        "path": "1 set of document for Mr. Puno's employment contract authentication.zip",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication.zip",
-        "depth": 0,
+        "name": "외주계약서(북부).pdf",
+        "path": "외주계약서(북부).pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Social Safeguards\\Nguyen Thi Ngoc Anh_급여\\외주계약서\\외주계약서(북부).pdf",
+        "depth": 4,
         "doc_type": "contract"
       },
       {
         "type": "file",
-        "name": "2. Employment Contract.pdf",
-        "path": "2. Employment Contract.pdf",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\2. Employment Contract.pdf",
-        "depth": 1,
+        "name": "베트남 북부도로 환경전문가 계약 건.pdf",
+        "path": "베트남 북부도로 환경전문가 계약 건.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Environment\\1. 계약건\\베트남 북부도로 환경전문가 계약 건.pdf",
+        "depth": 3,
         "doc_type": "contract"
       },
       {
         "type": "file",
-        "name": "Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
-        "path": "Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\계약서\\Consulting Services Contract CS01 NMPTCP_Stamped.pdf",
-        "depth": 1,
+        "name": "첨부1_근로계약서.pdf",
+        "path": "첨부1_근로계약서.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Environment\\1. 계약건\\첨부1_근로계약서.pdf",
+        "depth": 3,
         "doc_type": "contract"
       }
     ],
     "agreement": [
       {
         "type": "file",
-        "name": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
-        "path": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Rev.docx",
-        "depth": 0,
+        "name": "# Service Agreement (Ms. Ngoc Anh)_FIN.pdf",
+        "path": "# Service Agreement (Ms. Ngoc Anh)_FIN.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Social Safeguards\\# Service Agreement (Ms. Ngoc Anh)_FIN.pdf",
+        "depth": 2,
         "doc_type": "agreement"
       },
       {
         "type": "file",
-        "name": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
-        "path": "~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\~$22.10.26 Service Agreement (K-5. UDDIN)_V4 Review by KPH.docx",
-        "depth": 0,
+        "name": "Service Agreement (K-3. RAMOS)_V3.pdf",
+        "path": "Service Agreement (K-3. RAMOS)_V3.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Bridge Engineer\\2. 근로계약서\\Service Agreement (K-3. RAMOS)_V3.pdf",
+        "depth": 3,
         "doc_type": "agreement"
       },
       {
         "type": "file",
-        "name": "북부연결도로 공동수행 간이협약서_Final.pdf",
-        "path": "북부연결도로 공동수행 간이협약서_Final.pdf",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\계약서\\북부연결도로 공동수행 간이협약서_Final.pdf",
+        "name": "Service Agreement_Ramos.pdf",
+        "path": "Service Agreement_Ramos.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Bridge Engineer\\2. 근로계약서\\Service Agreement_Ramos.pdf",
+        "depth": 3,
+        "doc_type": "agreement"
+      }
+    ],
+    "budget": [
+      {
+        "type": "file",
+        "name": "베트남 북부도로 실행검토서_서명본.pdf",
+        "path": "베트남 북부도로 실행검토서_서명본.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\실행검토서\\베트남 북부도로 실행검토서_서명본.pdf",
         "depth": 1,
-        "doc_type": "agreement"
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "베트남 북부도로 실행검토서_서명본_r1.pdf",
+        "path": "베트남 북부도로 실행검토서_서명본_r1.pdf",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\실행검토서\\베트남 북부도로 실행검토서_서명본_r1.pdf",
+        "depth": 1,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
+        "name": "베트남 북부도로 실행검토서_R5_최종.xlsx",
+        "path": "베트남 북부도로 실행검토서_R5_최종.xlsx",
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\실행검토서\\베트남 북부도로 실행검토서_R5_최종.xlsx",
+        "depth": 1,
+        "doc_type": "budget"
       }
     ],
     "certificate": [
@@ -62,27 +88,28 @@
         "type": "file",
         "name": "1. Business Registration Certificate (아포스티유 예정).pdf",
         "path": "1. Business Registration Certificate (아포스티유 예정).pdf",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\1. Business Registration Certificate (아포스티유 예정).pdf",
-        "depth": 1,
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Bridge Engineer\\1 set of document for Mr. Puno's employment contract authentication\\1. Business Registration Certificate (아포스티유 예정).pdf",
+        "depth": 3,
         "doc_type": "certificate"
       },
       {
         "type": "file",
         "name": "7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
         "path": "7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
-        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\1 set of document for Mr. Puno's employment contract authentication\\7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
-        "depth": 1,
+        "full_path": "Z:01030_구조\\20210237 베트남 북부 산악지방 교통 연결사업 시공감리 용역\\인력 계약서 및 선투입공문\\Senior Bridge Engineer\\1 set of document for Mr. Puno's employment contract authentication\\7. Worker's certificate of conirmation of visa issuance (arrival visa letter).pdf",
+        "depth": 3,
         "doc_type": "certificate"
       }
     ]
   },
-  "timestamp": "2025-03-08 14:15:39",
+  "timestamp": "2025-03-10 02:38:25",
   "performance": {
-    "total_time": 0.7406857013702393,
-    "search_time": 0.7156896591186523,
+    "total_time": 1.619264841079712,
+    "search_time": 1.57822847366333,
     "document_counts": {
       "contract": 3,
       "agreement": 3,
+      "budget": 3,
       "certificate": 2
     }
   }

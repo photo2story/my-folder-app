@@ -50,10 +50,10 @@
       }
     ]
   },
-  "timestamp": "2025-03-10 01:23:01",
+  "timestamp": "2025-03-10 03:12:55",
   "performance": {
-    "total_time": 2.850133180618286,
-    "search_time": 2.824127197265625,
+    "total_time": 0.043746232986450195,
+    "search_time": 0.025057315826416016,
     "document_counts": {
       "agreement": 3,
       "deliverable1": 2

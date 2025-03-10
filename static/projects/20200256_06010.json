@@ -41,16 +41,6 @@
         "doc_type": "budget"
       }
     ],
-    "deliverable1": [
-      {
-        "type": "file",
-        "name": "투자타당성보고서1식.zip",
-        "path": "투자타당성보고서1식.zip",
-        "full_path": "Z:06010_환경\\1팀\\03.전략환경영향평가\\20200256ㅣ평택 팽성읍 동창리 도시개발사업 전략환경영향평가\\02 기술\\투자타당성보고서1식.zip",
-        "depth": 1,
-        "doc_type": "deliverable1"
-      }
-    ],
     "certificate": [
       {
         "type": "file",
@@ -62,14 +52,13 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 14:02:58",
+  "timestamp": "2025-03-10 02:15:25",
   "performance": {
-    "total_time": 0.1388566493988037,
-    "search_time": 0.1198573112487793,
+    "total_time": 0.35898518562316895,
+    "search_time": 0.3394341468811035,
     "document_counts": {
       "contract": 1,
       "budget": 3,
-      "deliverable1": 1,
       "certificate": 1
     }
   }

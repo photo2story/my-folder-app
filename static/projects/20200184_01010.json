@@ -8,14 +8,6 @@
     "contract": [
       {
         "type": "file",
-        "name": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-        "path": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
-        "depth": 0,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
         "name": "24-20-협조-90 계약체결.pdf",
         "path": "24-20-협조-90 계약체결.pdf",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\24-20-협조-90 계약체결.pdf",
@@ -28,6 +20,14 @@
         "path": "협조전(계약체결통보)해외계약[샘플].pdf",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.07 실행\\협조전(계약체결통보)해외계약[샘플].pdf",
         "depth": 2,
+        "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+        "path": "OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\1.08.01 기술지원계약서\\01 UtT 하도급비\\Invoice01 2021.01.28 $72,600\\OLD 하도급계약서 Project Preparetory Consultant under SASEC Highway Improvement Project.pdf",
+        "depth": 5,
         "doc_type": "contract"
       }
     ],
@@ -60,6 +60,14 @@
     "budget": [
       {
         "type": "file",
+        "name": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+        "path": "미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\미래전략실 요청(네팔사섹 계약금,실행금액비교).xlsx",
+        "depth": 0,
+        "doc_type": "budget"
+      },
+      {
+        "type": "file",
         "name": "20200417 실행검토서-양식 - 구조.xlsx",
         "path": "20200417 실행검토서-양식 - 구조.xlsx",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\20200417 실행검토서-양식 - 구조.xlsx",
@@ -68,35 +76,27 @@
       },
       {
         "type": "file",
-        "name": "네팔 SASEC 구조부 수행(실행)방안.hwp",
-        "path": "네팔 SASEC 구조부 수행(실행)방안.hwp",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\네팔 SASEC 구조부 수행(실행)방안.hwp",
-        "depth": 4,
-        "doc_type": "budget"
-      },
-      {
-        "type": "file",
-        "name": "네팔 SASEC-지반분야 실행검토_0420.hwp",
-        "path": "네팔 SASEC-지반분야 실행검토_0420.hwp",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\네팔 SASEC-지반분야 실행검토_0420.hwp",
-        "depth": 4,
+        "name": "20200428 Nepal Sasec 실행검토서.xlsx",
+        "path": "20200428 Nepal Sasec 실행검토서.xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\0. 사전작업\\0.05 제안서\\02 Negotiation\\03 가실행 작성\\01 실행검토서\\20200428 Nepal Sasec 실행검토서.xlsx",
+        "depth": 5,
         "doc_type": "budget"
       }
     ],
     "deliverable1": [
       {
         "type": "file",
-        "name": "네팔출장 보고서_양성석부사장.docx",
-        "path": "네팔출장 보고서_양성석부사장.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\네팔출장 보고서_양성석부사장.docx",
+        "name": "양성석 네팔 출장 보고서.pdf",
+        "path": "양성석 네팔 출장 보고서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서.pdf",
         "depth": 3,
         "doc_type": "deliverable1"
       },
       {
         "type": "file",
-        "name": "양성석 네팔 출장 보고서.pdf",
-        "path": "양성석 네팔 출장 보고서.pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서.pdf",
+        "name": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
+        "path": "양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.10 기타_현지 출장자료등\\20201124 양성석부사장님 1차출장보고서\\양성석 네팔 출장 보고서_세금 vat CIT 공제후 국내계좌입금.pdf",
         "depth": 3,
         "doc_type": "deliverable1"
       },
@@ -119,32 +119,6 @@
         "doc_type": "deliverable2"
       }
     ],
-    "completion": [
-      {
-        "type": "file",
-        "name": "01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-        "path": "01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\01. Project Completion Certificate - SHIP PPC_road3_V2_ADD.docx",
-        "depth": 2,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-        "path": "02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\02. Project Completion Certificate - SHIP PPC_road3_V3_ADD.docx",
-        "depth": 2,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-        "path": "20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20250107 Project Completion Certificate - SHIP PPC_road2_V4_ADD.docx",
-        "depth": 2,
-        "doc_type": "completion"
-      }
-    ],
     "certificate": [
       {
         "type": "file",
@@ -156,33 +130,32 @@
       },
       {
         "type": "file",
-        "name": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
-        "path": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서(2).pdf",
-        "depth": 2,
-        "doc_type": "certificate"
-      },
-      {
-        "type": "file",
         "name": "20230316 Nepal SASEC Road3 실적증명서.pdf",
         "path": "20230316 Nepal SASEC Road3 실적증명서.pdf",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서.pdf",
         "depth": 2,
         "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+        "path": "20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2020184 네팔 SASEC Highway Improvement Project\\1. 과업 계약 및 착수\\1.12 실적증명서\\20230316 Nepal SASEC Road3 실적증명서(2).pdf",
+        "depth": 2,
+        "doc_type": "certificate"
       }
     ]
   },
-  "timestamp": "2025-03-08 14:00:45",
+  "timestamp": "2025-03-10 02:11:16",
   "performance": {
-    "total_time": 2.8720479011535645,
-    "search_time": 2.849083662033081,
+    "total_time": 8.061924695968628,
+    "search_time": 8.041961908340454,
     "document_counts": {
       "contract": 3,
       "agreement": 3,
       "budget": 3,
       "deliverable1": 3,
       "deliverable2": 1,
-      "completion": 3,
       "certificate": 3
     }
   }

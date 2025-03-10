@@ -5,16 +5,6 @@
   "project_name": "Y20240126 부산광역시 동부, 수영하수처리구역 하수관로 기술진단",
   "project_path": "Z:07010_상하수도\\Y20240126 부산광역시 동부, 수영하수처리구역 하수관로 기술진단",
   "documents": {
-    "contract": [
-      {
-        "type": "file",
-        "name": "계약내역서(부산광역시 동부 수영하수처리구역 하수관로 기술진단용역).xlsx",
-        "path": "계약내역서(부산광역시 동부 수영하수처리구역 하수관로 기술진단용역).xlsx",
-        "full_path": "Z:07010_상하수도\\Y20240126 부산광역시 동부, 수영하수처리구역 하수관로 기술진단\\01. 행정자료\\02. 계약서류\\01. 원도급내역서\\계약내역서(부산광역시 동부 수영하수처리구역 하수관로 기술진단용역).xlsx",
-        "depth": 3,
-        "doc_type": "contract"
-      }
-    ],
     "specification": [
       {
         "type": "file",
@@ -90,12 +80,11 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 15:21:12",
+  "timestamp": "2025-03-10 04:27:08",
   "performance": {
-    "total_time": 1.0970945358276367,
-    "search_time": 1.0541226863861084,
+    "total_time": 1.2048673629760742,
+    "search_time": 1.1818656921386719,
     "document_counts": {
-      "contract": 1,
       "specification": 2,
       "initiation": 3,
       "agreement": 1,

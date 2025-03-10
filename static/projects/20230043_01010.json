@@ -8,18 +8,10 @@
     "contract": [
       {
         "type": "file",
-        "name": "2022.12.19 Contract Price.xlsx",
-        "path": "2022.12.19 Contract Price.xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\2022.12.19 Contract Price.xlsx",
-        "depth": 1,
-        "doc_type": "contract"
-      },
-      {
-        "type": "file",
-        "name": "22.12.19 PMC for Road Safety_Contract Price.xlsx",
-        "path": "22.12.19 PMC for Road Safety_Contract Price.xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\22.12.19 PMC for Road Safety_Contract Price.xlsx",
-        "depth": 2,
+        "name": "0228_Effectiveness of the Contract.pdf",
+        "path": "0228_Effectiveness of the Contract.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\09  공문서 수발신\\01  공문서 수신\\2023\\0228_Effectiveness of the Contract.pdf",
+        "depth": 3,
         "doc_type": "contract"
       },
       {
@@ -29,9 +21,33 @@
         "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\23.01.31_PMC for Road Safety Contract_SOOSUNG signed.pdf",
         "depth": 2,
         "doc_type": "contract"
+      },
+      {
+        "type": "file",
+        "name": "Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
+        "path": "Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\01 TL 계약\\Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
+        "depth": 3,
+        "doc_type": "contract"
       }
     ],
     "agreement": [
+      {
+        "type": "file",
+        "name": "Nepal PMC_Sub-Contract Agreement_Signed.pdf",
+        "path": "Nepal PMC_Sub-Contract Agreement_Signed.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\10  하도급 계약서\\Nepal PMC_Sub-Contract Agreement_Signed.pdf",
+        "depth": 2,
+        "doc_type": "agreement"
+      },
+      {
+        "type": "file",
+        "name": "Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
+        "path": "Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\10  하도급 계약서\\01  하도급계약서\\Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
+        "depth": 3,
+        "doc_type": "agreement"
+      },
       {
         "type": "file",
         "name": "Contract Agreement of QCBS-19.pdf",
@@ -39,25 +55,17 @@
         "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\Contract Agreement of QCBS-19.pdf",
         "depth": 2,
         "doc_type": "agreement"
-      },
-      {
-        "type": "file",
-        "name": "Nepal PMC_Sub-Contract Agreement_Revised(0331161726).docx",
-        "path": "Nepal PMC_Sub-Contract Agreement_Revised(0331161726).docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\02 Sub Consultant 계약\\Nepal PMC_Sub-Contract Agreement_Revised(0331161726).docx",
-        "depth": 3,
-        "doc_type": "agreement"
-      },
-      {
-        "type": "file",
-        "name": "Nepal PMC_Sub-Contract Agreement_Revised.docx",
-        "path": "Nepal PMC_Sub-Contract Agreement_Revised.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\10  하도급 계약서\\Nepal PMC_Sub-Contract Agreement_Revised.docx",
-        "depth": 2,
-        "doc_type": "agreement"
       }
     ],
     "budget": [
+      {
+        "type": "file",
+        "name": "네팔 PMC 실행검토서_r1.xlsx",
+        "path": "네팔 PMC 실행검토서_r1.xlsx",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서_r1.xlsx",
+        "depth": 1,
+        "doc_type": "budget"
+      },
       {
         "type": "file",
         "name": "네팔 PMC 실행검토서.xlsx",
@@ -73,21 +81,13 @@
         "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서_final.xlsx",
         "depth": 1,
         "doc_type": "budget"
-      },
-      {
-        "type": "file",
-        "name": "네팔 PMC 실행검토서_r1.xlsx",
-        "path": "네팔 PMC 실행검토서_r1.xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서_r1.xlsx",
-        "depth": 1,
-        "doc_type": "budget"
       }
     ]
   },
-  "timestamp": "2025-03-08 14:39:29",
+  "timestamp": "2025-03-10 03:19:40",
   "performance": {
-    "total_time": 0.2483537197113037,
-    "search_time": 0.20935440063476562,
+    "total_time": 0.6689109802246094,
+    "search_time": 0.6459102630615234,
     "document_counts": {
       "contract": 3,
       "agreement": 3,

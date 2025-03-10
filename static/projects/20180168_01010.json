@@ -16,37 +16,29 @@
       },
       {
         "type": "file",
-        "name": "해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-        "path": "해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.07 실행\\해외계약금액정리(딩케솔라감리)-김성민.xlsx",
-        "depth": 2,
+        "name": "딩케쌀라 회계사 고용 계약서.pdf",
+        "path": "딩케쌀라 회계사 고용 계약서.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\회계사 계약서\\딩케쌀라 회계사 고용 계약서.pdf",
+        "depth": 3,
         "doc_type": "contract"
       },
       {
         "type": "file",
-        "name": "고용계약서.docx",
-        "path": "고용계약서.docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\회계사 계약서\\고용계약서.docx",
-        "depth": 3,
+        "name": "20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+        "path": "20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.01 관련문서\\2.01.01 발송 수신 공문\\수신공문\\20191003 JV-ET-DS-211 Contractor's Mobilization Report.pdf",
+        "depth": 4,
         "doc_type": "contract"
       }
     ],
-    "specification": [
+    "initiation": [
       {
         "type": "file",
-        "name": "01.과업수행계획서.hwp",
-        "path": "01.과업수행계획서.hwp",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\xx 투입전 안전 참고자료\\부록\\8. 사전조사자료 일체\\01.과업수행계획서.hwp",
+        "name": "03 과업착수비.pdf",
+        "path": "03 과업착수비.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.05 AP & Payment\\01 기성배분 검토\\20191231 1차(1-9) 통합 기성 배분(1901-1909)\\증빙서류\\03 과업착수비.pdf",
         "depth": 5,
-        "doc_type": "specification"
-      },
-      {
-        "type": "file",
-        "name": "01.과업수행계획서.hwp",
-        "path": "01.과업수행계획서.hwp",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\부록\\8. 사전조사자료 일체\\01.과업수행계획서.hwp",
-        "depth": 4,
-        "doc_type": "specification"
+        "doc_type": "initiation"
       }
     ],
     "agreement": [
@@ -112,45 +104,11 @@
       },
       {
         "type": "file",
-        "name": "전차보고서.zip",
-        "path": "전차보고서.zip",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\xx 투입전 안전 참고자료\\부록\\8. 사전조사자료 일체\\전차보고서.zip",
-        "depth": 5,
-        "doc_type": "deliverable1"
-      },
-      {
-        "type": "file",
         "name": "02.사전검토보고서.hwp",
         "path": "02.사전검토보고서.hwp",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\2. 감리\\2.02 Road safety specialist\\부록\\8. 사전조사자료 일체\\02.사전검토보고서.hwp",
         "depth": 4,
         "doc_type": "deliverable1"
-      }
-    ],
-    "completion": [
-      {
-        "type": "file",
-        "name": "01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-        "path": "01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\01 Tanzania DUTP_PHASE I_DRAFT Completion Certificate (English).docx",
-        "depth": 3,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-        "path": "23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\23.02 DRAFT Completion Certificates_Dinke Sawla.doc",
-        "depth": 3,
-        "doc_type": "completion"
-      },
-      {
-        "type": "file",
-        "name": "DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-        "path": "DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.04 실적증명\\01  Draft\\DRAFT Completion Certificates_Dinke Sawla_DASAN검토.doc",
-        "depth": 3,
-        "doc_type": "completion"
       }
     ],
     "certificate": [
@@ -164,33 +122,32 @@
       },
       {
         "type": "file",
-        "name": "경력증명서_이학현_도로(2020.05).pdf",
-        "path": "경력증명서_이학현_도로(2020.05).pdf",
-        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\02 Road Safety and Safety Audit Specialist\\02 이학현 BJ\\20210106 CV\\경력증명서_이학현_도로(2020.05).pdf",
-        "depth": 5,
-        "doc_type": "certificate"
-      },
-      {
-        "type": "file",
         "name": "Certificate of Graduation-cho.pdf",
         "path": "Certificate of Graduation-cho.pdf",
         "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\09 다산 M_P E 교체건\\20200814 ME 교체자 CV\\Certificate of Graduation-cho.pdf",
         "depth": 4,
         "doc_type": "certificate"
+      },
+      {
+        "type": "file",
+        "name": "Construction Engineer Career Certificate.pdf",
+        "path": "Construction Engineer Career Certificate.pdf",
+        "full_path": "Z:01010_도로\\0004 해외사업\\C2018168 Ethiopia Dinke-Sawla Road Project\\1. 과업 계약 및 착수\\1.09 인력관리\\09 다산 M_P E 교체건\\20200814 ME 교체자 CV\\Construction Engineer Career Certificate.pdf",
+        "depth": 4,
+        "doc_type": "certificate"
       }
     ]
   },
-  "timestamp": "2025-03-08 13:53:16",
+  "timestamp": "2025-03-10 01:55:44",
   "performance": {
-    "total_time": 1.9799985885620117,
-    "search_time": 1.9593734741210938,
+    "total_time": 5.98814845085144,
+    "search_time": 5.958141803741455,
     "document_counts": {
       "contract": 3,
-      "specification": 2,
+      "initiation": 1,
       "agreement": 3,
       "budget": 3,
-      "deliverable1": 3,
-      "completion": 3,
+      "deliverable1": 2,
       "certificate": 3
     }
   }

@@ -32,10 +32,10 @@
       }
     ]
   },
-  "timestamp": "2025-03-08 14:35:48",
+  "timestamp": "2025-03-10 03:13:09",
   "performance": {
-    "total_time": 0.1530447006225586,
-    "search_time": 0.11704325675964355,
+    "total_time": 0.20063495635986328,
+    "search_time": 0.1806342601776123,
     "document_counts": {
       "deliverable1": 3
     }

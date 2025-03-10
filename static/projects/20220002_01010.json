@@ -25,16 +25,6 @@
         "doc_type": "initiation"
       }
     ],
-    "budget": [
-      {
-        "type": "file",
-        "name": "제10장-사업실행계획.hwp",
-        "path": "제10장-사업실행계획.hwp",
-        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\보고서 작성\\샘플\\01.Final Report(Korean)\\01.Main Report\\02.Editable\\제10장-사업실행계획.hwp",
-        "depth": 5,
-        "doc_type": "budget"
-      }
-    ],
     "deliverable1": [
       {
         "type": "file",
@@ -60,17 +50,35 @@
         "depth": 5,
         "doc_type": "deliverable1"
       }
+    ],
+    "deliverable2": [
+      {
+        "type": "file",
+        "name": "인도네시아-바탐-종평면도_배수유역.dwg",
+        "path": "인도네시아-바탐-종평면도_배수유역.dwg",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\수량분개\\바탐-빈탐 수량산출서\\배수공\\인도네시아-바탐-종평면도_배수유역.dwg",
+        "depth": 3,
+        "doc_type": "deliverable2"
+      },
+      {
+        "type": "file",
+        "name": "종평면도-20210526- 수정-구조부 검토의견 반영- 종단조정 -v5_구조물 포함.dwg",
+        "path": "종평면도-20210526- 수정-구조부 검토의견 반영- 종단조정 -v5_구조물 포함.dwg",
+        "full_path": "Z:01010_도로\\0004 해외사업\\202202 인도네시아 바탐-빈탄 교량\\수량분개\\바탐-빈탐 수량산출서\\배수공\\종평면도-20210526- 수정-구조부 검토의견 반영- 종단조정 -v5_구조물 포함.dwg",
+        "depth": 3,
+        "doc_type": "deliverable2"
+      }
     ]
   },
-  "timestamp": "2025-03-08 14:17:37",
+  "timestamp": "2025-03-10 02:42:02",
   "performance": {
-    "total_time": 0.4678199291229248,
-    "search_time": 0.43682289123535156,
+    "total_time": 1.3315412998199463,
+    "search_time": 1.310544490814209,
     "document_counts": {
       "contract": 1,
       "initiation": 1,
-      "budget": 1,
-      "deliverable1": 3
+      "deliverable1": 3,
+      "deliverable2": 2
     }
   }
 }
