@@ -106,7 +106,7 @@ class AuditService:
             f"📋 **Project Audit Result**\n"
             f"ID: {data.get('project_id', 'Unknown')}\n"
             f"Department: {data.get('department', data.get('department_code', 'Unknown'))}\n"
-            f"Name: {data.get('project_name', f'Project {data.get('project_id', 'Unknown')}')}\n"
+            f"Name: {data.get('project_name') or 'Project ' + str(data.get('project_id', 'Unknown'))}\n"
             f"Status: {data.get('status', 'Unknown')}\n"
             f"Contractor: {data.get('contractor', 'Unknown')}\n"
             f"Path: {data.get('project_path', 'Unknown')}\n\n"

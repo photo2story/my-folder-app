@@ -1,4 +1,5 @@
 ## /my_flask_app/Get_data.py
+# 네트워크 드라이브에서 프로젝트 목록 생성
 
 import os
 import argparse
@@ -166,6 +167,7 @@ def create_project_list(root_path, target_departments=None, force_scan=False, ve
         structured_data = [
             {
                 'project_id': p['project_id'],
+                'department_code': p['department_code'],
                 'department_name': p['department_name'],
                 'project_name': p['name'],
                 'original_folder': p['path']
@@ -173,7 +175,7 @@ def create_project_list(root_path, target_departments=None, force_scan=False, ve
         ]
         
         df = pd.DataFrame(structured_data)
-        df = df.sort_values([ 'project_id'], 'department_code')
+        df = df.sort_values(['project_id', 'department_code'])
         df.to_csv(PROJECT_LIST_CSV, index=False, encoding='utf-8')
         print(f"\nSaved {len(df)} projects to {PROJECT_LIST_CSV}")
     else:

@@ -29,11 +29,12 @@ async def send_audit_to_discord(data):
             if isinstance(data, list):
                 for item in data:
                     if 'error' not in item:
+                        project_name = item.get('project_name') or f"Project {item.get('project_id', 'Unknown')}"
                         message = (
                             f"📋 **Project Audit Result**\n"
                             f"ID: {item.get('project_id', 'Unknown')}\n"
                             f"Department: {item.get('department', item.get('department_code', 'Unknown'))}\n"
-                            f"Name: {item.get('project_name', f'Project {item.get('project_id', 'Unknown')}')}\n"
+                            f"Name: {project_name}\n"
                             f"Status: {item.get('status', 'Unknown')}\n"  # Status 추가
                             f"Contractor: {item.get('contractor', 'Unknown')}\n"  # Contractor 추가
                             f"Path: {item.get('project_path', 'Unknown')}\n\n"
@@ -79,11 +80,12 @@ async def send_audit_to_discord(data):
                                 print(f"Failed to send audit error to Discord webhook: {message}")
             else:
                 if 'error' not in data:
+                    project_name = data.get('project_name') or f"Project {data.get('project_id', 'Unknown')}"
                     message = (
                         f"📋 **Project Audit Result**\n"
                         f"ID: {data.get('project_id', 'Unknown')}\n"
                         f"Department: {data.get('department', data.get('department_code', 'Unknown'))}\n"
-                        f"Name: {data.get('project_name', f'Project {data.get('project_id', 'Unknown')}')}\n"
+                        f"Name: {project_name}\n"
                         f"Status: {data.get('status', 'Unknown')}\n"  # Status 추가
                         f"Contractor: {data.get('contractor', 'Unknown')}\n"  # Contractor 추가
                         f"Path: {data.get('project_path', 'Unknown')}\n\n"
