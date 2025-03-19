@@ -18,6 +18,7 @@ STATIC_DATA_PATH = os.path.join(ROOT_DIR, 'static', 'data')
 YEAR_PATTERN = re.compile(r'(?:199|20[0-2])\d')
 PROJECT_ID_PATTERN = re.compile(r'(?:^|[^\d])((?:199|20[0-2])\d\d{4})(?:[^\d]|$)')
 PROJECT_YEAR_SEQ = re.compile(r'((?:199|20[0-2])\d)[^0-9]*(\d{2,3})(?:[^\d]|$)')
+PROJECT_YEAR_DASH_SEQ = re.compile(r'((?:199|20[0-2])\d)-(\d{4})')  # 2023-0104 형식용
 
 def check_network_drive(drive_path):
     try:
@@ -53,25 +54,27 @@ def is_project_folder(folder_name, verbose=False):
     return False
 
 def extract_project_id(folder_name, verbose=False):
-    # 날짜 형식 제외 (YYYY.MM.DD 또는 YYYY-MM-DD)
-    if re.match(r'\d{4}[-.]\d{2}[-.]\d{2}', folder_name):
-        if verbose:
-            print(f"[SKIP] Date format folder: {folder_name}")
-        return None
-    
-    # 8자리 또는 7자리 숫자 패턴
-    if match := PROJECT_ID_PATTERN.search(folder_name):
-        project_id = match.group(1)
-        if len(project_id) == 7:  # 7자리인 경우 8자리로 변환
-            project_id = f"{project_id[:4]}0{project_id[4:]}"
+    # 연도-일련번호 패턴 (예: 2021-203)
+    if match := PROJECT_YEAR_SEQ.search(folder_name):
+        year, seq = match.groups()
+        project_id = f"{year}0{seq.zfill(3)}"
         if verbose:
             print(f"[ID] Project ID: {project_id}")
         return project_id
     
-    # 연도+일련번호 패턴
-    if match := PROJECT_YEAR_SEQ.search(folder_name):
+    # 연도-일련번호 패턴 (예: 2023-0104)
+    if match := PROJECT_YEAR_DASH_SEQ.search(folder_name):
         year, seq = match.groups()
-        project_id = f"{year}0{seq.zfill(3)}"
+        project_id = f"{year}{seq}"
+        if verbose:
+            print(f"[ID] Project ID from dash format: {project_id}")
+        return project_id
+    
+    # 8자리 또는 7자리 숫자 패턴 (YYYYMMDD 또는 YYYYMMD)
+    if match := PROJECT_ID_PATTERN.search(folder_name):
+        project_id = match.group(1)
+        if len(project_id) == 7:  # 7자리인 경우 8자리로 변환
+            project_id = f"{project_id[:4]}0{project_id[4:]}"
         if verbose:
             print(f"[ID] Project ID: {project_id}")
         return project_id
@@ -106,15 +109,14 @@ def scan_directory(path, current_depth=0, verbose=False, scanned_folders=None):
             if not os.path.isdir(item_path):
                 continue
             
-            # 연도 기반 프로젝트 폴더 확인
-            if is_project_folder(item, verbose):
-                if project_id := extract_project_id(item, verbose):
-                    projects.append({
-                        'name': item,
-                        'path': item_path,
-                        'depth': current_depth,
-                        'project_id': project_id
-                    })
+            # 프로젝트 ID 추출 시도
+            if project_id := extract_project_id(item, verbose):
+                projects.append({
+                    'name': item,
+                    'path': item_path,
+                    'depth': current_depth,
+                    'project_id': project_id
+                })
             
             # 키워드 기반 깊이 탐색 또는 프로젝트 하위 폴더 스캔
             if should_scan_deeper(item, verbose):
