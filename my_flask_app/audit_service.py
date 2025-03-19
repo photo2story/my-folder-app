@@ -48,7 +48,7 @@ class AuditService:
     async def save_audit_result(self, result, department_code):
         """감사 결과를 부서별 폴더에 JSON으로 저장하며, 잘못된 문자열을 변환"""
         project_id = result['project_id']
-        department = result.get('department', f"{department_code}_Unknown").replace('.', '_')
+        department = result.get('department', f"{department_code}_Unknown").replace('.', '_')  # .을 _로 교체
         if not re.match(r'^\d+_\w+$', department):
             logger.warning(f"Invalid department format: {department}, normalizing...")
             department = re.sub(r'[^0-9a-zA-Z_]', '_', department)
@@ -65,14 +65,14 @@ class AuditService:
             if isinstance(details, list):
                 corrected_details = []
                 for item in details:
-                    if isinstance(item, str):
+                    if isinstance(item, str):  # 문자열인 경우 JSON 변환 시도
                         try:
                             corrected_item = json.loads(item.replace("'", "\""))
                         except json.JSONDecodeError:
-                            corrected_item = item
+                            corrected_item = item  # 변환 실패 시 원본 유지
                         corrected_details.append(corrected_item)
                     else:
-                        corrected_details.append(item)
+                        corrected_details.append(item)  # 딕셔너리 등은 그대로 추가
                 return corrected_details
             return details
 
@@ -85,11 +85,11 @@ class AuditService:
             await f.write(json.dumps(result, ensure_ascii=False, indent=2))
 
         logger.info(f"✅ 감사 결과 저장 완료: {filepath}")
-        
-        # 각 파일마다 개별적으로 GitHub에 업로드
-        await sync_files_to_github(filepath)
-        logger.info(f"✅ GitHub 업로드 완료: {filepath}")
-        
+
+        # 저장 후 GitHub에 업로드
+        await sync_files_to_github(filepath)  # 특정 파일만 업로드
+        logger.info(f"✅ 감사 결과 GitHub에 업로드 완료: {filepath}")
+
         return filepath
 
     async def _send_single_to_discord(self, data, ctx=None):

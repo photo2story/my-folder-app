@@ -53,6 +53,12 @@ def is_project_folder(folder_name, verbose=False):
     return False
 
 def extract_project_id(folder_name, verbose=False):
+    # 날짜 형식 제외 (YYYY.MM.DD 또는 YYYY-MM-DD)
+    if re.match(r'\d{4}[-.]\d{2}[-.]\d{2}', folder_name):
+        if verbose:
+            print(f"[SKIP] Date format folder: {folder_name}")
+        return None
+    
     # 8자리 또는 7자리 숫자 패턴
     if match := PROJECT_ID_PATTERN.search(folder_name):
         project_id = match.group(1)
