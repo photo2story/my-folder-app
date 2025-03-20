@@ -54,12 +54,18 @@ def is_project_folder(folder_name, verbose=False):
     return False
 
 def extract_project_id(folder_name, verbose=False):
+    # 날짜 형식 제외 (YYYY.MM 또는 YYYY.MM.DD)
+    if re.match(r'\d{4}[-.]\d{2}([-.]\d{2})?$', folder_name):
+        if verbose:
+            print(f"[SKIP] Date format: {folder_name}")
+        return None
+    
     # 연도-일련번호 패턴 (예: 2021-203)
     if match := PROJECT_YEAR_SEQ.search(folder_name):
         year, seq = match.groups()
         project_id = f"{year}0{seq.zfill(3)}"
         if verbose:
-            print(f"[ID] Project ID: {project_id}")
+            print(f"[ID] Project ID from year-seq: {project_id} (from {folder_name})")
         return project_id
     
     # 연도-일련번호 패턴 (예: 2023-0104)
@@ -67,24 +73,16 @@ def extract_project_id(folder_name, verbose=False):
         year, seq = match.groups()
         project_id = f"{year}{seq}"
         if verbose:
-            print(f"[ID] Project ID from dash format: {project_id}")
+            print(f"[ID] Project ID from year-dash-seq: {project_id} (from {folder_name})")
         return project_id
     
-    # 8자리 또는 7자리 숫자 패턴 (YYYYMMDD 또는 YYYYMMD)
+    # 8자리 또는 7자리 숫자 패턴
     if match := PROJECT_ID_PATTERN.search(folder_name):
         project_id = match.group(1)
-        if len(project_id) == 7:  # 7자리인 경우 8자리로 변환
+        if len(project_id) == 7:
             project_id = f"{project_id[:4]}0{project_id[4:]}"
         if verbose:
-            print(f"[ID] Project ID: {project_id}")
-        return project_id
-    
-    # 연도만 있는 경우
-    if match := YEAR_PATTERN.search(folder_name):
-        year = match.group(0)
-        project_id = f"{year}0000"
-        if verbose:
-            print(f"[ID] Project ID (year only): {project_id}")
+            print(f"[ID] Project ID from digits: {project_id} (from {folder_name})")
         return project_id
     
     return None
@@ -109,8 +107,18 @@ def scan_directory(path, current_depth=0, verbose=False, scanned_folders=None):
             if not os.path.isdir(item_path):
                 continue
             
-            # 프로젝트 ID 추출 시도
-            if project_id := extract_project_id(item, verbose):
+            # 전체 경로에서 프로젝트 ID 추출 시도
+            full_path = os.path.normpath(item_path)
+            path_parts = full_path.split(os.sep)
+            
+            # 각 경로 부분에서 프로젝트 ID 찾기
+            project_id = None
+            for part in path_parts:
+                if temp_id := extract_project_id(part, verbose):
+                    project_id = temp_id
+                    break
+            
+            if project_id:
                 projects.append({
                     'name': item,
                     'path': item_path,
