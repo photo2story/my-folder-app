@@ -307,3 +307,7 @@ file_explorer_screen.dart: 트리뷰 기반 파일 탐색기.
 Flutter 앱은 디스플레이 역할로 제한되며, Flask 서버에서 모든 프로젝트 감사를 수행하고, 
 GitHub에 결과를 저장합니다. Flutter는 Flask API 또는 GitHub에서 데이터를 가져와 표시하며, 
 오프라인 모드도 지원합니다. 
+
+2025.4.2일 MCP연동
+Smithery는 MCP 서버를 모아둔 사이트 입니다. Smithery에서 GitHub로 검색하면 @smithery-ai/github의 GitHub를 클릭합니다.
+npx -y @smithery/cli@latest install @smithery-ai/github --client cursor --key b599f73c-b119-428a-9895-1ebbdacc6689

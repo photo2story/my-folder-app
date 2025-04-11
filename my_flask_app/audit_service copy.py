@@ -1,5 +1,7 @@
 # /my_flask_app/audit_service.py
 
+# /my_flask_app/audit_service.py
+
 import os
 import asyncio
 import aiofiles
@@ -10,7 +12,7 @@ import re
 from pathlib import Path
 from search_project_data import ProjectDocumentSearcher
 from gemini import analyze_with_gemini
-from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, STATIC_PATH, CONTRACT_STATUS_CSV
+from config import PROJECT_LIST_CSV, NETWORK_BASE_PATH, DISCORD_WEBHOOK_URL, STATIC_DATA_PATH, STATIC_PATH, CONTRACT_STATUS_CSV, RESULTS_DIR
 from config_assets import DOCUMENT_TYPES, DEPARTMENT_MAPPING, DEPARTMENT_NAMES, AUDIT_FILTERS
 import logging
 import pandas as pd
@@ -19,9 +21,9 @@ import time
 from get_project import get_project_info
 import ast
 from audit_message import send_audit_to_discord, send_audit_status_to_discord
+from git_operations import sync_files_to_github  # git_operations 임포트
 
 # JSON 파일 저장 경로 설정
-RESULTS_DIR = os.path.join(STATIC_PATH, 'results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -46,14 +48,18 @@ class AuditService:
     async def save_audit_result(self, result, department_code):
         """감사 결과를 부서별 폴더에 JSON으로 저장하며, 잘못된 문자열을 변환"""
         project_id = result['project_id']
-        department = result.get('department', f"{department_code}_Unknown")
-        
+        department = result.get('department', f"{department_code}_Unknown").replace('.', '_')  # .을 _로 교체
+        if not re.match(r'^\d+_\w+$', department):
+            logger.warning(f"Invalid department format: {department}, normalizing...")
+            department = re.sub(r'[^0-9a-zA-Z_]', '_', department)
+
         department_folder = os.path.join(RESULTS_DIR, department)
         filename = f"audit_{project_id}.json"
         filepath = os.path.join(department_folder, filename)
 
         if not os.path.exists(department_folder):
             os.makedirs(department_folder, exist_ok=True)
+            logger.info(f"Created department folder: {department_folder}")
 
         def fix_document_details(details):
             if isinstance(details, list):
@@ -79,6 +85,11 @@ class AuditService:
             await f.write(json.dumps(result, ensure_ascii=False, indent=2))
 
         logger.info(f"✅ 감사 결과 저장 완료: {filepath}")
+
+        # 저장 후 GitHub에 업로드
+        await sync_files_to_github(filepath)  # 특정 파일만 업로드
+        logger.info(f"✅ 감사 결과 GitHub에 업로드 완료: {filepath}")
+
         return filepath
 
     async def _send_single_to_discord(self, data, ctx=None):
@@ -95,7 +106,7 @@ class AuditService:
             f"📋 **Project Audit Result**\n"
             f"ID: {data.get('project_id', 'Unknown')}\n"
             f"Department: {data.get('department', data.get('department_code', 'Unknown'))}\n"
-            f"Name: {data.get('project_name', f'Project {data.get('project_id', 'Unknown')}')}\n"
+            f"Name: {data.get('project_name') or 'Project ' + str(data.get('project_id', 'Unknown'))}\n"
             f"Status: {data.get('status', 'Unknown')}\n"
             f"Contractor: {data.get('contractor', 'Unknown')}\n"
             f"Path: {data.get('project_path', 'Unknown')}\n\n"
@@ -113,7 +124,7 @@ class AuditService:
                 count = len(doc_info.get('details', []))
                 found_docs.append(f"{doc_name} ({count}개)")
             else:
-                missing_docs.append(f"{doc_name} (0개)")
+                missing_docs.append(f"{doc_type} (0개)")
 
         if found_docs:
             message += "✅ Found:\n- " + "\n- ".join(found_docs) + "\n\n"

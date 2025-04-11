@@ -40,3 +40,4 @@ psutil
 pytest
 pytest-asyncio
 aiofiles
+tavily-python

@@ -14,6 +14,10 @@ logger = logging.getLogger(__name__)
 # Google API 설정
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
 
+# API 키 설정
+TAVILY_API_KEY = os.getenv('TAVILY_API', '')
+BRAVE_API_KEY = os.getenv('BRAVE_API', '')
+
 # 프로젝트 루트 경로
 PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 STATIC_PATH = os.path.join(PROJECT_ROOT, 'static')
@@ -101,6 +105,28 @@ DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID', '0'))
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+
+# MCP 서버 설정
+MCP_SERVERS = {
+    "tavily-mcp": {
+        "command": "npx",
+        "args": ["-y", "tavily-mcp@0.1.2"],
+        "env": {
+            "TAVILY_API_KEY": TAVILY_API_KEY
+        }
+    },
+    "brave-search": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+        "env": {
+            "BRAVE_API_KEY": BRAVE_API_KEY
+        }
+    },
+    "sequential-thinking": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    }
+}
 
 # 감사 대상 필터링 설정 (config_assets에서 가져옴)
 # config_assets에서 정의된 AUDIT_FILTERS와 AUDIT_FILTERS_depart를 사용
