@@ -1,67 +1,58 @@
 {
-  "project_id": "C20140197",
-  "project_name": "행정중심복합도시 6생활권 및 1생활권 유보지 지구단위계획 수립용역",
-  "department": "04010_도시계획부",
-  "status": "진행",
-  "contractor": "비주관사",
-  "documents": {
-    "contract": {
-      "exists": false,
-      "details": []
-    },
-    "specification": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "1. 6생 지구단위계획 수립용역 과업내용서(건화송부용).hwp",
-          "path": "1. 6생 지구단위계획 수립용역 과업내용서(건화송부용).hwp",
-          "full_path": "Z:01050_교통\\2014197  행정중심복합도시 6-1,2,3,4 생활권 지구단위계획수립\\1. 과업 행정관련\\1.08 내부서류\\1.08.02 협조전\\발신\\1. 6생 지구단위계획 수립용역 과업내용서(건화송부용).hwp",
-          "depth": 4,
-          "doc_type": "specification"
+    "project_id": "C20140197",
+    "project_name": "행정중심복합도시 6생활권 및 1생활권 유보지 지구단위계획 수립용역",
+    "department": "04010_도시계획부",
+    "status": "진행",
+    "contractor": "비주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
+        },
+        "specification": {
+            "exists": false,
+            "details": []
+        },
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": false,
-      "details": []
-    },
-    "budget": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable1": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": false,
-      "details": []
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-05 18:49:22",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01050_교통\\2014197  행정중심복합도시 6-1,2,3,4 생활권 지구단위계획수립",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:33):\n**1. 현재 문서화 상태:** 하\n\n**이유:** 비주관사임에도 불구하고, 필수 문서인 계약서, 성과품(보고서), 성과품(도면)이 모두 누락되어 있습니다.  과업지시서만 존재하는 것은 프로젝트 진행 상황을 파악하고 관리하는 데 심각한 어려움을 초래할 수 있습니다.  진행 중인 프로젝트의 특성상 계약서와 성과물이 없다는 것은 심각한 위험 요소입니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **계약서:**  프로젝트의 법적 근거를 제공하며, 용역의 범위, 기간, 대금 등 중요한 정보를 담고 있습니다. 누락 시 계약상의 문제 발생 가능성이 높습니다.\n* **성과품(보고서) 및 성과품(도면):** 프로젝트의 결과물이며,  작업 진행 상황을 확인하고, 최종 결과를 평가하는 데 필수적입니다. 누락 시 프로젝트 결과물 검증 및 인수인계에 문제가 발생합니다.\n\n**3. 위험도 점수 조정 필요성:** 있다\n\n**구체적인 개선 방안:**\n\n현재 위험도 40/100은 과소평가입니다.  계약서와 성과품이 전혀 없다는 점을 고려하여 위험도를 **최소 70/100 이상**으로 상향 조정해야 합니다.  즉각적인 조치로 계약서와 현재까지의 성과품(보고서, 도면)을 확보해야 합니다.  만약 성과품이 아직 생성되지 않았다면,  프로젝트 진행 상황 보고서라도 작성하여  현재까지의 진행 상황을 명확히 해야 합니다.  추가적으로 착수계를 확보하여 프로젝트 시작 시점과 계획을 명확히 하는 것도 필요합니다.  위험도를 낮추기 위해서는  프로젝트 관리 체계를 재정비하고,  문서 관리 절차를 개선하여 향후 유사한 문제 발생을 방지해야 합니다.  최소한 위험도를 낮추기 위한 구체적인 계획과 그 이행 상황을 문서화하고,  주기적으로 점검하는 시스템을 구축하는 것이 중요합니다.\n\n\n요약:\n- 확인된 문서: 1개 유형\n- 누락된 문서: 9개 유형\n- 기본 위험도: 40/100\n",
-  "timestamp": "2025-03-10 01:33:39",
-  "performance": {
-    "total_time": 0,
-    "search_time": 2.423088312149048,
-    "ai_time": 4.098223686218262,
-    "save_time": 0
-  }
 }

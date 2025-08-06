@@ -1,142 +1,58 @@
 {
-  "project_id": "C20200131",
-  "project_name": "미얀마 GMS Highway Modernization Project 설계 및 감리용역",
-  "department": "01010_도로부",
-  "status": "진행",
-  "contractor": "비주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "RFP Section 8 - Standard Form of Contract.pdf",
-          "path": "RFP Section 8 - Standard Form of Contract.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\01 제안단계 RFP등\\RFP Section 8 - Standard Form of Contract.pdf",
-          "depth": 2,
-          "doc_type": "contract"
+    "project_id": "C20200131",
+    "project_name": "미얀마 GMS Highway Modernization Project 설계 및 감리용역",
+    "department": "01010_도로부",
+    "status": "진행",
+    "contractor": "비주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Contract for Consultant's Services (HMP-PMCSC-1).pdf",
-          "path": "Contract for Consultant's Services (HMP-PMCSC-1).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\02 계약서류\\190910 계약체결\\Contract for Consultant's Services (HMP-PMCSC-1).pdf",
-          "depth": 3,
-          "doc_type": "contract"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "(200107)Contract for Sub-Consaltancy Services-CRDCC-수정.pdf",
-          "path": "(200107)Contract for Sub-Consaltancy Services-CRDCC-수정.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\05 하도급 계약\\00 계약서\\20200107 CRDCC\\(200107)Contract for Sub-Consaltancy Services-CRDCC-수정.pdf",
-          "depth": 4,
-          "doc_type": "contract"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "specification": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Final Project Report - Appendix H(specification).pdf",
-          "path": "Final Project Report - Appendix H(specification).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\01 설계단계\\00 관련자료 모음\\20200908 TA-8987 Final Project Report\\Final Project Report - Appendix H(specification).pdf",
-          "depth": 3,
-          "doc_type": "specification"
-        }
-      ]
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "GMS 업무분담합의서.pdf",
-          "path": "GMS 업무분담합의서.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\04 업무분담합의서\\20200531 업무분담합의서\\GMS 업무분담합의서.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "2021 02 합동사무실 운영비 분담금액 결재본.pdf",
-          "path": "2021 02 합동사무실 운영비 분담금액 결재본.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\04 업무분담합의서\\20210201 설계 추가 3개월 연장안 (202104까지)\\2021 02 합동사무실 운영비 분담금액 결재본.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "2021 03 합동사무실 운영비 분담금액 결재본.pdf",
-          "path": "2021 03 합동사무실 운영비 분담금액 결재본.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\04 업무분담합의서\\20210201 설계 추가 3개월 연장안 (202104까지)\\2021 03 합동사무실 운영비 분담금액 결재본.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        }
-      ]
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "실행예산서 signed.pdf",
-          "path": "실행예산서 signed.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\03 실행관련\\03 실행예산서\\실행예산서 signed.pdf",
-          "depth": 3,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "실행예산서_GMS_감리 2인 + fs2건.xls",
-          "path": "실행예산서_GMS_감리 2인 + fs2건.xls",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\03 실행관련\\03 실행예산서\\실행예산서_GMS_감리 2인 + fs2건.xls",
-          "depth": 3,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "실행예산서_GMS_감리 1인만 투입 - 원계약서.xls",
-          "path": "실행예산서_GMS_감리 1인만 투입 - 원계약서.xls",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역\\00 행정자료\\03 실행관련\\03 실행예산서\\BAK\\실행예산서_GMS_감리 1인만 투입 - 원계약서.xls",
-          "depth": 4,
-          "doc_type": "budget"
-        }
-      ]
-    },
-    "deliverable1": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": false,
-      "details": []
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:51:33",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01010_도로\\0004 해외사업\\C2020131 미얀마 GMS Highway Modernization Project 설계 및 감리용역",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 02:09):\n## 프로젝트 C20200131 문서 분석 평가\n\n**1. 현재 문서화 상태:** 하\n\n**이유:**  프로젝트는 진행 중이며 비주관사임에도 불구하고, 필수 문서인 착수계, 성과품(보고서), 성과품(도면), 준공계, 실적증명, 용역수행평가가 모두 누락되어 있습니다. 비주관사 기준으로 계약서와 공동도급협정은 확보되었으나,  성과를 증명하는 중요한 문서들이 전혀 없어 프로젝트 관리 및 추후 검증에 심각한 어려움이 예상됩니다.  현재 확보된 문서만으로는 프로젝트 진행 상황과 성과를 제대로 파악할 수 없습니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **착수계:** 프로젝트 시작을 공식적으로 알리고, 계약 내용에 대한 이해와 수행 계획을 명시하는 중요한 문서입니다.  누락 시 계약 위반으로 이어질 수 있습니다.\n* **성과품(보고서) & 성과품(도면):** 프로젝트 진행 상황과 결과물을 증명하는 핵심 문서입니다.  이것들이 없으면 프로젝트의 실제 진행 여부와 성과를 확인할 수 없어, 향후 문제 발생 시 책임 소재를 규명하기 어렵습니다.  특히, 도로부 프로젝트의 특성상 도면은 필수적입니다.\n* **실적증명:** 프로젝트 수행 실적을 입증하는 중요한 자료로, 향후 유사 프로젝트 수주에 필수적입니다.\n\n\n**3. 위험도 점수 조정 필요성:** 있다\n\n**현재 위험도:** 95/100\n\n**조정 후 위험도:** 75/100 (추정)\n\n**개선 방안:**\n\n* **즉시 착수계, 성과품(보고서), 성과품(도면)을 작성 및 제출합니다.**  만약 이미 작업이 진행되었다면, 지금까지의 진행 상황을 정확하게 반영한 보고서와 도면을 작성해야 합니다.\n* **프로젝트 진행 과정에서 정기적인 성과 보고를 통해 누락된 문서들을 지속적으로 보완합니다.**  일정 기간마다 보고서를 작성하여 제출하고, 중요한 변경 사항이 발생할 때마다 도면을 업데이트해야 합니다.\n* **프로젝트 완료 후 준공계와 실적증명을 신속하게 작성하여 제출합니다.**  이는 프로젝트의 공식적인 종료와 실적을 인정받는 데 필수적입니다.\n* **용역수행평가를 실시하여 프로젝트의 성과와 문제점을 분석하고, 향후 프로젝트 개선에 활용합니다.** 이를 통해 프로젝트 관리 프로세스를 개선하고 위험 요소를 사전에 예방할 수 있습니다.\n\n위험도 점수는 상기 개선 방안의 실행 정도에 따라 추가 조정될 수 있습니다.  특히, 성과품(보고서) 및 (도면)의 완성도에 따라 위험도가 크게 달라질 것입니다.  미흡한 부분이 많을수록 위험도는 높아집니다.\n\n\n요약:\n- 확인된 문서: 4개 유형\n- 누락된 문서: 6개 유형\n- 기본 위험도: 95/100\n",
-  "timestamp": "2025-03-10 02:09:46",
-  "performance": {
-    "total_time": 0,
-    "search_time": 2.668222188949585,
-    "ai_time": 5.485847473144531,
-    "save_time": 0
-  }
 }

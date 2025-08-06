@@ -1,133 +1,58 @@
 {
-  "project_id": "C20230043",
-  "project_name": "네팔 Road Safety Management PMC",
-  "department": "01010_도로부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "0228_Effectiveness of the Contract.pdf",
-          "path": "0228_Effectiveness of the Contract.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\09  공문서 수발신\\01  공문서 수신\\2023\\0228_Effectiveness of the Contract.pdf",
-          "depth": 3,
-          "doc_type": "contract"
+    "project_id": "C20230043",
+    "project_name": "네팔 Road Safety Management PMC",
+    "department": "01010_도로부",
+    "status": "진행",
+    "contractor": "비주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "23.01.31_PMC for Road Safety Contract_SOOSUNG signed.pdf",
-          "path": "23.01.31_PMC for Road Safety Contract_SOOSUNG signed.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\23.01.31_PMC for Road Safety Contract_SOOSUNG signed.pdf",
-          "depth": 2,
-          "doc_type": "contract"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
-          "path": "Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\01 TL 계약\\Contract with Soosung_FINAL both Signed_Team Leader 계약서.pdf",
-          "depth": 3,
-          "doc_type": "contract"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "specification": {
-      "exists": false,
-      "details": []
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Nepal PMC_Sub-Contract Agreement_Signed.pdf",
-          "path": "Nepal PMC_Sub-Contract Agreement_Signed.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\10  하도급 계약서\\Nepal PMC_Sub-Contract Agreement_Signed.pdf",
-          "depth": 2,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
-          "path": "Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\10  하도급 계약서\\01  하도급계약서\\Sub Contract Agreement(PMC for Road Safety)_both signed.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "Contract Agreement of QCBS-19.pdf",
-          "path": "Contract Agreement of QCBS-19.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\01  계약 및 관련자료\\01  계약자료\\Contract Agreement of QCBS-19.pdf",
-          "depth": 2,
-          "doc_type": "agreement"
-        }
-      ]
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "네팔 PMC 실행검토서_r1.xlsx",
-          "path": "네팔 PMC 실행검토서_r1.xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서_r1.xlsx",
-          "depth": 1,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "네팔 PMC 실행검토서.xlsx",
-          "path": "네팔 PMC 실행검토서.xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서.xlsx",
-          "depth": 1,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "네팔 PMC 실행검토서_final.xlsx",
-          "path": "네팔 PMC 실행검토서_final.xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC\\02  실행검토\\네팔 PMC 실행검토서_final.xlsx",
-          "depth": 1,
-          "doc_type": "budget"
-        }
-      ]
-    },
-    "deliverable1": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": false,
-      "details": []
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:51:39",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01010_도로\\0004 해외사업\\C20230043 네팔 Road Safety PMC",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 03:19):\n## 프로젝트 C20230043 문서 분석 결과\n\n**1. 현재 문서화 상태:** 중\n\n**이유:**  프로젝트는 주관사이며 진행 중입니다.  계약서, 공동도급협정, 실행예산은 확보되었으나, 과업지시서, 착수계, 성과품(보고서/도면), 준공계, 실적증명, 용역수행평가 등 필수 문서들이 전부 누락되었습니다. 주관사로서 모든 문서 유형이 완비되어야 함에도 불구하고 상당 부분 누락되어 위험도가 높습니다. 진행 단계임을 고려하더라도,  핵심적인 과업지시서와 착수계가 없다는 점이 심각한 문제입니다.\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:** 프로젝트의 범위, 목표, 수행 방법 등을 명확히 하여 향후 발생 가능한 분쟁을 예방하고 효율적인 프로젝트 관리를 위해 필수적입니다.\n* **착수계:** 프로젝트 착수를 공식적으로 알리고,  계획대로 진행될 수 있도록 하는 중요한 문서입니다.  이 문서 없이는 프로젝트의 시작 시점을 명확히 할 수 없고, 향후 문제 발생 시 책임 소재를 명확히 하기 어렵습니다.\n\n**3. 위험도 점수 조정 필요성:** 있다\n\n**현재 위험도:** 70/100\n\n**조정 후 위험도:** 90/100 (상향 조정)\n\n**이유:** 기존 70/100은 진행 단계의 누락 문서 허용 범위를 고려한 것으로 보이나,  핵심 문서인 과업지시서와 착수계가 완전히 누락된 점을 고려하면 위험도가 더 높아야 합니다.  주관사로서의 책임과 의무를 고려하면 현재 상태는 매우 위험한 수준입니다.\n\n**개선 방안:**\n\n* **즉시 과업지시서와 착수계를 작성 및 제출:**  프로젝트 관리자는 해당 문서 작성을 최우선순위로 처리해야 합니다.\n* **문서 관리 체계 수립:**  프로젝트의 모든 문서를 체계적으로 관리하고, 누락을 방지하기 위한 시스템을 구축해야 합니다.  문서 관리 담당자를 지정하고 정기적인 문서 점검을 실시하는 것이 좋습니다.\n* **성과품 관리 계획 수립:**  보고서 및 도면 등 성과품 관리 계획을 수립하여,  프로젝트 진행 상황에 맞춰 성과품을 지속적으로 생성하고 관리해야 합니다.\n* **정기적인 위험 관리:**  프로젝트 진행 과정에서 발생할 수 있는 위험 요소들을 지속적으로 모니터링하고,  적절한 대응 방안을 마련해야 합니다.  문서 누락은 프로젝트 실패의 주요 원인이 될 수 있으므로,  문서 관리에 대한 철저한 관리 및 감독이 필요합니다.\n\n\n위와 같은 개선 방안을 통해 문서 관리 체계를 확립하고,  위험도를 낮추는 노력을 해야 합니다.  그렇지 않으면 프로젝트의 성공적인 완료를 보장할 수 없습니다.\n\n\n요약:\n- 확인된 문서: 3개 유형\n- 누락된 문서: 7개 유형\n- 기본 위험도: 70/100\n",
-  "timestamp": "2025-03-10 03:19:40",
-  "performance": {
-    "total_time": 0,
-    "search_time": 1.2241616249084473,
-    "ai_time": 5.805304765701294,
-    "save_time": 0
-  }
 }

@@ -1,0 +1,58 @@
+{
+    "project_id": "C20040090",
+    "project_name": "폐기물 종합처리시설 진입로 개설공사 실시설계용역",
+    "department": "01010_도로부",
+    "status": "준공",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
+        },
+        "specification": {
+            "exists": false,
+            "details": []
+        },
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
+        }
+    },
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:50:40",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
+    }
+}

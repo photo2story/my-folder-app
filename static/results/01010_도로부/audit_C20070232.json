@@ -1,0 +1,58 @@
+{
+    "project_id": "C20070232",
+    "project_name": "김해 복합스포츠 레저시설 조성사업 설계감리 용역",
+    "department": "01010_도로부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
+        },
+        "specification": {
+            "exists": false,
+            "details": []
+        },
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
+        }
+    },
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:50:52",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
+    }
+}

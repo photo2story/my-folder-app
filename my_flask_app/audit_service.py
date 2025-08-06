@@ -380,6 +380,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="프로젝트 감사 서비스")
     parser.add_argument('--project-id', type=str, help="감사할 프로젝트 ID")
+    parser.add_argument('--department', type=str, help="특정 부서만 감사 (예: 01010 for 도로부)")
     parser.add_argument('--use-ai', action='store_true', help="AI 분석 사용 여부")
     args = parser.parse_args()
 
@@ -389,6 +390,22 @@ if __name__ == "__main__":
     if args.project_id:
         result = loop.run_until_complete(audit_service.audit_project(args.project_id, use_ai=args.use_ai))
         print(json.dumps(result, ensure_ascii=False, indent=4))
+    elif args.department:
+        # 특정 부서의 프로젝트들만 감사
+        dept_code = args.department.zfill(5)  # 5자리로 패딩
+        print(f"부서 {dept_code}의 프로젝트들을 감사합니다...")
+        
+        # contract_status.csv에서 해당 부서의 프로젝트들 필터링
+        contract_df = audit_service.load_contract_data()
+        dept_projects = contract_df[contract_df['Depart_Code'] == dept_code]
+        
+        if dept_projects.empty:
+            print(f"부서 {dept_code}에 해당하는 프로젝트가 없습니다.")
+        else:
+            project_ids = dept_projects['ProjectID'].tolist()
+            print(f"감사할 프로젝트 목록: {project_ids}")
+            results = loop.run_until_complete(audit_service.audit_multiple_projects(project_ids, use_ai=args.use_ai))
+            print(json.dumps(results, ensure_ascii=False, indent=4))
     else:
         results = loop.run_until_complete(audit_service.process_audit_targets(use_ai=args.use_ai))
         print(json.dumps(results, ensure_ascii=False, indent=4))
@@ -397,5 +414,6 @@ if __name__ == "__main__":
 # python audit_service.py --project-id 20180076 --use-ai
 # python audit_service.py --project-id 20240178 --use-ai
 # python audit_service.py --project-id 20190088 --use-ai # 준공폴더,9999
-# python audit_service.py --project-id 20190088 --use-ai # 준공폴더,9999
-# python audit_service.py --project-id 20240001 --use-ai 
+# python audit_service.py --project-id 20240001 --use-ai
+# python audit_service.py --department 01010 --use-ai  # 도로부만 감사
+# python audit_service.py --department 04010 --use-ai  # 도시계획부만 감사 

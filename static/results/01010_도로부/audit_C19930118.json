@@ -1,0 +1,58 @@
+{
+    "project_id": "C19930118",
+    "project_name": "154kv 청주공단 S/S 인출 전력구공사 지질조사 및 실시설계용역",
+    "department": "01010_도로부",
+    "status": "준공",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
+        },
+        "specification": {
+            "exists": false,
+            "details": []
+        },
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
+        }
+    },
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:50:01",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
+    }
+}

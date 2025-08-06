@@ -1,183 +1,58 @@
 {
-  "project_id": "C20180053",
-  "project_name": "아르메니아-조지아 국경Bagratashen교량 건설 시공감리용역",
-  "department": "01030_구조부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Contract_CS-BB-001_Final.pdf",
-          "path": "Contract_CS-BB-001_Final.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Contract_CS-BB-001_Final.pdf",
-          "depth": 2,
-          "doc_type": "contract"
+    "project_id": "C20180053",
+    "project_name": "아르메니아-조지아 국경Bagratashen교량 건설 시공감리용역",
+    "department": "01030_구조부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
-          "path": "Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Contract_CS-BB-001_rev3 AS_rev HS-Revised (18.04.13).pdf",
-          "depth": 2,
-          "doc_type": "contract"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Minutes of Contract Negotiation.pdf",
-          "path": "Minutes of Contract Negotiation.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\01. 본 계약서\\Minutes of Contract Negotiation.pdf",
-          "depth": 2,
-          "doc_type": "contract"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "specification": {
-      "exists": false,
-      "details": []
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Sub-Contract Agreement (signed).pdf",
-          "path": "Sub-Contract Agreement (signed).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\02. Sub-Consultancy 계약서\\Sub-Contract Agreement (signed).pdf",
-          "depth": 2,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "공동수행협약서.pdf",
-          "path": "공동수행협약서.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\04. 공통업무협약서\\공동수행협약서.pdf",
-          "depth": 2,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "바그라타쉔 공동수행협약서 개정.pdf",
-          "path": "바그라타쉔 공동수행협약서 개정.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\04. 공통업무협약서\\바그라타쉔 공동수행협약서 개정.pdf",
-          "depth": 2,
-          "doc_type": "agreement"
-        }
-      ]
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Bagratashen교량 실행검토(Final).pdf",
-          "path": "Bagratashen교량 실행검토(Final).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\03. 기성관리\\04. 실행계획\\Bagratashen교량 실행검토(Final).pdf",
-          "depth": 2,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "Bagratashen교량 실행검토-2010430-rev05(85%).pdf",
-          "path": "Bagratashen교량 실행검토-2010430-rev05(85%).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\03. 기성관리\\04. 실행계획\\Bagratashen교량 실행검토-2010430-rev05(85%).pdf",
-          "depth": 2,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "Bagratashen교량 실행검토-2010502-rev05(85%).pdf",
-          "path": "Bagratashen교량 실행검토-2010502-rev05(85%).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\03. 기성관리\\04. 실행계획\\Bagratashen교량 실행검토-2010502-rev05(85%).pdf",
-          "depth": 2,
-          "doc_type": "budget"
-        }
-      ]
-    },
-    "deliverable1": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "해외사업단_정기업무보고서(19년 10월 4주차).pdf",
-          "path": "해외사업단_정기업무보고서(19년 10월 4주차).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단_정기업무보고서(19년 10월 4주차).pdf",
-          "depth": 2,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "해외사업단_정기업무보고서(19년 10월 5주차).pdf",
-          "path": "해외사업단_정기업무보고서(19년 10월 5주차).pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단_정기업무보고서(19년 10월 5주차).pdf",
-          "depth": 2,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
-          "path": "해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\04. 공정관리\\주간업무보고\\해외사업단-정기업무보고서 - 2021 1월  2주차  아르메니아 조지아 감리현장.pdf",
-          "depth": 2,
-          "doc_type": "deliverable1"
-        }
-      ]
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "10-압해~암태(2공구)도로건설공사 전면책임감리용역-기성실적증명서.pdf",
-          "path": "10-압해~암태(2공구)도로건설공사 전면책임감리용역-기성실적증명서.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\00. 제안서\\아르메니아 조지아 바그라타셴 제안서\\02 작업중\\03. TECH-2\\10-압해~암태(2공구)도로건설공사 전면책임감리용역-기성실적증명서.pdf",
-          "depth": 5,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "12-제2경인연결(안양~성남간)고속도로민간투자사업전면책임감리용역-실적증명서.pdf",
-          "path": "12-제2경인연결(안양~성남간)고속도로민간투자사업전면책임감리용역-실적증명서.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\00. 제안서\\아르메니아 조지아 바그라타셴 제안서\\02 작업중\\03. TECH-2\\12-제2경인연결(안양~성남간)고속도로민간투자사업전면책임감리용역-실적증명서.pdf",
-          "depth": 5,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "12-화양~적금(3공구)도로건설공사전면책임감리용역-기성실적증명서.pdf",
-          "path": "12-화양~적금(3공구)도로건설공사전면책임감리용역-기성실적증명서.pdf",
-          "full_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역\\02. RFP & Contract\\00. 제안서\\아르메니아 조지아 바그라타셴 제안서\\02 작업중\\03. TECH-2\\12-화양~적금(3공구)도로건설공사전면책임감리용역-기성실적증명서.pdf",
-          "depth": 5,
-          "doc_type": "certificate"
-        }
-      ]
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-05 18:50:33",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01030_구조\\2018053 아르메니아-조지아 New Bagratashen Bridge 시공감리용역",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:45):\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트 C20180053은 주관사 프로젝트이며, 진행 단계입니다.  필수 문서인 계약서, 공동도급협정, 실행예산, 성과품(보고서), 실적증명은 확보되었으나, 과업지시서, 착수계, 성과품(도면), 준공계, 용역수행평가가 모두 누락되었습니다.  진행 단계의 기준을 고려하더라도 주요 누락 문서들이 상당히 많아 '중'으로 평가합니다. 특히, 프로젝트의 핵심 내용을 명시하는 과업지시서와 프로젝트 시작을 알리는 착수계의 부재는 심각한 문제입니다.  \n\n**2. 가장 시급한 보완 필요 문서:** 과업지시서, 착수계\n\n**이유:** 과업지시서는 프로젝트의 범위, 목표, 기준 등을 명확히 하여 향후 발생할 수 있는 분쟁을 예방하고 효율적인 프로젝트 수행을 위한 필수 문서입니다.  착수계는 프로젝트 시작을 공식적으로 알리고,  계약 내용에 대한 이해와 준수 의지를 표명하는 중요한 문서입니다.  이 두 문서가 없다면 프로젝트의 법적·행정적 근거가 약해지고, 추후 문제 발생 시 책임 소재를 명확히 규정하기 어려워집니다.\n\n**3. 위험도 점수 조정 필요성:** 있음\n\n**구체적인 개선 방안:**\n\n* **현재 위험도 70/100 에서 90/100으로 상향 조정**을 제안합니다.  누락된 문서들은 프로젝트의 위험요소를 증가시키는 주요 원인이기 때문입니다.  특히 과업지시서와 착수계의 부재는 프로젝트의 법적, 행정적 불확실성을 높여 위험도를 크게 증가시킵니다.\n\n* **즉시 과업지시서와 착수계를 확보해야 합니다.**  관련 부서에 협조를 요청하고, 필요시 추가적인 시간과 자원을 투입해야 합니다.\n\n* **성과품(도면) 확보를 위한 계획을 수립해야 합니다.**  도면은 프로젝트 결과물의 중요한 부분이므로,  누락된 도면을 확보하기 위한 구체적인 계획과 일정을 수립하고,  관련 담당자에게 책임을 부여해야 합니다.\n\n* **준공계 및 용역수행평가는 프로젝트 완료 단계에서 준비하되,  현재 단계에서 미흡한 문서들을 먼저 보완하는데 집중해야 합니다.**\n\n* **정기적인 문서 관리 체계를 구축하여 향후 유사한 문제 발생을 방지해야 합니다.**  문서 관리 담당자를 지정하고,  문서 관리 절차 및 체크리스트를 마련하여 문서 누락을 예방해야 합니다.\n\n\n위와 같은 개선 방안을 통해 위험도를 낮추고 프로젝트의 성공적인 완료 가능성을 높일 수 있습니다.\n\n\n요약:\n- 확인된 문서: 5개 유형\n- 누락된 문서: 5개 유형\n- 기본 위험도: 70/100\n",
-  "timestamp": "2025-03-10 01:44:55",
-  "performance": {
-    "total_time": 0,
-    "search_time": 8.620812177658081,
-    "ai_time": 5.318621397018433,
-    "save_time": 0
-  }
 }

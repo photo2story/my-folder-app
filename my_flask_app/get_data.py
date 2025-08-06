@@ -203,6 +203,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate project list from network drive")
     parser.add_argument('--force', action='store_true', help="Force full scan (currently placeholder)")
     parser.add_argument('--verbose', action='store_true', help="Enable detailed debug output")
+    parser.add_argument('--department', type=str, help="Scan specific department only (e.g., 01010 for 도로부)")
     args = parser.parse_args()
     
     TARGET_DEPARTMENTS = [
@@ -220,7 +221,7 @@ if __name__ == "__main__":
         "04030",  # 조경
         "05010",  # 수자원
         "06010",  # 환경
-        "07010",  # 상하수도
+        "07010",  # 상하수도/항만
         "08010",  # 건설사업관리
         "09010",  # 해외영업
         "10010",  # 플랫폼사업실
@@ -230,7 +231,16 @@ if __name__ == "__main__":
     
     root_path = NETWORK_BASE_PATH
     print(f"\nNetwork drive path: {root_path}")
-    create_project_list(root_path, TARGET_DEPARTMENTS, force_scan=args.force, verbose=args.verbose)
+    
+    # 특정 부서만 스캔하는 경우
+    if args.department:
+        target_dept = args.department.zfill(5)  # 5자리로 패딩
+        print(f"Scanning only department: {target_dept}")
+        create_project_list(root_path, [target_dept], force_scan=args.force, verbose=args.verbose)
+    else:
+        create_project_list(root_path, TARGET_DEPARTMENTS, force_scan=args.force, verbose=args.verbose)
 
 # python get_data.py
 # python get_data.py --verbose
+# python get_data.py --department 01010 --verbose  # 도로부만 스캔
+# python get_data.py --department 01010 --force --verbose  # 도로부 강제 스캔

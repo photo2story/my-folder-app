@@ -41,10 +41,10 @@ def get_network_drive(verbose=False):
         return _NETWORK_DRIVE_CACHE
 
     # 기본값 설정
-    _NETWORK_DRIVE_CACHE = 'Z:'
+    _NETWORK_DRIVE_CACHE = 'T:'
     
     if verbose:
-        drives = ['Z:', 'Y:', 'X:', 'U:']
+        drives = ['T:', 'Z:', 'Y:', 'X:', 'U:']
         for drive in drives:
             try:
                 if os.path.exists(drive):
@@ -54,8 +54,8 @@ def get_network_drive(verbose=False):
             except Exception:
                 continue
         
-        if _NETWORK_DRIVE_CACHE == 'Z:':
-            logger.warning("No network drive found, using default Z:")
+        if _NETWORK_DRIVE_CACHE == 'T:':
+            logger.warning("No network drive found, using default T:")
     
     return _NETWORK_DRIVE_CACHE
 

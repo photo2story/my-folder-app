@@ -1,183 +1,58 @@
 {
-  "project_id": "C20180098",
-  "project_name": "E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업(조지아)",
-  "department": "01010_도로부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "20201130 현장공문 계약전문가 추가 투입019.PDF",
-          "path": "20201130 현장공문 계약전문가 추가 투입019.PDF",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\20201202 Contract Specialist\\20201202 단장이 보낸자료\\20201130 현장공문 계약전문가 추가 투입019.PDF",
-          "depth": 5,
-          "doc_type": "contract"
+    "project_id": "C20180098",
+    "project_name": "E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업(조지아)",
+    "department": "01010_도로부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Request for Contract Amendment (Night Shift).pdf",
-          "path": "Request for Contract Amendment (Night Shift).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\2022.04.29. Request for Contract Amendment\\Request for Contract Amendment (Night Shift).pdf",
-          "depth": 4,
-          "doc_type": "contract"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Request for Contract Amendment (Night Shift).pdf",
-          "path": "Request for Contract Amendment (Night Shift).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\16차 (야간작업 연장)\\Request for Contract Amendment (Night Shift).pdf",
-          "depth": 4,
-          "doc_type": "contract"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "specification": {
-      "exists": false,
-      "details": []
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "# Contract Agreement.pdf",
-          "path": "# Contract Agreement.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\# Contract Agreement.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "변경 공동 수급 협정서_Final_3.pdf",
-          "path": "변경 공동 수급 협정서_Final_3.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\2021.11.05. 변경계약서\\변경 공동 수급 협정서_Final_3.pdf",
-          "depth": 4,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "Consultancy Service Agreement (CINELLI) SIGNED.pdf",
-          "path": "Consultancy Service Agreement (CINELLI) SIGNED.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.03  Expert Agreement\\Consultancy Service Agreement (CINELLI) SIGNED.pdf",
-          "depth": 3,
-          "doc_type": "agreement"
-        }
-      ]
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "실행보고서_조지아 E-60_Final.xlsx",
-          "path": "실행보고서_조지아 E-60_Final.xlsx",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.07 실행\\01 실행검토서\\실행보고서_조지아 E-60_Final.xlsx",
-          "depth": 3,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "실행보고서_조지아 E-60_갑지_Signed.pdf",
-          "path": "실행보고서_조지아 E-60_갑지_Signed.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.07 실행\\01 실행검토서\\실행보고서_조지아 E-60_갑지_Signed.pdf",
-          "depth": 3,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "[결재본]실행검토서-조지아E60.pdf",
-          "path": "[결재본]실행검토서-조지아E60.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.07 실행\\01 실행검토서\\[결재본]실행검토서-조지아E60.pdf",
-          "depth": 3,
-          "doc_type": "budget"
-        }
-      ]
-    },
-    "deliverable1": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Request for Extension of the Time for Completion.pdf",
-          "path": "Request for Extension of the Time for Completion.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\1.06  Amendment No.20\\01  Request for Extension of the Time for Completion\\Request for Extension of the Time for Completion.pdf",
-          "depth": 4,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "Request for Extension of the Time for Completion.pdf",
-          "path": "Request for Extension of the Time for Completion.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.01 계약\\01  계약서\\1.06  Amendment No.20\\01  Request for Extension of the Time for Completion\\Request for Extension of the Time for Completion.pdf",
-          "depth": 5,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "공문 2018-046[수성]e-60 highway 준공금 청구의 건.pdf",
-          "path": "공문 2018-046[수성]e-60 highway 준공금 청구의 건.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.08 기술지원(외주)\\01 설계단계_도로조명_터널기계전기\\02 청구서\\공문 2018-046[수성]e-60 highway 준공금 청구의 건.pdf",
-          "depth": 4,
-          "doc_type": "completion"
-        }
-      ]
-    },
-    "certificate": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "211095_이관영(퇴직증명서)_평화엔지니어.pdf",
-          "path": "211095_이관영(퇴직증명서)_평화엔지니어.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.09 인력관리\\04 이관영 투입일 191108\\211095_이관영(퇴직증명서)_평화엔지니어.pdf",
-          "depth": 3,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "이관영 입사서류(제외 건강보험 퇴직증명서 원천징수영수증).pdf",
-          "path": "이관영 입사서류(제외 건강보험 퇴직증명서 원천징수영수증).pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.09 인력관리\\04 이관영 투입일 191108\\이관영 입사서류(제외 건강보험 퇴직증명서 원천징수영수증).pdf",
-          "depth": 3,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "경력증명서.pdf",
-          "path": "경력증명서.pdf",
-          "full_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업\\1. 과업 계약 및 착수\\1.09 인력관리\\강인규(단장후보)\\경력증명서.pdf",
-          "depth": 3,
-          "doc_type": "certificate"
-        }
-      ]
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-06 08:51:27",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01010_도로\\0004 해외사업\\C2018098 Georgia E-60 Highway Chumateleti-Khevi 구간 설계검토 및 시공감리 사업",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:47):\n**1. 현재 문서화 상태:** 중\n\n**이유:** 프로젝트는 진행 중이며 주관사이므로 모든 문서 유형이 100% 완비되어야 위험도 0/100을 달성합니다.  현재 계약서, 공동도급협정, 실행예산, 준공계, 실적증명은 존재하지만, 과업지시서, 착수계, 성과품(보고서), 성과품(도면), 용역수행평가가 완전히 누락되어 있습니다.  진행 단계의 기준을 고려하더라도 필수 문서인 과업지시서와 착수계가 없다는 것은 심각한 문제입니다.  따라서 현재 상태는 '중'으로 평가되며, 위험도 70/100은 현실을 반영한 수치입니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:**  프로젝트의 범위, 목표, 수행 기준 등을 명확히 규정하는 가장 중요한 문서입니다.  이것이 없으면 프로젝트의 진행 방향과 결과물에 대한 불확실성이 커지고 분쟁의 소지가 발생할 수 있습니다.\n* **착수계:**  프로젝트의 공식적인 시작을 알리고, 계약 내용에 대한 이해와 준수 의지를 표명하는 문서입니다.  이것이 없으면 프로젝트 시작 시점과 책임 소재가 불분명해질 수 있습니다.\n* **성과품(보고서) 및 성과품(도면):**  프로젝트의 진행 상황과 결과물을 보여주는 중요한 증빙자료입니다.  이것이 누락되면 프로젝트 성과를 평가하고 관리하는 데 어려움을 겪게 됩니다.\n\n\n**3. 위험도 점수 조정 필요성:** 있다\n\n**구체적인 개선 방안:**\n\n* **즉시 과업지시서와 착수계를 작성 및 제출해야 합니다.**  이 두 문서는 프로젝트의 법적/행정적 기반을 확립하는 데 필수적입니다.\n* **프로젝트 진행 단계에 맞춰 성과품(보고서) 및 성과품(도면)을 정기적으로 작성하고 제출해야 합니다.**  적어도 중간 보고서와 도면은 제출되어야 합니다.  진행 상황을 명확히 파악하고 문제 발생 시 신속하게 대응하기 위해서입니다.\n* **용역수행평가 계획을 수립하고, 프로젝트 종료 시점에 평가를 실시해야 합니다.** 이를 통해 프로젝트의 효율성과 문제점을 파악하고, 향후 유사 프로젝트에 대한 개선 방안을 마련할 수 있습니다.\n\n위의 개선 방안을 이행한다면, 위험도는 70/100에서 상당히 낮아질 것입니다.  하지만 모든 문서가 완비될 때까지는 위험도 0/100을 달성할 수 없다는 점을 명심해야 합니다.  특히, 과업지시서와 착수계의 미비는 심각한 위험 요소이므로 우선적으로 해결해야 합니다.  모든 문서가 완비되면 위험도는 0에 가까워지고,  '상'으로 평가될 수 있습니다.\n\n\n요약:\n- 확인된 문서: 5개 유형\n- 누락된 문서: 5개 유형\n- 기본 위험도: 70/100\n",
-  "timestamp": "2025-03-10 01:47:29",
-  "performance": {
-    "total_time": 0,
-    "search_time": 16.397161722183228,
-    "ai_time": 5.792830944061279,
-    "save_time": 0
-  }
 }

@@ -1,259 +1,58 @@
 {
-  "project_id": "C20170001",
-  "project_name": "미얀마 우정의 교량(Dala) 건설사업 설계 및 감리",
-  "department": "01030_구조부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Request for Approval of Budget Reallocation and Contract Addendum No.3 for the Consulting_(1).pdf",
-          "path": "Request for Approval of Budget Reallocation and Contract Addendum No.3 for the Consulting_(1).pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\05 설계변경 보고서\\20210521 2nd Design Change Report\\Request for Approval of Budget Reallocation and Contract Addendum No.3 for the Consulting_(1).pdf",
-          "depth": 4,
-          "doc_type": "contract"
+    "project_id": "C20170001",
+    "project_name": "미얀마 우정의 교량(Dala) 건설사업 설계 및 감리",
+    "department": "01030_구조부",
+    "status": "진행",
+    "contractor": "비주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Submission of Signed Contract Addendum No.3 for the Consulting Services (1).pdf",
-          "path": "Submission of Signed Contract Addendum No.3 for the Consulting Services (1).pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\05 설계변경 보고서\\20210521 2nd Design Change Report\\Submission of Signed Contract Addendum No.3 for the Consulting Services (1).pdf",
-          "depth": 4,
-          "doc_type": "contract"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "Encl#1. Adjusted Contract Price (USD).pdf",
-          "path": "Encl#1. Adjusted Contract Price (USD).pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\05 설계변경 보고서\\20210521 2nd Design Change Report\\0_우정의다리 현장 변경 BOQ 송부_210521\\Encl#1. Adjusted Contract Price (USD).pdf",
-          "depth": 5,
-          "doc_type": "contract"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "specification": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Volume II (1_2) - General Specification_171027.pdf",
-          "path": "Volume II (1_2) - General Specification_171027.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\4. 성과품\\01 2017년 10월\\02 Bid Documents\\Volume II - Specification\\Volume II (1_2) - General Specification_171027.pdf",
-          "depth": 4,
-          "doc_type": "specification"
-        },
-        {
-          "type": "file",
-          "name": "Volume II (2_2) - Special Specification_171027.pdf",
-          "path": "Volume II (2_2) - Special Specification_171027.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\4. 성과품\\01 2017년 10월\\02 Bid Documents\\Volume II - Specification\\Volume II (2_2) - Special Specification_171027.pdf",
-          "depth": 4,
-          "doc_type": "specification"
-        },
-        {
-          "type": "file",
-          "name": "Special Specification - IPC.pdf",
-          "path": "Special Specification - IPC.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\4. 성과품\\04 IPC Girder\\01.Dala Side Approach Bridge\\03.Specification\\Special Specification - IPC.pdf",
-          "depth": 4,
-          "doc_type": "specification"
-        }
-      ]
-    },
-    "initiation": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "착수금 청구서-일론킴-190122.pdf",
-          "path": "착수금 청구서-일론킴-190122.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\일론킴-동영상제작\\착수금 청구서-일론킴-190122.pdf",
-          "depth": 5,
-          "doc_type": "initiation"
-        },
-        {
-          "type": "file",
-          "name": "동영상제작 착수금(1차)-도화 송금확인증.pdf",
-          "path": "동영상제작 착수금(1차)-도화 송금확인증.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\일론킴-동영상제작\\추가계약\\1차 기성(착수금)\\동영상제작 착수금(1차)-도화 송금확인증.pdf",
-          "depth": 7,
-          "doc_type": "initiation"
-        },
-        {
-          "type": "file",
-          "name": "착수금 청구서-일론킴-190122.pdf",
-          "path": "착수금 청구서-일론킴-190122.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.02 기성관리\\3.02.02 협력업체기성\\00 국내\\일론킴-동영상제작\\추가계약\\1차 기성(착수금)\\착수금 청구서-일론킴-190122.pdf",
-          "depth": 7,
-          "doc_type": "initiation"
-        }
-      ]
-    },
-    "agreement": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
-          "path": "미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\01 한국\\01 3D 동영상제작 - 레이웍스\\미얀마 우정의 다리 동영상제작비 분담합의서.pdf",
-          "depth": 5,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "CRDCC - Original Agreement.pdf",
-          "path": "CRDCC - Original Agreement.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\02 미얀마\\01 현지기술자공급 - CRDCC\\CRDCC - Original Agreement.pdf",
-          "depth": 5,
-          "doc_type": "agreement"
-        },
-        {
-          "type": "file",
-          "name": "Addendum No.1 for Subcontract Agreement for CS(CRDCC)_Final.pdf",
-          "path": "Addendum No.1 for Subcontract Agreement for CS(CRDCC)_Final.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\02 기술지원계약\\02 미얀마\\01 현지기술자공급 - CRDCC\\Addendum No.1 for Subcontract Agreement for CS(CRDCC)_Final.pdf",
-          "depth": 5,
-          "doc_type": "agreement"
-        }
-      ]
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
-          "path": "Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\05 설계변경 보고서\\20210521 2nd Design Change Report\\Clarification on Revised Budget Plan for GOM Portion (MYA-10) (1).pdf",
-          "depth": 4,
-          "doc_type": "budget"
-        },
-        {
-          "type": "file",
-          "name": "주탑PY2 말뚝 검토 실행예산서.pdf",
-          "path": "주탑PY2 말뚝 검토 실행예산서.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\0. 문서관리\\0.04 주간공정보고\\주탑PY2 말뚝 검토 실행예산서.pdf",
-          "depth": 2,
-          "doc_type": "budget"
-        }
-      ]
-    },
-    "deliverable1": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "월간보고서 업데이트사항(Dec_2021).hwp",
-          "path": "월간보고서 업데이트사항(Dec_2021).hwp",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\5. 각종 검토자료\\월간보고서\\02. 참고자료\\2022.01\\월간보고서 업데이트사항(Dec_2021).hwp",
-          "depth": 4,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "월간보고서 업데이트사항(Dec_2021) (1).hwp",
-          "path": "월간보고서 업데이트사항(Dec_2021) (1).hwp",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\5. 각종 검토자료\\월간보고서\\02. 참고자료\\2022.01\\월간보고서 업데이트사항(Dec_2021) (1).hwp",
-          "depth": 4,
-          "doc_type": "deliverable1"
-        },
-        {
-          "type": "file",
-          "name": "분기보고서 작성.hwp",
-          "path": "분기보고서 작성.hwp",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\5. 각종 검토자료\\분기보고서\\01. 참고자료\\분기보고서 작성.hwp",
-          "depth": 3,
-          "doc_type": "deliverable1"
-        }
-      ]
-    },
-    "deliverable2": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "종평면도(수정).dwg",
-          "path": "종평면도(수정).dwg",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\1. 사전작업\\1.02 관련 자료\\960 Feasibility Study Report_KOR\\종평면도(수정) - Standard\\종평면도(수정).dwg",
-          "depth": 4,
-          "doc_type": "deliverable2"
-        }
-      ]
-    },
-    "completion": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "Certificate of Completion For Engineering Services-Soosung.pdf",
-          "path": "Certificate of Completion For Engineering Services-Soosung.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\당초설계 실적증명서\\Certificate of Completion For Engineering Services-Soosung.pdf",
-          "depth": 4,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project.pdf",
-          "path": "DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\사장교 변경설계 실적증명서\\작업\\DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project.pdf",
-          "depth": 5,
-          "doc_type": "completion"
-        },
-        {
-          "type": "file",
-          "name": "DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project_July.pdf",
-          "path": "DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project_July.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\사장교 변경설계 실적증명서\\작업\\DOHWA_Certificate of Completion for design change for cable-stayed bridge in Korea-Myanmar (Dala) Bridge construction project_July.pdf",
-          "depth": 5,
-          "doc_type": "completion"
-        }
-      ]
-    },
-    "certificate": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-도화.pdf",
-          "path": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-도화.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\사장교 변경설계 실적증명서\\한-미얀마 우정의 다리 실적증명서(1차설계변경)-도화.pdf",
-          "depth": 4,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-수성.pdf",
-          "path": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-수성.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\사장교 변경설계 실적증명서\\한-미얀마 우정의 다리 실적증명서(1차설계변경)-수성.pdf",
-          "depth": 4,
-          "doc_type": "certificate"
-        },
-        {
-          "type": "file",
-          "name": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-진우.pdf",
-          "path": "한-미얀마 우정의 다리 실적증명서(1차설계변경)-진우.pdf",
-          "full_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리\\3. 관리\\3.01 계약관리\\06 컨설턴트 실적증명서\\사장교 변경설계 실적증명서\\한-미얀마 우정의 다리 실적증명서(1차설계변경)-진우.pdf",
-          "depth": 4,
-          "doc_type": "certificate"
-        }
-      ]
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-05 18:49:50",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01030_구조\\2017001 한-미얀마 우정의교량(Dala) 건설사업 설계 및 감리",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:39):\n## 프로젝트 C20170001 문서 분석 평가 결과\n\n**1. 현재 문서화 상태:** 중\n\n**이유:** 본 프로젝트는 주관사이며 진행 중인 상태입니다.  주관사 기준 100% 완비가 이상적인 상태이나, 용역수행평가가 누락되었고, 실행예산도 2개만 존재하는 점을 고려했을 때 100% 완비는 아니지만, 필수 문서는 대부분 확보되어 있습니다. 진행 단계의 위험도 기준(30~70/100)을 고려했을 때 중간 정도의 상태로 평가됩니다.  특히, 성과품(도면)이 1개만 있는 점은 주의 깊게 살펴봐야 합니다.\n\n**2. 가장 시급한 보완 필요 문서 및 이유:**\n\n* **용역수행평가:**  프로젝트 진행 상황에 대한 객관적인 평가 및 향후 개선 방향 설정에 필수적입니다. 누락 시, 프로젝트의 성과 관리 및 개선에 어려움을 초래할 수 있습니다.  주관사로서의 책임감 있는 자세를 위해서도 반드시 필요합니다.\n* **실행예산 (추가):**  예산 관리의 투명성과 정확성을 위해서는 실행예산의 추가 확보가 필요합니다.  부족한 예산 내역을 확인하고, 추가 예산 확보 계획을 세워야 합니다.\n* **성과품(도면):**  1개의 도면만 존재한다는 것은 설계의 완성도에 대한 의문을 제기합니다.  추가 도면의 존재 여부를 확인하고, 부족하다면 추가 작성 및 제출을 서둘러야 합니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**위험도 점수 조정 필요성:** 있음\n\n**현재 위험도:** 100/100 (기본 위험도)\n\n**조정 후 위험도:** 60/100 (제안)\n\n**개선 방안:**\n\n* **즉시 용역수행평가 실시 및 제출:**  프로젝트 진행 상황을 정확하게 파악하고, 문제점을 조기에 발견하여 해결하기 위한 조치를 취해야 합니다. 평가 기준 및 항목을 명확히 하고, 객관적인 데이터를 기반으로 평가해야 합니다.\n* **실행예산 추가 확보:**  예산 부족 사유를 명확히 밝히고, 추가 예산 확보를 위한 계획을 수립하여 상위 부서에 보고해야 합니다.  예산 집행 내역을 철저히 관리하여 투명성을 확보해야 합니다.\n* **성과품(도면) 추가 확인 및 보완:**  도면 누락 여부를 확인하고, 부족한 부분을 보완하여 완성도 높은 설계를 완료해야 합니다.  관련 부서와의 협의를 통해 도면 관리 체계를 개선하는 것을 고려해야 합니다.\n* **문서 관리 체계 개선:**  모든 문서를 체계적으로 관리하고, 누락 없이 기록 및 보관하는 시스템을 구축해야 합니다.  문서 관리 담당자를 지정하고, 정기적인 문서 점검을 실시하는 것을 권장합니다.\n\n\n위 개선 방안을 통해 위험 요소를 최소화하고 프로젝트의 성공적인 완료를 위한 기반을 마련해야 합니다.  특히, 용역수행평가는 즉시 진행되어야 하며, 그 결과에 따라 위험도 점수를 재조정해야 할 수 있습니다.\n\n\n요약:\n- 확인된 문서: 9개 유형\n- 누락된 문서: 1개 유형\n- 기본 위험도: 100/100\n",
-  "timestamp": "2025-03-10 01:39:02",
-  "performance": {
-    "total_time": 0,
-    "search_time": 18.361884355545044,
-    "ai_time": 6.173868894577026,
-    "save_time": 0
-  }
 }

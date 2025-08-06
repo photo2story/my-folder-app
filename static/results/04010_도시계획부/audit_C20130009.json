@@ -1,84 +1,58 @@
 {
-  "project_id": "C20130009",
-  "project_name": "청양 정산2농공단지조성사업 조사설계용역",
-  "department": "04010_도시계획부",
-  "status": "진행",
-  "contractor": "주관사",
-  "documents": {
-    "contract": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "2013009 계약서.pdf",
-          "path": "2013009 계약서.pdf",
-          "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\1. 과업 계약 및 착수\\1.01 계약\\1.01.03 계약서\\01. 최초\\2013009 계약서.pdf",
-          "depth": 4,
-          "doc_type": "contract"
-        }
-      ]
-    },
-    "specification": {
-      "exists": false,
-      "details": []
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": false,
-      "details": []
-    },
-    "budget": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "20200422-청양 정산2 실행예산서.pdf",
-          "path": "20200422-청양 정산2 실행예산서.pdf",
-          "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\1. 과업 계약 및 착수\\1.07 실행\\20200422-청양 정산2 실행예산서.pdf",
-          "depth": 2,
-          "doc_type": "budget"
+    "project_id": "C20130009",
+    "project_name": "청양 정산2농공단지조성사업 조사설계용역",
+    "department": "04010_도시계획부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "실행예산서.pdf",
-          "path": "실행예산서.pdf",
-          "full_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역\\1. 과업 계약 및 착수\\1.07 실행\\실행예산서.pdf",
-          "depth": 2,
-          "doc_type": "budget"
+        "specification": {
+            "exists": false,
+            "details": []
+        },
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "deliverable1": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable2": {
-      "exists": false,
-      "details": []
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": false,
-      "details": []
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-05 18:49:04",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:04010_도시계획\\2팀\\2013-009. 청양 정산2농공단지조성사업 조사설계용역",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:30):\n## 프로젝트 C20130009 문서 분석 결과\n\n**1. 현재 문서화 상태:** 중\n\n**이유:**  본 프로젝트는 주관사이며, 진행 중입니다.  계약서와 실행예산은 확보되었으나, 과업지시서, 착수계, 공동도급협정, 모든 성과품(보고서, 도면), 준공계, 실적증명, 용역수행평가 등 필수 문서 대부분이 누락되었습니다.  주관사 기준 100% 완비 기준에 크게 미달하지만, 진행 중인 프로젝트의 특성상 모든 문서를 완비하지 못한 점을 고려하여 '중'으로 평가합니다.\n\n\n**2. 가장 시급한 보완 필요 문서:**\n\n* **과업지시서:**  프로젝트의 범위, 목표, 기준 등을 명확히 하고, 향후 발생 가능한 분쟁을 예방하는 데 필수적입니다.\n* **착수계:**  프로젝트 착수를 공식적으로 알리고, 향후 일정 관리 및 책임 소재를 명확히 하기 위해 필요합니다.\n* **성과품(보고서, 도면):**  프로젝트의 진행 상황과 결과를 확인하고, 최종 결과물을 검토하는 데 필수적입니다.  진행 단계에 따라 중간보고서라도 확보해야 합니다.\n\n\n**3. 위험도 점수 조정 필요성 및 개선 방안:**\n\n**위험도 점수 조정 필요성: 있다.**\n\n현재 위험도 65/100은 누락된 문서의 중요성을 충분히 반영하지 못합니다.  특히 과업지시서와 착수계의 부재는 프로젝트 관리의 허점을 드러내므로 위험도를 상향 조정해야 합니다.\n\n**개선 방안:**\n\n* **즉시 과업지시서와 착수계를 작성 및 제출합니다.**  관련 부서와 협의하여 빠르게 진행해야 합니다.\n* **정기적인 성과품(보고서 및 도면) 제출 시스템을 구축합니다.**  프로젝트 진행 단계별로 보고서 및 도면 제출 일정을 명확히 하고, 실제 제출 및 검토가 이루어지도록 관리 체계를 강화합니다.\n* **위험도 점수를 85/100으로 상향 조정합니다.**  중요 문서의 누락으로 인한 위험성을 정확히 반영하기 위해서입니다.\n* **준공 이전에 모든 필수 문서를 확보합니다.**  실적증명 및 용역 수행 평가 등도 준공 후에 제출해야 하지만, 미리 준비 계획을 세워야 합니다.\n* **문서 관리 체계를 재정비합니다.**  프로젝트 초기부터 문서 관리 체계를 수립하여, 모든 문서를 체계적으로 관리하고, 누락을 방지해야 합니다.\n\n상기 개선 방안을 통해 문서 관리 체계를 개선하고 위험 요소를 최소화해야 합니다.  위험도 상향 조정은 프로젝트 관리의 중요성을 강조하고, 적극적인 문제 해결을 촉구하기 위함입니다.\n\n\n요약:\n- 확인된 문서: 2개 유형\n- 누락된 문서: 8개 유형\n- 기본 위험도: 65/100\n",
-  "timestamp": "2025-03-10 01:30:52",
-  "performance": {
-    "total_time": 0,
-    "search_time": 4.682149171829224,
-    "ai_time": 5.720729827880859,
-    "save_time": 0
-  }
 }

@@ -1,108 +1,58 @@
 {
-  "project_id": "C20150134",
-  "project_name": "순천00 도시첨단산업단지 조사설계용역",
-  "department": "04020_도시설계부",
-  "status": "진행",
-  "contractor": "비주관사",
-  "documents": {
-    "contract": {
-      "exists": false,
-      "details": []
-    },
-    "specification": {
-      "exists": false,
-      "details": []
-    },
-    "initiation": {
-      "exists": false,
-      "details": []
-    },
-    "agreement": {
-      "exists": false,
-      "details": []
-    },
-    "budget": {
-      "exists": false,
-      "details": []
-    },
-    "deliverable1": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "01.본문(1장 조사개요).hwp",
-          "path": "01.본문(1장 조사개요).hwp",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_받은파일\\도시부\\200910 지반조서 보고서_황인승BJ\\10_지반조사보고서(최종본_171025)\\01.본문(1장 조사개요).hwp",
-          "depth": 4,
-          "doc_type": "deliverable1"
+    "project_id": "C20150134",
+    "project_name": "순천00 도시첨단산업단지 조사설계용역",
+    "department": "04020_도시설계부",
+    "status": "진행",
+    "contractor": "주관사",
+    "documents": {
+        "contract": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "붙임1_보고서표지.hwp",
-          "path": "붙임1_보고서표지.hwp",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_받은파일\\도시부\\200910 지반조서 보고서_황인승BJ\\10_지반조사보고서(최종본_171025)\\붙임1_보고서표지.hwp",
-          "depth": 4,
-          "doc_type": "deliverable1"
+        "specification": {
+            "exists": false,
+            "details": []
         },
-        {
-          "type": "file",
-          "name": "지반조사보고서 표지.hwp",
-          "path": "지반조사보고서 표지.hwp",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_받은파일\\도시부\\200910 지반조서 보고서_황인승BJ\\20_추가지반조사보고서(18.08)\\지반조사보고서 표지.hwp",
-          "depth": 4,
-          "doc_type": "deliverable1"
+        "initiation": {
+            "exists": false,
+            "details": []
+        },
+        "agreement": {
+            "exists": false,
+            "details": []
+        },
+        "budget": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable1": {
+            "exists": false,
+            "details": []
+        },
+        "deliverable2": {
+            "exists": false,
+            "details": []
+        },
+        "completion": {
+            "exists": false,
+            "details": []
+        },
+        "certificate": {
+            "exists": false,
+            "details": []
+        },
+        "evaluation": {
+            "exists": false,
+            "details": []
         }
-      ]
     },
-    "deliverable2": {
-      "exists": true,
-      "details": [
-        {
-          "type": "file",
-          "name": "C-D-002_우수계획평면도(순천)-구조물 현황 참고.dwg",
-          "path": "C-D-002_우수계획평면도(순천)-구조물 현황 참고.dwg",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_보낸파일\\도시부\\200909 PC암거 날개벽 및 우수관 날개벽 성과품_김주현 CJ\\C-D-002_우수계획평면도(순천)-구조물 현황 참고.dwg",
-          "depth": 3,
-          "doc_type": "deliverable2"
-        },
-        {
-          "type": "file",
-          "name": "집수정 일반도 및 구조도.dwg",
-          "path": "집수정 일반도 및 구조도.dwg",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_보낸파일\\도시부\\200924 웨어 및 집수정_황인승BJ\\04_집수정\\01_도면\\집수정 일반도 및 구조도.dwg",
-          "depth": 5,
-          "doc_type": "deliverable2"
-        },
-        {
-          "type": "file",
-          "name": "웨어 일반도및구조도.dwg",
-          "path": "웨어 일반도및구조도.dwg",
-          "full_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사\\99_보낸파일\\도시부\\200924 웨어 및 집수정_황인승BJ\\03_웨어\\01_도면\\웨어 일반도및구조도.dwg",
-          "depth": 5,
-          "doc_type": "deliverable2"
-        }
-      ]
-    },
-    "completion": {
-      "exists": false,
-      "details": []
-    },
-    "certificate": {
-      "exists": false,
-      "details": []
-    },
-    "evaluation": {
-      "exists": false,
-      "details": []
+    "project_path": null,
+    "ai_analysis": null,
+    "timestamp": "2025-08-05 18:49:27",
+    "performance": {
+        "total_time": 0,
+        "search_time": 0,
+        "ai_time": 0,
+        "save_time": 0
     }
-  },
-  "project_path": "Z:01030_구조\\2015134_순천00 도시첨단 산업단지 조성공사",
-  "ai_analysis": "문서 분석 결과 (2025-03-10 01:34):\n**1. 현재 문서화 상태:** 중\n\n**이유:** 비주관사로서 필수 문서인 계약서와 성과품(보고서/도면)은 확보되었으나,  나머지 문서(과업지시서, 착수계, 준공계 등)가 모두 누락되어 있습니다.  진행 단계임을 고려하더라도  과업지시서와 착수계는 프로젝트의 기본적인 진행 및 관리를 위해 필수적이며,  누락으로 인해 프로젝트 관리의 투명성과 추적 가능성이 저하됩니다.  현재 위험도 15/100은 누락된 문서의 중요성을 제대로 반영하지 못하고 있습니다.\n\n\n**2. 가장 시급한 보완 필요 문서:** 과업지시서, 착수계\n\n**이유:** 과업지시서와 착수계는 프로젝트의 범위, 목표, 일정, 책임 등을 명확히 규정하고, 프로젝트 시작을 공식적으로 알리는 중요한 문서입니다.  이들의 누락은 프로젝트 진행에 대한 불확실성을 높이고, 향후 분쟁 발생 가능성을 증가시키며,  성과품의 검수 및 인수인계에도 문제를 야기할 수 있습니다.  따라서 다른 문서보다 우선적으로 확보해야 합니다.\n\n\n**3. 위험도 점수 조정 필요성:** 있음\n\n**구체적인 개선 방안:** 현재 위험도 15/100은 현실과 맞지 않습니다. 과업지시서와 착수계의 누락은 상당한 위험 요소이며,  비주관사라 하더라도  프로젝트 진행의 투명성과 관리의 어려움을 고려해야 합니다. 따라서 위험도를 50/100으로 상향 조정하는 것이 적절합니다.  과업지시서와 착수계를 확보하면 위험도를 30/100으로 낮출 수 있습니다.  준공 단계에서는 모든 문서를 확보하여 위험도를 0/100으로 만들어야 합니다.  향후 위험도 평가는 다음과 같은 기준으로 세분화하는 것이 좋습니다.\n\n* **계약서:**  없으면 30점 감점\n* **과업지시서:** 없으면 20점 감점\n* **착수계:** 없으면 10점 감점\n* **성과품(보고서/도면):** 각각 부족시 5점씩 감점 (최대 10점)\n* **준공계:** 없으면 20점 감점\n* **실행예산, 공동도급협정 등:**  없어도 큰 영향은 없으나,  존재하면 위험도 감소에 반영\n\n\n이러한 세분화된 기준을 통해 위험도 평가의 정확성을 높이고,  문서 보완의 우선순위를 명확히 할 수 있습니다.\n\n\n요약:\n- 확인된 문서: 2개 유형\n- 누락된 문서: 8개 유형\n- 기본 위험도: 15/100\n",
-  "timestamp": "2025-03-10 01:34:22",
-  "performance": {
-    "total_time": 0,
-    "search_time": 8.14138412475586,
-    "ai_time": 5.080676317214966,
-    "save_time": 0
-  }
 }

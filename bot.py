@@ -373,6 +373,98 @@ async def audit(ctx, *, query: str = None):
         await log_debug(ctx, f"감사 명령어 실행 중 오류 발생", error=e)
         await send_audit_status_to_discord(ctx, f"❌ 오류 발생: {str(e)}")
 
+@bot.command(name='audit_dept')
+async def audit_dept(ctx, department_code: str = None):
+    """특정 부서의 모든 프로젝트 감사"""
+    try:
+        if not department_code:
+            help_message = (
+                "🏢 부서별 감사 명령어 사용법:\n"
+                "!audit_dept [부서코드] - 특정 부서의 모든 프로젝트 감사\n\n"
+                "📋 부서 코드 목록:\n"
+                "01010 - 도로부\n"
+                "01020 - 공항및인프라사업부\n"
+                "01030 - 구조부\n"
+                "01040 - 지반부\n"
+                "01050 - 교통부\n"
+                "04010 - 도시계획부\n"
+                "05010 - 수자원부\n"
+                "06010 - 환경사업부\n"
+                "07010 - 상하수도부\n"
+                "예시: !audit_dept 01010"
+            )
+            await ctx.send(help_message)
+            return
+
+        await send_audit_status_to_discord(ctx, f"🏢 부서 {department_code}의 모든 프로젝트 감사를 시작합니다...")
+        
+        # audit_targets_new.csv에서 해당 부서의 프로젝트만 필터링
+        audit_targets_csv = os.path.join(STATIC_DATA_PATH, 'audit_targets_new.csv')
+        if not os.path.exists(audit_targets_csv):
+            await send_audit_status_to_discord(ctx, f"❌ audit_targets_new.csv 파일을 찾을 수 없습니다.")
+            return
+        
+        df = pd.read_csv(audit_targets_csv, encoding='utf-8-sig')
+        df['ProjectID'] = df['ProjectID'].apply(lambda x: re.sub(r'^[A-Za-z]', '', str(x)))
+        
+        # 부서별 필터링
+        dept_projects = df[df['Depart'].str.contains(department_code, na=False)]
+        
+        if dept_projects.empty:
+            await send_audit_status_to_discord(ctx, f"❌ 부서 코드 {department_code}에 해당하는 프로젝트가 없습니다.")
+            return
+        
+        total_projects = len(dept_projects)
+        await send_audit_status_to_discord(ctx, f"📊 부서 {department_code}: 총 {total_projects}개 프로젝트를 처리합니다...")
+        
+        all_results = []
+        success_count = 0
+        error_count = 0
+        
+        for idx, row in dept_projects.iterrows():
+            project_id = str(row['ProjectID'])
+            progress = f"({idx + 1}/{total_projects})"
+            
+            await send_audit_status_to_discord(ctx, f"🔍 프로젝트 {project_id} 감사를 시작합니다...")
+            try:
+                result = await audit_service.audit_project(project_id, department_code, False, ctx)
+                if isinstance(result, dict) and 'error' not in result:
+                    all_results.append(result)
+                    success_count += 1
+                    await send_audit_status_to_discord(ctx, f"✅ 프로젝트 {project_id} 감사 완료 {progress}")
+                else:
+                    error_count += 1
+                    await send_audit_status_to_discord(ctx, f"❌ 프로젝트 {project_id} 감사 실패 {progress}")
+                await asyncio.sleep(1)
+            except Exception as e:
+                error_count += 1
+                await send_audit_status_to_discord(ctx, f"❌ 프로젝트 {project_id} 처리 중 오류: {str(e)} {progress}")
+                continue
+        
+        # 결과 저장
+        results_dir = os.path.join(STATIC_PATH, 'results')
+        os.makedirs(results_dir, exist_ok=True)
+        output_path = os.path.join(results_dir, f'audit_dept_{department_code}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json')
+        async with aiofiles.open(output_path, 'w', encoding='utf-8') as f:
+            await f.write(json.dumps(all_results, ensure_ascii=False, indent=2))
+        
+        report = (
+            f"🏢 **부서 {department_code} 감사 완료 보고서**\n"
+            "------------------------\n"
+            f"✅ 감사 성공: {success_count}개\n"
+            f"❌ 감사 실패: {error_count}개\n"
+            f"📊 총 처리: {total_projects}개\n"
+            "------------------------\n"
+            f"📁 결과 저장: {output_path}"
+        )
+        
+        await ctx.send(report)
+        await send_audit_to_discord(all_results)
+        
+    except Exception as e:
+        await send_audit_status_to_discord(ctx, f"❌ 부서별 감사 중 오류 발생: {str(e)}")
+        logger.error(f"Error in audit_dept: {e}")
+
 @bot.command(name='clear_cache')
 async def clear_cache(ctx):
     try:
